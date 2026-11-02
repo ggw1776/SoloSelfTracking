@@ -28,5 +28,11 @@
         public static readonly MiscItem LonelyFragment = new("Lonely Fragment");
         public static readonly MiscItem BlazingFragment = new("Blazing Fragment");
         public static readonly MiscItem DevouringFragment = new("Devouring Fragment");
+
+        public static readonly MiscItem DoryanisMachinarium = new("Doryanis Machinarium");
+        public static readonly MiscItem Curiosity = new("Curiosity");
+        public static readonly MiscItem ZorathsEyeoftheInevitable = new("Zoraths Eye of the Inevitable");
+        public static readonly MiscItem ZorathsEyeoftheEndless = new("Zoraths Eye of the Endless");
+        public static readonly MiscItem FleshofXesht = new("Flesh of Xesht");
     }
 }

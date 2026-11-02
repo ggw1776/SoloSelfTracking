@@ -24,5 +24,16 @@
         public static readonly GemItem ScornfulHeraldSupport = new("Scornful Herald Support");
         public static readonly GemItem PactOfLycia = new("Pact Of Lycia");
         public static readonly GemItem CommunionSupport = new("Communion Support");
+        public static readonly GemItem EldrichBlasphemySupport = new("Eldrich Blasphemy Support");
+        public static readonly GemItem CrystalfallSupport = new("Crystalfall Support");
+
+        public static readonly GemItem GreaterUnleashSupport = new("Greater Unleash Support");
+        public static readonly GemItem PacifismSupport = new("Pacifism Support");
+        public static readonly GemItem MachinationsSupport = new("Machinations Support");
+        public static readonly GemItem VaalTemptationSupport = new("Vaal Temptation Support");
+        public static readonly GemItem HextoadSupport = new("Hextoad Support");
+        public static readonly GemItem HexpassSupport = new("Hexpass Support");
+        public static readonly GemItem FoulgraspSupport = new("Foulgrasp Support");
+        public static readonly GemItem HivebornSupport = new("Hiveborn Support");
     }
 }

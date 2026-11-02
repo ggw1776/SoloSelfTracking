@@ -1,0 +1,78 @@
+﻿@page "/bosses"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+
+<BossTracker Title="Boss Tracker"
+             Bosses="bosses"
+             DropProvider="GetBossDrops"
+             AnalysisHref="boss-analysis" />
+
+@code {
+    private readonly string[] bosses =
+    {
+        "Sirus",
+        "Shaper",
+        "Elder",
+        "Maven",
+        "Cortex",
+        "Exarch",
+        "Eater",
+        "Atziri",
+        "Incarnation of Neglect",
+        "Incarnation of Fear",
+        "Incarnation of Dread",
+        "Black Star",
+        "Infinite Hunger",
+        "Zorath",
+        "Farrul",
+        "Saqawal",
+        "Fenumus",
+        "Craiceann",
+        "Ahuatotli",
+        "Kurgal",
+        "Aul",
+        "Catarina",
+        "Oshabi",
+        "Trialmaster",
+        "King in the Mists",
+        "Black Knight",
+        "It That Was"
+    };
+
+    private List<BossDrop> GetBossDrops(string boss)
+    {
+        return boss switch
+        {
+            "Sirus" => BossDrops.Sirus,
+            "Shaper" => BossDrops.Shaper,
+            "Elder" => BossDrops.Elder,
+            "Maven" => BossDrops.Maven,
+            "Cortex" => BossDrops.Cortex,
+            "Exarch" => BossDrops.Exarch,
+            "Eater" => BossDrops.Eater,
+            "Atziri" => BossDrops.Atziri,
+            "Incarnation of Neglect" => BossDrops.IncarnationOfNeglect,
+            "Incarnation of Fear" => BossDrops.IncarnationOfFear,
+            "Incarnation of Dread" => BossDrops.IncarnationOfDread,
+            "Black Star" => BossDrops.BlackStar,
+            "Infinite Hunger" => BossDrops.InfiniteHunger,
+            "Zorath" => BossDrops.Zorath,
+            "Farrul" => BossDrops.Farrul,
+            "Saqawal" => BossDrops.Saqawal,
+            "Fenumus" => BossDrops.Fenumus,
+            "Craiceann" => BossDrops.Craiceann,
+            "Ahuatotli" => BossDrops.Ahuatotli,
+            "Kurgal" => BossDrops.Kurgal,
+            "Aul" => BossDrops.Aul,
+            "Catarina" => BossDrops.Catarina,
+            "Oshabi" => BossDrops.Oshabi,
+            "Trialmaster" => BossDrops.Trialmaster,
+            "King in the Mists" => BossDrops.KingInTheMists,
+            "Black Knight" => BossDrops.BlackKnight,
+            "It That Was" => BossDrops.ItThatWas,
+            _ => new List<BossDrop>()
+        };
+    }
+}

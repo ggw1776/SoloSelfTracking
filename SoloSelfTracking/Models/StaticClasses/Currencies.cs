@@ -25,5 +25,13 @@
         public static readonly CurrencyItem NamelessAstrolabe = new("Nameless Astrolabe");
         public static readonly CurrencyItem RunicAstrolabe = new("Runic Astrolabe");
         public static readonly CurrencyItem TimelessAstrolabe = new("Timeless Astrolabe");
+
+        public static readonly CurrencyItem GrandEldritchEmber = new("Grand Eldritch Ember");
+        public static readonly CurrencyItem GreaterEldritchEmber = new("Greater Eldritch Ember");
+        public static readonly CurrencyItem GreaterEldritchIchor = new("Greater Eldritch Ichor");
+        public static readonly CurrencyItem GrandEldritchIchor = new("Grand Eldritch Ichor");
+        public static readonly CurrencyItem VeiledExaltedOrb = new("Veiled Exalted Orb");
+        public static readonly CurrencyItem AllflameEmberOfKulemak = new("Allflame Ember Of Kulemak");
+        public static readonly CurrencyItem CorruptedCatalyst = new("Corrupted Catalyst");
     }
 }
