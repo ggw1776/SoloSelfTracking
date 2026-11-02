@@ -1,5 +1,285 @@
-﻿<h3>LogMonitor</h3>
+﻿@using System.Text
+@rendermode InteractiveServer
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<div class="terminal-widget">
+    @if (_isOpen)
+    {
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <span>Monitor</span>
+                <button class="terminal-close" @onclick="() => _isOpen = false">_</button>
+            </div>
+
+            <div class="terminal-config">
+                <input type="text"
+                       @bind="_path"
+                       @bind:event="oninput"
+                       @onkeydown="HandleKeyDown"
+                       placeholder="Enter log file path..." />
+
+                <button @onclick="ApplyPathAsync">Open</button>
+            </div>
+
+            @if (!string.IsNullOrEmpty(_error))
+            {
+                <div class="terminal-error">@_error</div>
+            }
+            else if (string.IsNullOrEmpty(_path))
+            {
+                <div class="terminal-empty">
+                    Awaiting file...
+                </div>
+            }
+            else
+            {
+                <div class="terminal-output">
+                    @foreach (var line in _lines)
+                    {
+                        <div>@line</div>
+                    }
+                </div>
+                <div class="terminal-status">
+                    <span>FOLLOWING: @_path</span>
+                    <span>LAST UPDATE: @_lastUpdated.ToString("HH:mm:ss")</span>
+                </div>
+            }
+        </div>
+    }
+
+    <button class="terminal-toggle"
+            @onclick="() => _isOpen = !_isOpen">
+            Client.txt monitor
+    </button>
+</div>
 
 @code {
+    private const string StorageKey = "terminal-file-path";
+    private const int LineCount = 10;
 
+    private string _path = string.Empty;
+    private string? _error;
+    private List<string> _lines = new();
+
+    private bool _isOpen;
+    private bool _initialized;
+
+    private DateTime _lastUpdated;
+
+    private CancellationTokenSource? _pollingCts;
+    private Task? _pollingTask;
+
+    private readonly SemaphoreSlim _refreshLock = new(1, 1);
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender || _initialized)
+            return;
+
+        _initialized = true;
+
+        try
+        {
+            _path = await JS.InvokeAsync<string?>(
+                "localStorage.getItem", StorageKey) ?? string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(_path))
+            {
+                await RefreshAsync();
+                StartPolling();
+            }
+        }
+        catch (Exception ex)
+        {
+            _error = $"Initialization failed: {ex.Message}";
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task ApplyPathAsync()
+    {
+        _error = null;
+
+        if (string.IsNullOrWhiteSpace(_path))
+        {
+            _error = "Please specify a file path.";
+            return;
+        }
+
+        try
+        {
+            var fullPath = Path.GetFullPath(_path.Trim());
+
+            if (!File.Exists(fullPath))
+            {
+                _error = "File not found.";
+                return;
+            }
+
+            _path = fullPath;
+
+            await JS.InvokeVoidAsync(
+                "localStorage.setItem", StorageKey, _path);
+
+            await RefreshAsync();
+            StartPolling();
+        }
+        catch (Exception ex)
+        {
+            _error = $"Unable to open file: {ex.Message}";
+        }
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+            await ApplyPathAsync();
+    }
+
+    private void StartPolling()
+    {
+        _pollingCts?.Cancel();
+
+        _pollingCts = new CancellationTokenSource();
+        _pollingTask = PollAsync(_pollingCts.Token);
+    }
+
+    private async Task PollAsync(CancellationToken token)
+    {
+        using var timer = new PeriodicTimer(
+            TimeSpan.FromSeconds(5));
+
+        try
+        {
+            while (await timer.WaitForNextTickAsync(token))
+            {
+                await RefreshAsync(token);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+        }
+    }
+
+    private async Task RefreshAsync(CancellationToken token = default)
+    {
+        if (string.IsNullOrWhiteSpace(_path))
+            return;
+
+        await _refreshLock.WaitAsync(token);
+
+        try
+        {
+            _lines = await Task.Run(
+                () => ReadLastLines(_path, LineCount),
+                token);
+
+            _lastUpdated = DateTime.Now;
+            _error = null;
+        }
+        catch (Exception ex)
+        {
+            _error = $"Read error: {ex.Message}";
+        }
+        finally
+        {
+            _refreshLock.Release();
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private static List<string> ReadLastLines(string path, int count)
+    {
+        var reversedLines = new List<string>();
+        var currentLine = new List<byte>();
+
+        using var stream = new FileStream(
+            path,
+            FileMode.Open,
+            FileAccess.Read,
+            FileShare.ReadWrite | FileShare.Delete);
+
+        if (stream.Length == 0)
+            return new();
+
+        stream.Seek(-1, SeekOrigin.End);
+
+        bool firstByte = true;
+
+        while (stream.Position >= 0 && reversedLines.Count < count)
+        {
+            int value = stream.ReadByte();
+
+            if (value == -1)
+                break;
+
+            byte currentByte = (byte)value;
+
+            if (currentByte == (byte)'\n')
+            {
+                // Ignore the empty line after a trailing newline.
+                if (!firstByte)
+                {
+                    currentLine.Reverse();
+
+                    reversedLines.Add(
+                        Encoding.UTF8.GetString(currentLine.ToArray())
+                            .TrimEnd('\r'));
+
+                    currentLine.Clear();
+                }
+            }
+            else
+            {
+                currentLine.Add(currentByte);
+            }
+
+            firstByte = false;
+
+            if (stream.Position > 0)
+                stream.Seek(-2, SeekOrigin.Current);
+            else
+                break;
+        }
+
+        // Include the first line if we reached the beginning of the file. Will never happen
+        if (reversedLines.Count < count && currentLine.Count > 0)
+        {
+            currentLine.Reverse();
+
+            reversedLines.Add(
+                Encoding.UTF8.GetString(currentLine.ToArray())
+                    .TrimEnd('\r'));
+        }
+
+        reversedLines.Reverse();
+
+        return reversedLines;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_pollingCts is not null)
+        {
+            await _pollingCts.CancelAsync();
+
+            if (_pollingTask is not null)
+            {
+                try
+                {
+                    await _pollingTask;
+                }
+                catch (OperationCanceledException)
+                {
+                }
+            }
+
+            _pollingCts.Dispose();
+        }
+
+        _refreshLock.Dispose();
+    }
 }
