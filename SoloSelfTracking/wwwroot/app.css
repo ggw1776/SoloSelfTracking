@@ -856,3 +856,171 @@ hr {
     max-height: 300px;
     overflow-y: auto;
 }
+
+
+
+.terminal-widget {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 10000;
+    font-family: "Courier New", monospace;
+    color: var(--poe-text, #d4c8b0);
+}
+
+/* Main terminal window */
+.terminal-window {
+    width: min(650px, calc(100vw - 32px));
+    height: 390px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-bottom: 10px;
+    background: var(--poe-bg, #11100f);
+    border: 1px solid var(--poe-border, #514334);
+    border-radius: var(--poe-radius, 3px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.65);
+}
+
+/* Header */
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 12px;
+    background: var(--poe-panel, #211e1b);
+    border-bottom: 1px solid var(--poe-border, #514334);
+    color: var(--poe-gold, #b89a5a);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.terminal-close {
+    background: transparent;
+    border: none;
+    color: var(--poe-text-muted, #918574);
+    font-family: inherit;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+    .terminal-close:hover {
+        color: var(--poe-text-bright, #eee1c5);
+    }
+
+/* File selection */
+.terminal-config {
+    display: flex;
+    gap: 6px;
+    padding: 10px;
+    background: var(--poe-bg-secondary, #191715);
+    border-bottom: 1px solid var(--poe-border-muted, #38312a);
+}
+
+    .terminal-config input {
+        flex: 1;
+        min-width: 0;
+        padding: 6px 8px;
+        background: var(--poe-bg, #11100f);
+        border: 1px solid var(--poe-border-muted, #38312a);
+        border-radius: var(--poe-radius, 3px);
+        color: var(--poe-text, #d4c8b0);
+        font-family: inherit;
+        font-size: 12px;
+        outline: none;
+    }
+
+        .terminal-config input:focus {
+            border-color: var(--poe-gold, #b89a5a);
+        }
+
+        .terminal-config input::placeholder {
+            color: var(--poe-text-muted, #918574);
+        }
+
+    .terminal-config button,
+    .terminal-toggle {
+        padding: 6px 12px;
+        background: var(--poe-panel, #211e1b);
+        border: 1px solid var(--poe-border, #514334);
+        border-radius: var(--poe-radius, 3px);
+        color: var(--poe-text, #d4c8b0);
+        font-family: inherit;
+        font-size: 11px;
+        letter-spacing: 1px;
+        cursor: pointer;
+    }
+
+        .terminal-config button:hover,
+        .terminal-toggle:hover {
+            background: var(--poe-panel-hover, #2b2621);
+            border-color: var(--poe-gold, #b89a5a);
+            color: var(--poe-text-bright, #eee1c5);
+        }
+
+/* Log output */
+.terminal-output {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 12px;
+    background: var(--poe-bg, #11100f);
+    color: var(--poe-text, #d4c8b0);
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+    .terminal-output div {
+        min-height: 1.5em;
+    }
+
+/* Empty state */
+.terminal-empty {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--poe-text-muted, #918574);
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* Errors */
+.terminal-error {
+    padding: 10px;
+    color: var(--poe-red-hover, #b54138);
+    font-size: 12px;
+}
+
+/* Footer */
+.terminal-status {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 10px;
+    background: var(--poe-panel, #211e1b);
+    border-top: 1px solid var(--poe-border-muted, #38312a);
+    color: var(--poe-text-muted, #918574);
+    font-size: 9px;
+}
+
+/* Floating toggle */
+.terminal-toggle {
+    display: block;
+    margin-left: auto;
+    background: var(--poe-panel, #211e1b);
+    border-color: var(--poe-border, #514334);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 600px) {
+    .terminal-window {
+        height: 55vh;
+    }
+
+    .terminal-status {
+        flex-direction: column;
+    }
+}
