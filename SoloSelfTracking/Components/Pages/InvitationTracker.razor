@@ -1,0 +1,33 @@
+﻿@page "/invitation-bosses"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+
+<BossTracker Title="Boss Tracker"
+             Bosses="bosses"
+             DropProvider="GetBossDrops"
+             AnalysisHref="invitation-analysis"
+             Maps="true" />
+
+@code {
+    private readonly string[] bosses =
+    {
+        "Exarch",
+        "Eater",
+        "Black Star",
+        "Infinite Hunger"
+    };
+
+    private List<BossDrop> GetBossDrops(string boss)
+    {
+        return boss switch
+        {
+            "Exarch" => BossDrops.Exarch,
+            "Eater" => BossDrops.Eater,
+            "Black Star" => BossDrops.BlackStar,
+            "Infinite Hunger" => BossDrops.InfiniteHunger,
+            _ => new List<BossDrop>()
+        };
+    }
+}

@@ -40,6 +40,27 @@ namespace SoloSelfTracking.Migrations
                     b.Property<TimeSpan>("ElapsedTime")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("MapCurrency")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MapDivCards")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MapMaps")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MapMonsterPackSize")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MapQuantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MapRarity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MapScarabs")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.ToTable("KillRecords");

@@ -1033,3 +1033,26 @@ hr {
     text-align: center;
     width: 150px;
 }
+
+.map-stats {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.map-stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+    .map-stat label {
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+
+    .map-stat input {
+        width: 55px;
+        text-align: center;
+    }

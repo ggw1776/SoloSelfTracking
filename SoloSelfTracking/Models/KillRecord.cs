@@ -8,6 +8,19 @@
         public List<KillRecordDrop> Drops { get; set; } = new();
         public int Deaths { get; set; } = 0;
         public TimeSpan ElapsedTime { get; set; }
+        public int MapQuantity { get; set; }
+        public int MapRarity { get; set; }
+        public int MapMonsterPackSize { get; set; }
+        public int MapScarabs { get; set; }
+        public int MapMaps { get; set; }
+        public int MapCurrency { get; set; }
+        public int MapDivCards { get; set; }
+
+
+        public bool IsMapStatsSet()
+        {
+            return MapQuantity > 0 || MapRarity > 0 || MapMonsterPackSize > 0 || MapScarabs > 0 || MapMaps > 0 || MapCurrency > 0 || MapDivCards > 0;
+        }
     }
 
     public class KillRecordDrop
