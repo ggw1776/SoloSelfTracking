@@ -55,6 +55,10 @@ NO FUCK OFF
 The database file is saved in your AppData\Local as tracking.db. If you wish to change to a different profile, change the database name in appsettings.json.
 To change the port, update the ServerPort value in appsettings.json. If you don't know what that means, don't mess with it.
 
+# GGG TERMS OF SERVICE CONCERNS
+At time of writing, the app does not interact with the PoE Executable at all.
+There is an optional feature to read the Client.txt file, but it is opt-in only and has no additional functionality. GGG does not comment on what is allowed from a third-party tool perspective, but the app does not (and likely will not in the future) perform any actions that would violate ToS.
+
 # HOW TO CONTRIBUTE
 
 idk make a PR and I'll look at it
