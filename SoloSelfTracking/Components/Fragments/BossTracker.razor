@@ -41,7 +41,9 @@
                             class="btn @(SelectedDrops.Contains(drop.Key)
                                 ? "btn-success"
                                 : "btn-outline-secondary")"
-                            @onclick="() => ToggleDrop(drop)">
+                            @onclick="() => ToggleDrop(drop)"
+                            @oncontextmenu="() => DecrementDrop(drop)"
+                            @oncontextmenu:preventDefault>
                         @drop.Item.DisplayName
                         @if (SelectedDrops.Contains(drop.Key) && !drop.IsMultiple)
                         {
@@ -246,6 +248,21 @@ else
 
         if (!SelectedDrops.Add(drop.Key))
             SelectedDrops.Remove(drop.Key);
+    }
+
+    private void DecrementDrop(DropOption drop)
+    {
+        if (!drop.IsMultiple)
+        {
+            return;
+        }
+
+        CurrentMultidropRecords.Remove(drop.Key);
+
+        if (!CurrentMultidropRecords.Contains(drop.Key))
+        {
+            SelectedDrops.Remove(drop.Key);
+        }
     }
 
     private async Task RecordKill()
