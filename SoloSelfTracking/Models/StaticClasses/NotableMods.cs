@@ -318,8 +318,10 @@
 
         public static List<string> GetVariants()
         {
-            var variants = new List<string>();
-
+            var variants = new List<string>
+            {
+                "{variant:0}Unidentified"
+            };
             int counter = 1;
             var modList = Mods.OrderBy(x => x.Name);
             foreach (var variant in modList)

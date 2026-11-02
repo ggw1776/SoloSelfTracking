@@ -495,10 +495,11 @@ else
             return false;
 
         var name = lines[2].Trim();
+        var idStatus = lines[6].Trim();
 
         var item = ItemIndex.FindItem(name);
 
-        if (item is null)
+        if (item is null && idStatus != "Unidentified")
             return false;
 
         if (item == Uniques.Voices)
@@ -548,6 +549,26 @@ else
             }
 
             CreateUniqueDrop(builder);
+        }
+        else if (idStatus == "Unidentified")
+        {
+            var type = lines[2];
+
+            switch(type)
+            {
+                case "Medium Cluster Jewel":
+                    SelectedJewelType = "Megalomaniac";
+                    break;
+                case "Large Cluster Jewel":
+                    SelectedJewelType = "Voices";
+                    break;
+                case "Crimson Jewel":
+                    SelectedJewelType = "Split Personality";
+                    break;
+                default:
+                    break;
+            }
+            CreateUniqueDrop(new List<string>() { "Unidentified" });
         }
 
         return true;
