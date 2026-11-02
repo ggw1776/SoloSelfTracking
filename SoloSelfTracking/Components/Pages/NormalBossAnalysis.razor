@@ -1,0 +1,38 @@
+﻿@page "/boss-analysis"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+
+<BossAnalysis Title="Analysis" Bosses="Bosses" />
+
+@code {
+    private static readonly List<string> Bosses = new()
+    {
+        "Sirus",
+        "Shaper",
+        "Elder",
+        "Maven",
+        "Cortex",
+        "Exarch",
+        "Eater",
+        "Atziri",
+        "Incarnation of Neglect",
+        "Incarnation of Fear",
+        "Incarnation of Dread",
+        "Black Star",
+        "Infinite Hunger",
+        "Zorath",
+        "Farrul",
+        "Saqawal",
+        "Fenumus",
+        "Craiceann",
+        "Ahuatotli",
+        "Kurgal",
+        "Aul",
+        "Catarina",
+        "Oshabi",
+        "Trialmaster",
+        "King in the Mists",
+        "Black Knight",
+        "It That Was"
+    };
+}
