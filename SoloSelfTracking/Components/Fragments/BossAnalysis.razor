@@ -337,7 +337,7 @@ else
                             ? (double)group.Where(x => x.IsMapStatsSet()).Sum(x => x.Deaths) / kills
                             : 0,
                         AverageTime_Seconds = kills > 0
-                            ? (double)group.Where(x => x.IsMapStatsSet()).Sum(
+                            ? (double)group.Sum(
                                 x => x.ElapsedTime.TotalSeconds) / kills
                             : 0,
                         AverageMapQuantity = mapSetKills > 0
