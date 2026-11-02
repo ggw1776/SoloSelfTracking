@@ -1,0 +1,154 @@
+﻿@implements IDisposable
+
+<div class="performance-tracker">
+    <div class="performance-tracker-stat">
+        <span class="performance-tracker-label">ELAPSED TIME</span>
+        <span class="performance-tracker-value">@FormattedTime</span>
+
+        <div class="performance-tracker-controls">
+            <button class="performance-button"
+                    @onclick="ToggleTimer">
+                @(IsRunning ? "PAUSE" : "START")
+            </button>
+
+            <button class="performance-button secondary"
+                    @onclick="ResetTimer">
+                RESET
+            </button>
+        </div>
+    </div>
+
+    <div class="performance-tracker-divider"></div>
+
+    <div class="performance-tracker-stat">
+        <span class="performance-tracker-label">DEATHS</span>
+
+        <div class="performance-death-controls">
+            <button class="performance-button secondary"
+                    @onclick="DecreaseDeaths"
+                    disabled="@(Deaths <= 0)">
+                -
+            </button>
+
+            <span class="performance-tracker-value">@Deaths</span>
+
+            <button class="performance-button"
+                    @onclick="IncreaseDeaths">
+                +
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public TimeSpan ElapsedTime { get; set; }
+
+    [Parameter]
+    public EventCallback<TimeSpan> ElapsedTimeChanged { get; set; }
+
+    [Parameter]
+    public int Deaths { get; set; }
+
+    [Parameter]
+    public EventCallback<int> DeathsChanged { get; set; }
+
+    private System.Threading.Timer? _timer;
+    private DateTime? _startedAt;
+    private TimeSpan _elapsedBeforeStart;
+    private bool IsRunning { get; set; }
+
+    private string FormattedTime =>
+        ElapsedTime.ToString(@"hh\:mm\:ss");
+
+    protected override void OnParametersSet()
+    {
+        if (!IsRunning)
+            _elapsedBeforeStart = ElapsedTime;
+    }
+
+    private async Task ToggleTimer()
+    {
+        if (IsRunning)
+        {
+            await StopTimer();
+        }
+        else
+        {
+            _startedAt = DateTime.UtcNow;
+            IsRunning = true;
+
+            _timer ??= new System.Threading.Timer(
+                async _ => await InvokeAsync(UpdateTimer),
+                null,
+                Timeout.Infinite,
+                Timeout.Infinite);
+
+            _timer.Change(0, 1000);
+        }
+    }
+
+    private async Task UpdateTimer()
+    {
+        if (!_startedAt.HasValue || !IsRunning)
+            return;
+
+        var elapsed = _elapsedBeforeStart +
+                      (DateTime.UtcNow - _startedAt.Value);
+
+        await UpdateElapsedTime(elapsed);
+        StateHasChanged();
+    }
+
+    private async Task UpdateElapsedTime(TimeSpan elapsed)
+    {
+        ElapsedTime = elapsed;
+        await ElapsedTimeChanged.InvokeAsync(elapsed);
+    }
+
+    private async Task ResetTimer()
+    {
+        _timer?.Change(Timeout.Infinite, Timeout.Infinite);
+
+        _startedAt = IsRunning ? DateTime.UtcNow : null;
+        _elapsedBeforeStart = TimeSpan.Zero;
+
+        await UpdateElapsedTime(TimeSpan.Zero);
+    }
+
+    private async Task IncreaseDeaths()
+    {
+        Deaths++;
+        await DeathsChanged.InvokeAsync(Deaths);
+    }
+
+    private async Task DecreaseDeaths()
+    {
+        if (Deaths <= 0)
+            return;
+
+        Deaths--;
+        await DeathsChanged.InvokeAsync(Deaths);
+    }
+
+    public async Task StopTimer()
+    {
+        if (!IsRunning)
+            return;
+
+        _timer?.Change(Timeout.Infinite, Timeout.Infinite);
+
+        if (_startedAt.HasValue)
+            _elapsedBeforeStart += DateTime.UtcNow - _startedAt.Value;
+
+        _startedAt = null;
+        IsRunning = false;
+
+        await UpdateElapsedTime(_elapsedBeforeStart);
+    }
+
+    public void Dispose()
+    {
+        _timer?.Dispose();
+    }
+}

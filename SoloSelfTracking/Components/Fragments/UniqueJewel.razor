@@ -1,0 +1,158 @@
+﻿
+<div class="card jewel-configurator">
+    <!---
+    <div class="card-header">
+        <h5 class="mb-0">@Title</h5>
+    </div> -->
+
+    <div class="card-body">
+
+        @if (SelectionLimit != 0) //<!--TODO  I don't wanna do this now, intentionally set to 0 but should be 1-->
+        {
+            <div class="mb-3">
+                <label class="form-label">Selected options</label>
+
+                <div>
+                    @if (_selectedOptions.Count == 0)
+                    {
+                        <span class="text-muted">No options selected</span>
+                    }
+                    else
+                    {
+                        @foreach (var option in _selectedOptions)
+                        {
+                            <span class="badge bg-secondary selected-option">
+                                @option
+                                <button type="button"
+                                        class="remove-option"
+                                        @onclick="() => RemoveOption(option)">
+                                    ×
+                                </button>
+                            </span>
+                        }
+                    }
+                </div>
+
+                <small class="text-muted">
+                    Select @_selectedOptions.Count of @SelectionLimit
+                    required maximum options.
+                </small>
+            </div>
+            <div class="dropdown w-100">
+                <input class="form-control"
+                       placeholder="Search options..."
+                       value="@_searchText"
+                       @oninput="OnSearchChanged"
+                       @onfocus="() => _dropdownOpen = true" />
+
+                @if (_dropdownOpen)
+                {
+                    <div class="jewel-option-list">
+                        @if (!FilteredOptions.Any())
+                        {
+                            <div class="dropdown-item text-muted">
+                                No matching options
+                            </div>
+                        }
+                        else
+                        {
+                            @foreach (var option in FilteredOptions)
+                            {
+                                var selected = _selectedOptions.Contains(option);
+
+                                <button type="button"
+                                        class="dropdown-item jewel-option @(selected ? "selected" : "")"
+                                        @onclick="() => ToggleOption(option)">
+                                    <span>@option</span>
+                                    @if (selected)
+                                    {
+                                        <span>✓</span>
+                                    }
+                                </button>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div>here be voices</div>
+        }
+
+
+
+        <div class="mt-3 d-flex justify-content-end">
+            <button type="button"
+                    class="btn btn-primary"
+                    disabled="@(_selectedOptions.Count == 0)"
+                    @onclick="Create">
+                Create
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public List<string> Options { get; set; } = new();
+
+    [Parameter]
+    public int SelectionLimit { get; set; } = 1;
+
+    [Parameter]
+    public EventCallback<IReadOnlyList<string>> OnCreate { get; set; }
+
+    private readonly List<string> _selectedOptions = new();
+
+    private string _searchText = string.Empty;
+    private bool _dropdownOpen;
+
+    private IEnumerable<string> FilteredOptions =>
+        Options.Where(option =>
+            option.Contains(_searchText, StringComparison.OrdinalIgnoreCase));
+
+    private void OnSearchChanged(ChangeEventArgs e)
+    {
+        _searchText = e.Value?.ToString() ?? string.Empty;
+        _dropdownOpen = true;
+    }
+
+    private void ToggleOption(string option)
+    {
+        if (_selectedOptions.Contains(option))
+        {
+            RemoveOption(option);
+            return;
+        }
+
+        if (_selectedOptions.Count >= SelectionLimit)
+        {
+            _dropdownOpen = false;
+            return;
+        }
+
+        _selectedOptions.Add(option);
+        _dropdownOpen = false;
+    }
+
+    private void RemoveOption(string option)
+    {
+        _selectedOptions.Remove(option);
+    }
+
+    private async Task Create()
+    {
+        if (_selectedOptions.Count == 0)
+            return;
+
+        await OnCreate.InvokeAsync(_selectedOptions.ToList());
+
+        _selectedOptions.Clear();
+        _searchText = string.Empty;
+        _dropdownOpen = false;
+    }
+}

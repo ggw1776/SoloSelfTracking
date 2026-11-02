@@ -1,0 +1,406 @@
+﻿@using SoloSelfTracking.Models
+@using SoloSelfTracking.Repositories
+@using SoloSelfTracking.Utilities
+@inject KillRecordRepository Repository
+
+<PageTitle>@Title</PageTitle>
+
+<h3 class="mb-3">@Title</h3>
+
+@if (isLoading)
+{
+    <p>Loading analysis...</p>
+}
+else if (History.Count == 0)
+{
+    <p class="text-muted">No kill records available for analysis.</p>
+}
+else
+{
+    var kills = FilteredKills;
+    var totalKills = kills.Count;
+    var totalDrops = kills.Sum(k => k.Drops.Count);
+
+    var mostRecentKill = kills.Count > 0
+        ? kills.Max(k => k.Date)
+        : (DateTime?)null;
+
+    <div class="mb-3">
+        <label class="form-label">Boss filter</label>
+        <select class="form-select" style="max-width: 300px"
+                @bind="selectedBoss">
+            <option value="All bosses">All bosses</option>
+            @foreach (var boss in BossOptions)
+            {
+                <option value="@boss">@boss</option>
+            }
+        </select>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-xl-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="text-muted small">Total kills</div>
+                    <h3>@totalKills</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-xl-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="text-muted small">Drops</div>
+                    <h3>@totalDrops</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-xl-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="text-muted small">Kills per drop</div>
+                    <h3>
+                        @(totalDrops > 0
+                            ? (totalKills / (double)totalDrops).ToString("0.##")
+                            : "N/A")
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-xl-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="text-muted small">Most recent kill</div>
+                    <h3>
+                        @(mostRecentKill?.ToString("g") ?? "N/A")
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="mb-5">
+        <h4>Boss Stats</h4>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>
+                            <button class="btn btn-link p-0 text-reset"
+                                    @onclick="() => SortBosses(nameof(BossStat.Boss))">
+                                Boss
+                            </button>
+                        </th>
+                        <th class="text-end">
+                            <button class="btn btn-link p-0 text-reset"
+                                    @onclick="() => SortBosses(nameof(BossStat.Kills))">
+                                Kills
+                            </button>
+                        </th>
+                        <th class="text-end">Average Time</th>
+                        <th class="text-end">Average Deaths</th>
+                        <th class="text-end">
+                            <button class="btn btn-link p-0 text-reset"
+                                    @onclick="() => SortBosses(nameof(BossStat.Drops))">
+                                Drops
+                            </button>
+                        </th>
+                        <th class="text-end">
+                            <button class="btn btn-link p-0 text-reset"
+                                    @onclick="() => SortBosses(nameof(BossStat.DropsPerKill))">
+                                Drops per kill
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var boss in BossStats)
+                    {
+                        var time = TimeSpan.FromSeconds(boss.AverageTime_Seconds);
+
+                        <tr @key="boss.Boss">
+                            <td>@boss.Boss</td>
+                            <td class="text-end">@boss.Kills</td>
+                            <td class="text-end">
+                                @($"{(int)time.TotalMinutes:D2}:{time.Seconds:D2}")
+                            </td>
+                            <td class="text-end">
+                                @boss.AverageDeaths.ToString("0.##")
+                            </td>
+                            <td class="text-end">@boss.Drops</td>
+                            <td class="text-end">
+                                @boss.DropsPerKill.ToString("0.##")
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="mb-5">
+        <h4>Drop-rate analysis</h4>
+
+        @if (DropRateRows.Count == 0)
+        {
+            <p class="text-muted">
+                No notable drops recorded for this selection.
+            </p>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>
+                                <button class="btn btn-link p-0 text-reset"
+                                        @onclick="() => SortDropRates(nameof(DropRateRow.Boss))">
+                                    Boss
+                                </button>
+                            </th>
+                            <th>
+                                <button class="btn btn-link p-0 text-reset"
+                                        @onclick="() => SortDropRates(nameof(DropRateRow.Item))">
+                                    Item
+                                </button>
+                            </th>
+                            <th class="text-end">Boss kills</th>
+                            <th class="text-end">Drop count</th>
+                            <th class="text-end">Kills with drop</th>
+                            <th class="text-end">
+                                <button class="btn btn-link p-0 text-reset"
+                                        @onclick="() => SortDropRates(nameof(DropRateRow.Rate))">
+                                    Observed rate
+                                </button>
+                            </th>
+                            <th class="text-end">Reported Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var row in DropRateRows)
+                        {
+                            <tr @key="(row.Boss, row.Item)">
+                                <td>@row.Boss</td>
+                                <td>
+                                    <span class="badge bg-secondary me-1 mb-1">
+                                        <ItemHoverInfo Item="ItemIndex.FindItem(row.Item)">
+                                            @row.Item
+                                        </ItemHoverInfo>
+                                    </span>
+                                </td>
+                                <td class="text-end">@row.BossKills</td>
+                                <td class="text-end">@row.DropCount</td>
+                                <td class="text-end">@row.KillsWithDrop</td>
+                                <td class="text-end">@row.Rate.ToString("P2")</td>
+                                <td class="text-end">@row.ReportedRate%</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </section>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<string> Bosses { get; set; } = Array.Empty<string>();
+
+    [Parameter]
+    public string Title { get; set; } = "Boss Analysis";
+
+    private List<KillRecord> History = new();
+    private bool isLoading = true;
+
+    private string selectedBoss = "All bosses";
+
+    private string dropSortColumn = "Boss";
+    private bool dropSortDescending;
+
+    private string bossSortColumn = "Boss";
+    private bool bossSortDescending;
+
+    private List<string> BossOptions => History
+        .Select(k => k.Boss)
+        .Distinct(StringComparer.OrdinalIgnoreCase)
+        .OrderBy(b => b)
+        .ToList();
+
+    private List<KillRecord> FilteredKills =>
+        selectedBoss == "All bosses"
+            ? History
+            : History.Where(k =>
+                string.Equals(k.Boss, selectedBoss,
+                    StringComparison.OrdinalIgnoreCase)).ToList();
+
+    private List<DropRateRow> DropRateRows
+    {
+        get
+        {
+            var rows = new List<DropRateRow>();
+
+            foreach (var group in FilteredKills.GroupBy(k => k.Boss))
+            {
+                var bossKills = group.ToList();
+
+                var items = bossKills
+                    .SelectMany(k => k.Drops).Select(d => d.Drop)
+                    .Distinct(StringComparer.OrdinalIgnoreCase);
+
+                foreach (var item in items)
+                {
+                    var matchingKills = bossKills.Count(k =>
+                        k.Drops.Select(d => d.Drop).Contains(
+                            item, StringComparer.OrdinalIgnoreCase));
+
+                    int dropCount = bossKills.Sum(k =>
+                    k.Drops
+                        .Where(d => string.Equals(
+                            d.Drop,
+                            item,
+                            StringComparison.OrdinalIgnoreCase))
+                        .Sum(d => Math.Max(1, d.Count)));
+
+                    rows.Add(new DropRateRow
+                    {
+                        Boss = group.Key,
+                        Item = item,
+                        BossKills = bossKills.Count,
+                        DropCount = dropCount,
+                        KillsWithDrop = matchingKills,
+                        Rate = bossKills.Count > 0
+                            ? (float)matchingKills / bossKills.Count
+                            : 0,
+                        ReportedRate = DropRateLookup.Find(group.Key, item)
+                    });
+                }
+            }
+
+            IEnumerable<DropRateRow> sorted = dropSortColumn switch
+            {
+                nameof(DropRateRow.Item) => rows.OrderBy(r => r.Item),
+                nameof(DropRateRow.Rate) => rows.OrderBy(r => r.Rate),
+                _ => rows.OrderBy(r => r.Boss).ThenBy(r => r.Item)
+            };
+
+            return (dropSortDescending
+                ? sorted.Reverse()
+                : sorted).ToList();
+        }
+    }
+
+    private List<BossStat> BossStats
+    {
+        get
+        {
+            var stats = FilteredKills
+                .GroupBy(k => k.Boss)
+                .Select(group =>
+                {
+                    var kills = group.Count();
+                    var drops = group.Sum(k => k.Drops.Count);
+
+                    return new BossStat
+                    {
+                        Boss = group.Key,
+                        Kills = kills,
+                        Drops = drops,
+                        DropsPerKill = kills > 0
+                            ? (float)drops / kills
+                            : 0,
+                        AverageDeaths = kills > 0
+                            ? (double)group.Sum(x => x.Deaths) / kills
+                            : 0,
+                        AverageTime_Seconds = kills > 0
+                            ? (double)group.Sum(
+                                x => x.ElapsedTime.TotalSeconds) / kills
+                            : 0
+                    };
+                });
+
+            IEnumerable<BossStat> sorted = bossSortColumn switch
+            {
+                nameof(BossStat.Kills) => stats.OrderBy(s => s.Kills),
+                nameof(BossStat.Drops) => stats.OrderBy(s => s.Drops),
+                nameof(BossStat.DropsPerKill) =>
+                    stats.OrderBy(s => s.DropsPerKill),
+                _ => stats.OrderBy(s => s.Boss)
+            };
+
+            return (bossSortDescending
+                ? sorted.Reverse()
+                : sorted).ToList();
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var records = await Repository.GetAllAsync();
+
+            History = records
+                .Where(k => Bosses.Contains(
+                    k.Boss, StringComparer.OrdinalIgnoreCase))
+                .ToList();
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void SortDropRates(string column)
+    {
+        if (dropSortColumn == column)
+        {
+            dropSortDescending = !dropSortDescending;
+        }
+        else
+        {
+            dropSortColumn = column;
+            dropSortDescending = column == nameof(DropRateRow.Rate);
+        }
+    }
+
+    private void SortBosses(string column)
+    {
+        if (bossSortColumn == column)
+        {
+            bossSortDescending = !bossSortDescending;
+        }
+        else
+        {
+            bossSortColumn = column;
+            bossSortDescending = column is
+                nameof(BossStat.Kills) or
+                nameof(BossStat.Drops) or
+                nameof(BossStat.DropsPerKill);
+        }
+    }
+
+    private sealed class DropRateRow
+    {
+        public string Boss { get; set; } = string.Empty;
+        public string Item { get; set; } = string.Empty;
+        public int BossKills { get; set; }
+        public int DropCount { get; set; }
+        public int KillsWithDrop { get; set; }
+        public float Rate { get; set; }
+        public float? ReportedRate { get; set; }
+    }
+
+    private sealed class BossStat
+    {
+        public string Boss { get; set; } = string.Empty;
+        public int Kills { get; set; }
+        public int Drops { get; set; }
+        public float DropsPerKill { get; set; }
+        public double AverageDeaths { get; set; }
+        public double AverageTime_Seconds { get; set; }
+    }
+}

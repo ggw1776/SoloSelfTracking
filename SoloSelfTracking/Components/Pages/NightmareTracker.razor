@@ -1,0 +1,34 @@
+﻿@page "/nightmares"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+
+<BossTracker Title="Nightmare Tracker"
+             Bosses="bosses"
+             DropProvider="GetBossDrops"
+             AnalysisHref="nightmare-analysis" />
+
+@code {
+    private readonly string[] bosses =
+    {
+        "Citadel",
+        "Abomination",
+        "Fortress",
+        "Sanctuary",
+        "Ziggaurat"
+    };
+
+    private List<BossDrop> GetBossDrops(string boss)
+    {
+        return boss switch
+        {
+            "Citadel" => BossDrops.Citadel,
+            "Abomination" => BossDrops.Abomination,
+            "Fortress" => BossDrops.Fortress,
+            "Sanctuary" => BossDrops.Sanctuary,
+            "Ziggaurat" => BossDrops.Ziggaurat,
+            _ => new List<BossDrop>()
+        };
+    }
+}

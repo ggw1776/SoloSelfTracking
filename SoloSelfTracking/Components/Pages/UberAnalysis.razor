@@ -1,0 +1,22 @@
+﻿@page "/uber-analysis"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+
+<BossAnalysis Title="Uber Analysis" Bosses="Bosses" />
+
+@code {
+    private static readonly List<string> Bosses = new()
+    {
+        "Uber Sirus",
+        "Uber Shaper",
+        "Uber Uber Elder",
+        "Uber Maven",
+        "Uber Cortex",
+        "Uber Exarch",
+        "Uber Eater",
+        "Uber Atziri",
+        "Uber Incarnation of Neglect",
+        "Uber Incarnation of Fear",
+        "Uber Incarnation of Dread"
+    };
+}

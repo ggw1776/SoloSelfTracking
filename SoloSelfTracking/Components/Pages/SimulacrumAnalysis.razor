@@ -1,0 +1,391 @@
+﻿@page "/simulacrum-analysis"
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Repositories
+@inject SimulacrumRecordRepository Repository
+
+<PageTitle>Simulacrum Analysis</PageTitle>
+
+<div class="sim-analysis">
+
+    <div class="sim-analysis-header">
+        <div>
+            <h2>Simulacrum Analysis</h2>
+            <p>Statistics and historical performance across completed Simulacrums.</p>
+        </div>
+
+        <div class="sim-analysis-filter">
+            <label>ARENA FILTER</label>
+            <select @bind="_selectedArena">
+                <option value="">All Arenas</option>
+                @foreach (var arena in Arenas)
+                {
+                    <option value="@arena">@arena</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    @if (_loading)
+    {
+        <p>Loading Simulacrum statistics...</p>
+    }
+    else if (!_records.Any())
+    {
+        <p>No completed Simulacrums have been recorded yet.</p>
+    }
+    else
+    {
+        <div class="sim-stat-grid">
+            <div class="sim-stat-card">
+                <span class="sim-stat-label">COMPLETED RUNS</span>
+                <span class="sim-stat-value">@FilteredRecords.Count</span>
+            </div>
+
+            <div class="sim-stat-card">
+                <span class="sim-stat-label">UNIQUE JEWELS</span>
+                <span class="sim-stat-value">@FilteredDrops.Count</span>
+            </div>
+
+            <div class="sim-stat-card">
+                <span class="sim-stat-label">JEWELS PER RUN</span>
+                <span class="sim-stat-value">@AverageDrops.ToString("0.00")</span>
+            </div>
+
+            <div class="sim-stat-card">
+                <span class="sim-stat-label">OMNIPHOBIA WAVES</span>
+                <span class="sim-stat-value">@OmniphobiaCount</span>
+            </div>
+
+            <div class="sim-stat-card">
+                <span class="sim-stat-label">KOSIS WAVES</span>
+                <span class="sim-stat-value">@KosisCount</span>
+            </div>
+
+            <div class="sim-stat-card">
+                <span class="sim-stat-label">MOST RECENT RUN</span>
+                <span class="sim-stat-value sim-stat-date">
+                    @(FilteredRecords.Any()
+                        ? FilteredRecords.Max(x => x.Date).ToString("MM/dd/yy HH:mm")
+                        : "N/A")
+                </span>
+            </div>
+
+            <div class="sim-stat-card">
+                <span class="sim-stat-label">AVERAGE TIME</span>
+                <span class="sim-stat-value">@string.Format("{0}:{1}", TimeSpan.FromSeconds(AverageTime_Seconds).Minutes.ToString("D2"), TimeSpan.FromSeconds(AverageTime_Seconds).Seconds.ToString("D2"))</span>
+            </div>
+            <div class="sim-stat-card">
+                <span class="sim-stat-label">AVERAGE DEATHS</span>
+                <span class="sim-stat-value">@AverageDeaths.ToString("0.##")</span>
+            </div>
+        </div>
+
+        <section class="sim-analysis-section">
+            <h3>Jewel Drop Statistics</h3>
+
+            <div class="sim-table-wrapper">
+                <table class="table sim-analysis-table">
+                    <thead>
+                        <tr>
+                            <th>Jewel</th>
+                            <th>Drops</th>
+                            <th>Runs With Drop</th>
+                            <th>Observed Rate</th>
+                            <th>Approx. Frequency</th>
+                            <th>Avg. Wave</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var stat in SortedJewelStats)
+                        {
+                            <tr>
+                                <td>@stat.JewelName</td>
+                                <td>@stat.DropCount</td>
+                                <td>@stat.RunsWithDrop / @FilteredRecords.Count</td>
+                                <td>@stat.Rate.ToString("P2")</td>
+                                <td>
+                                    @(stat.Rate > 0
+                                        ? $"1 in {(1 / stat.Rate):0.0}"
+                                        : "N/A")
+                                </td>
+                                <td>@stat.AverageWave.ToString("0.0")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="sim-analysis-section">
+            <h3>Notable Option Frequency</h3>
+            <p class="sim-section-description">
+                Frequency of selected notable passives across all recorded jewel drops.
+            </p>
+
+            <div class="sim-table-wrapper">
+                <table class="table sim-analysis-table">
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Occurrences</th>
+                            <th>Percentage of Jewels</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var stat in SortedOptionStats)
+                        {
+                            <tr>
+                                <td>@stat.Option</td>
+                                <td>@stat.Count</td>
+                                <td>
+                                    @(FilteredDrops.Count > 0
+                                        ? ((double)stat.Count / FilteredDrops.Count).ToString("P2")
+                                        : "N/A")
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="sim-analysis-section">
+            <h3>Arena Comparison</h3>
+
+            <div class="sim-table-wrapper">
+                <table class="table sim-analysis-table">
+                    <thead>
+                        <tr>
+                            <th>Arena</th>
+                            <th>Runs</th>
+                            <th>Jewels</th>
+                            <th>Jewels / Run</th>
+                            <th>Time</th>
+                            <th>Deaths</th>
+                            <th>Omniphobia</th>
+                            <th>Kosis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var stat in SortedArenaStats)
+                        {
+                            <tr class="@(stat.Arena == _selectedArena ? "selected-arena" : "")"
+                                @onclick="() => SelectArena(stat.Arena)">
+                                <td>@stat.Arena</td>
+                                <td>@stat.Runs</td>
+                                <td>@stat.Drops</td>
+                                <td>@stat.AverageDrops.ToString("0.00")</td>
+                                <td>@string.Format("{0}:{1}", TimeSpan.FromSeconds(stat.AverageTime_Seconds).Minutes.ToString("D2"), TimeSpan.FromSeconds(stat.AverageTime_Seconds).Seconds.ToString("D2"))</td>
+                                <td>@stat.AverageDeaths</td>
+                                <td>@stat.Omniphobia</td>
+                                <td>@stat.Kosis</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="sim-analysis-section">
+            <h3>Run History</h3>
+
+            <div class="sim-table-wrapper">
+                <table class="table sim-analysis-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Arena</th>
+                            <th>Unique Jewels</th>
+                            <th>Average Time</th>
+                            <th>Average Deaths</th>
+                            <th>Omniphobia</th>
+                            <th>Kosis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var record in SortedHistory)
+                        {
+                            <tr>
+                                <td>@record.Date.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>@record.Arena</td>
+                                <td>@record.UniqueDrops.Count()</td>
+                                <td>@string.Format("{0}:{1}", record.ElapsedTime.Minutes.ToString("D2"), record.ElapsedTime.Seconds.ToString("D2"))</td>
+                                <td>@record.Deaths.ToString("0.##")</td>
+                                <td>@record.Waves.Count(x => x.IsOmniphobiaWave)</td>
+                                <td>@record.Waves.Count(x => x.IsKosisWave)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    }
+</div>
+
+@code {
+    private List<SimulacrumRecord> _records = new();
+    private bool _loading = true;
+    private string _selectedArena = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _records = await Repository.GetAllAsync();
+        _loading = false;
+    }
+
+    private List<SimulacrumRecord> FilteredRecords =>
+        string.IsNullOrEmpty(_selectedArena)
+            ? _records
+            : _records.Where(x => x.Arena == _selectedArena).ToList();
+
+    private List<string> Arenas =>
+        _records.Select(x => x.Arena)
+            .Distinct()
+            .OrderBy(x => x)
+            .ToList();
+
+    private List<DropEntry> FilteredDrops =>
+        FilteredRecords
+            .SelectMany(record => record.Waves.SelectMany(wave =>
+                wave.UniqueDrops.Select(drop =>
+                    new DropEntry(record, wave.WaveNumber, drop))))
+            .ToList();
+
+    private double AverageDrops =>
+        FilteredRecords.Count == 0
+            ? 0
+            : (double)FilteredDrops.Count / FilteredRecords.Count;
+
+    private int OmniphobiaCount =>
+        FilteredRecords.Sum(x =>
+            x.Waves.Count(w => w.IsOmniphobiaWave));
+
+    private int KosisCount =>
+        FilteredRecords.Sum(x =>
+            x.Waves.Count(w => w.IsKosisWave));
+
+    private double AverageDeaths =>
+        FilteredRecords.Count == 0
+            ? 0
+            : (double)FilteredRecords.Sum(x => x.Deaths) / FilteredRecords.Count;
+
+
+    private double AverageTime_Seconds =>
+        FilteredRecords.Count == 0
+            ? 0
+            : (double)FilteredRecords.Sum(x => x.ElapsedTime.TotalSeconds) / FilteredRecords.Count;
+
+    private List<JewelDropStats> JewelStats =>
+        FilteredDrops
+            .GroupBy(x => x.Drop.JewelName)
+            .Select(group =>
+            {
+                var runsWithDrop = group
+                    .Select(x => x.Record.Id)
+                    .Distinct()
+                    .Count();
+
+                return new JewelDropStats
+                {
+                    JewelName = group.Key,
+                    DropCount = group.Count(),
+                    RunsWithDrop = runsWithDrop,
+                    Rate = FilteredRecords.Count == 0
+                        ? 0
+                        : (double)runsWithDrop / FilteredRecords.Count,
+                    AverageWave = group.Average(x => x.WaveNumber)
+                };
+            })
+            .ToList();
+
+    private List<OptionStats> OptionStatsList =>
+        FilteredDrops
+            .SelectMany(x => x.Drop.Options)
+            .GroupBy(x => x)
+            .Select(group => new OptionStats
+            {
+                Option = group.Key,
+                Count = group.Count()
+            })
+            .ToList();
+
+    private List<ArenaStats> ArenaStatsList =>
+        _records
+            .GroupBy(x => x.Arena)
+            .Select(group =>
+            {
+                var drops = group.Sum(x => x.UniqueDrops.Count());
+
+                return new ArenaStats
+                {
+                    Arena = group.Key,
+                    Runs = group.Count(),
+                    Drops = drops,
+                    AverageDrops = group.Count() == 0
+                        ? 0
+                        : (double)drops / group.Count(),
+                    Omniphobia = group.Sum(x =>
+                        x.Waves.Count(w => w.IsOmniphobiaWave)),
+                    Kosis = group.Sum(x =>
+                        x.Waves.Count(w => w.IsKosisWave)),
+                    AverageDeaths = group.Count() == 0
+                        ? 0
+                        : (double)group.Sum(x => x.Deaths) / group.Count(),
+                    AverageTime_Seconds = group.Count() == 0
+                        ? 0
+                        : (double)group.Sum(x => x.ElapsedTime.TotalSeconds) / group.Count()
+                };
+            })
+            .ToList();
+
+    private IEnumerable<JewelDropStats> SortedJewelStats =>
+        JewelStats.OrderByDescending(x => x.DropCount);
+
+    private IEnumerable<OptionStats> SortedOptionStats =>
+        OptionStatsList.OrderByDescending(x => x.Count);
+
+    private IEnumerable<ArenaStats> SortedArenaStats =>
+        ArenaStatsList.OrderByDescending(x => x.Runs);
+
+    private IEnumerable<SimulacrumRecord> SortedHistory =>
+        FilteredRecords.OrderByDescending(x => x.Date);
+
+    private void SelectArena(string arena)
+    {
+        _selectedArena = _selectedArena == arena
+            ? string.Empty
+            : arena;
+    }
+
+    private sealed record DropEntry(
+        SimulacrumRecord Record,
+        int WaveNumber,
+        SimulacrumUniqueDrop Drop);
+
+    private sealed class JewelDropStats
+    {
+        public string JewelName { get; set; } = string.Empty;
+        public int DropCount { get; set; }
+        public int RunsWithDrop { get; set; }
+        public double Rate { get; set; }
+        public double AverageWave { get; set; }
+    }
+
+    private sealed class OptionStats
+    {
+        public string Option { get; set; } = string.Empty;
+        public int Count { get; set; }
+    }
+
+    private sealed class ArenaStats
+    {
+        public string Arena { get; set; } = string.Empty;
+        public int Runs { get; set; }
+        public int Drops { get; set; }
+        public double AverageDrops { get; set; }
+        public int Omniphobia { get; set; }
+        public int Kosis { get; set; }
+        public double AverageDeaths { get; set; }
+        public double AverageTime_Seconds {get;set;}
+    }
+}

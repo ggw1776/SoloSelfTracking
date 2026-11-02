@@ -1,0 +1,46 @@
+﻿@page "/ubers"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+
+<BossTracker Title="Uber Tracker"
+             Bosses="bosses"
+             DropProvider="GetBossDrops"
+             AnalysisHref="uber-analysis" />
+
+@code {
+    private readonly string[] bosses =
+    {
+        "Uber Sirus",
+        "Uber Shaper",
+        "Uber Uber Elder",
+        "Uber Maven",
+        "Uber Cortex",
+        "Uber Exarch",
+        "Uber Eater",
+        "Uber Atziri",
+        "Uber Incarnation of Neglect",
+        "Uber Incarnation of Fear",
+        "Uber Incarnation of Dread"
+    };
+
+    private List<BossDrop> GetBossDrops(string boss)
+    {
+        return boss switch
+        {
+            "Uber Sirus" => BossDrops.UberSirus,
+            "Uber Shaper" => BossDrops.UberShaper,
+            "Uber Uber Elder" => BossDrops.UberUberElder,
+            "Uber Maven" => BossDrops.UberMaven,
+            "Uber Cortex" => BossDrops.UberCortex,
+            "Uber Exarch" => BossDrops.UberExarch,
+            "Uber Eater" => BossDrops.UberEater,
+            "Uber Atziri" => BossDrops.UberAtziri,
+            "Uber Incarnation of Neglect" => BossDrops.UberIncarnationOfNeglect,
+            "Uber Incarnation of Fear" => BossDrops.UberIncarnationOfFear,
+            "Uber Incarnation of Dread" => BossDrops.UberIncarnationOfDread,
+            _ => new List<BossDrop>()
+        };
+    }
+}

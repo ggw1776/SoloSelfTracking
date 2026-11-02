@@ -1,0 +1,16 @@
+﻿@page "/nightmare-analysis"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+
+<BossAnalysis Title="Nightmare Analysis" Bosses="Bosses" />
+
+@code {
+    private static readonly List<string> Bosses = new()
+    {
+        "Citadel",
+        "Abomination",
+        "Fortress",
+        "Sanctuary",
+        "Ziggaurat"
+    };
+}

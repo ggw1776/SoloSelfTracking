@@ -1,0 +1,386 @@
+﻿@using SoloSelfTracking.Interfaces
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Repositories
+@using SoloSelfTracking.Utilities
+@using Microsoft.JSInterop
+@implements IPastable
+@implements IAsyncDisposable
+@inject KillRecordRepository Repository
+@inject IJSRuntime JS
+
+<PageTitle>@Title</PageTitle>
+
+<h1>@Title</h1>
+
+<div class="mb-4">
+    <ul class="nav nav-tabs flex-wrap">
+        @foreach (var boss in Bosses)
+        {
+            <li class="nav-item" @key="boss">
+                <button type="button"
+                        class="nav-link @(SelectedBoss == boss ? "active" : "")"
+                        aria-current="@(SelectedBoss == boss ? "page" : null)"
+                        @onclick="() => SelectBoss(boss)">
+                    @boss
+                </button>
+            </li>
+        }
+    </ul>
+</div>
+
+@if (!string.IsNullOrEmpty(SelectedBoss))
+{
+    <div class="card mb-4 p-3">
+        <h4>Record @SelectedBoss Kill</h4>
+
+        <div class="d-flex flex-wrap gap-2 mb-3">
+            @foreach (var drop in CurrentDrops)
+            {
+                <ItemHoverInfo Item="drop.Item">
+                    <button type="button"
+                            class="btn @(SelectedDrops.Contains(drop.Key)
+                                ? "btn-success"
+                                : "btn-outline-secondary")"
+                            @onclick="() => ToggleDrop(drop)">
+                        @drop.Item.DisplayName
+                        @if (SelectedDrops.Contains(drop.Key) && !drop.IsMultiple)
+                        {
+                            <span> ✓</span>
+                        }
+                        else if (SelectedDrops.Contains(drop.Key) && drop.IsMultiple)
+                        {
+                            <span> &nbsp (@CurrentMultidropRecords.Where(x => string.Equals(x, drop.Key)).Count()) </span>
+                        }
+                    </button>
+                </ItemHoverInfo>
+            }
+        </div>
+
+        <div class="d-flex flex-wrap gap-2">
+            <PerformanceTracker @ref="_performanceTracker"
+                                @bind-ElapsedTime="_elapsedTime"
+                                @bind-Deaths="_deaths" />
+
+            <button type="button"
+                    class="btn btn-primary"
+                    @onclick="RecordKill">
+                Record Kill
+            </button>
+        </div>
+    </div>
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+    <h4>History</h4>
+
+    <div class="d-flex gap-2 align-items-center">
+        @if (!string.IsNullOrWhiteSpace(AnalysisHref))
+        {
+            <div class="nav-item px-3">
+                <NavLink class="bi accordion" href="@AnalysisHref">
+                    Analysis
+                </NavLink>
+            </div>
+        }
+
+        <label for="historyFilter">Show:</label>
+        <select id="historyFilter"
+                class="form-select"
+                @bind="HistoryFilter">
+            <option value="All">All bosses</option>
+            @foreach (var boss in Bosses)
+            {
+                <option value="@boss">@boss</option>
+            }
+        </select>
+    </div>
+</div>
+
+@if (!FilteredHistory.Any())
+{
+    <p class="text-muted">No kills recorded for this selection.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Date and Time</th>
+                    <th>Boss</th>
+                    <th>Drops</th>
+                    <th>Time to Kill</th>
+                    <th>Deaths</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var kill in FilteredHistory)
+                {
+                    <tr @key="kill.Id">
+                        <td>@kill.Date.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                        <td>
+                            <span class="badge bg-primary">
+                                @kill.Boss
+                            </span>
+                        </td>
+                        <td>
+                            @if (kill.Drops.Count == 0)
+                            {
+                                <span class="text-muted">
+                                    No notable drops
+                                </span>
+                            }
+                            else
+                            {
+                                @foreach (var drop in kill.Drops)
+                                {
+                                    <span class="badge bg-secondary me-1 mb-1">
+                                        <ItemHoverInfo Item="ItemIndex.FindItem(drop.Drop)">
+                                            @drop.Drop
+                                            @if(drop.Count > 1)
+                                            {
+                                                <span>(@drop.Count)</span>
+                                            }
+                                        </ItemHoverInfo>
+                                    </span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary me-1 mb-1">
+                                @FormatDuration(kill.ElapsedTime)
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary me-1 mb-1">
+                                @kill.Deaths
+                            </span>
+                        </td>
+                        <td>
+                            <button type="button"
+                                    class="btn btn-sm btn-outline-danger"
+                                    @onclick="() => DeleteKill(kill.Id)">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<string> Bosses { get; set; } = Array.Empty<string>();
+
+    [Parameter, EditorRequired]
+    public Func<string, List<BossDrop>> DropProvider { get; set; } = null!;
+
+    [Parameter]
+    public string Title { get; set; } = "Boss Tracker";
+
+    [Parameter]
+    public string? AnalysisHref { get; set; }
+
+    private string SelectedBoss = string.Empty;
+    private string HistoryFilter = "All";
+
+    private int _nextKillId;
+    private HashSet<string> SelectedDrops = new();
+    private List<KillRecord> KillHistory = new();
+    private List<string> CurrentMultidropRecords = new();
+
+    private TimeSpan _elapsedTime = TimeSpan.Zero;
+    private int _deaths;
+    private PerformanceTracker? _performanceTracker;
+
+    private List<DropOption> CurrentDrops =>
+        string.IsNullOrEmpty(SelectedBoss)
+            ? new()
+            : DropProvider(SelectedBoss)
+                .Select(drop => new DropOption(
+                    drop.Drop.GetItemKey(),
+                    drop.Drop,
+                    drop.IsMultiDrop))
+                .ToList();
+
+    private IEnumerable<KillRecord> FilteredHistory =>
+        KillHistory
+            .Where(k => HistoryFilter == "All"
+                || k.Boss == HistoryFilter)
+            .OrderByDescending(k => k.Date)
+            .ThenByDescending(k => k.Id);
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Bosses.Count > 0)
+            SelectedBoss = Bosses[0];
+
+        var completeHistory = await Repository.GetAllAsync();
+
+        KillHistory = completeHistory
+            .Where(x => Bosses.Contains(x.Boss))
+            .ToList();
+
+        _nextKillId = completeHistory.Count > 0
+            ? completeHistory.Max(x => x.Id) + 1
+            : 0;
+    }
+
+    private void SelectBoss(string boss)
+    {
+        SelectedBoss = boss;
+        SelectedDrops.Clear();
+    }
+
+    private void ToggleDrop(DropOption drop)
+    {
+        if (drop.IsMultiple)
+        {
+            CurrentMultidropRecords.Add(drop.Key);
+            SelectedDrops.Add(drop.Key);
+            return;
+        }
+
+        if (!SelectedDrops.Add(drop.Key))
+            SelectedDrops.Remove(drop.Key);
+    }
+
+    private async Task RecordKill()
+    {
+        if (string.IsNullOrEmpty(SelectedBoss))
+            return;
+
+        // Stop the timer before capturing the record.
+        if (_performanceTracker is not null)
+            await _performanceTracker.StopTimer();
+
+        var drops = CurrentDrops
+            .Where(d => SelectedDrops.Contains(d.Key))
+            .Select(d => d.Item)
+            .ToList();
+
+        var dropRecord = new List<KillRecordDrop>();
+        foreach(var drop in drops)
+        {
+            dropRecord.Add(new KillRecordDrop()
+            {
+                Drop = drop.Name,
+                Count = CurrentMultidropRecords.Where(x => string.Equals(x, drop.GetItemKey())).Count()
+            });
+        }
+
+        var record = new KillRecord
+        {
+            Id = _nextKillId++,
+            Date = DateTime.Now,
+            Boss = SelectedBoss,
+            Drops = dropRecord,
+            Deaths = _deaths,
+            ElapsedTime = _elapsedTime
+        };
+
+        KillHistory.Add(record);
+        await Repository.AddAsync(record);
+
+        SelectedDrops.Clear();
+        CurrentMultidropRecords.Clear();
+        _elapsedTime = TimeSpan.Zero;
+        _deaths = 0;
+    }
+
+    private async Task DeleteKill(int id)
+    {
+        KillHistory.RemoveAll(k => k.Id == id);
+        await Repository.DeleteAsync(id);
+    }
+
+    private static string FormatDuration(TimeSpan duration)
+    {
+        return $"{(int)duration.TotalHours:D2}:{duration.Minutes:D2}:{duration.Seconds:D2}";
+    }
+
+    private sealed class DropOption(string key, Item item, bool isMultiple)
+    {
+        public string Key { get; } = key;
+        public Item Item { get; } = item;
+        public bool IsMultiple { get; } = isMultiple;
+        public int DropCount { get; set; }
+    }
+
+    // Clipboard handling
+
+    private IJSObjectReference? _pasteModule;
+    private DotNetObjectReference<BossTracker>? _dotNetReference;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        _pasteModule = await JS.InvokeAsync<IJSObjectReference>(
+            "import", "./js/pastehelper.js");
+
+        _dotNetReference = DotNetObjectReference.Create(this);
+
+        await _pasteModule.InvokeVoidAsync(
+            "attachPasteHandler", _dotNetReference);
+
+        await _pasteModule.InvokeVoidAsync(
+            "attachFocusHandler", _dotNetReference);
+    }
+
+    [JSInvokable]
+    public async Task<bool> HandlePastedItem(string pastedText)
+    {
+        return await HandlePaste(pastedText);
+    }
+
+    [JSInvokable]
+    public async Task<bool> HandleFocusedItem(string pastedText)
+    {
+        return await HandlePaste(pastedText);
+    }
+
+    private Task<bool> HandlePaste(string pastedText)
+    {
+        var lines = pastedText.Split(
+            new[] { "\r\n", "\n", "\r" },
+            StringSplitOptions.RemoveEmptyEntries);
+
+        if (lines.Length < 3)
+            return Task.FromResult(false);
+
+        var possibleNames = lines
+            .Take(3)
+            .Select(x => x.Trim());
+
+        var matchingDrop = CurrentDrops.FirstOrDefault(drop =>
+            possibleNames.Any(name =>
+                string.Equals(drop.Item.Name, name,
+                    StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(drop.Item.DisplayName, name,
+                    StringComparison.OrdinalIgnoreCase)));
+
+        if (matchingDrop is null)
+            return Task.FromResult(false);
+
+        if (SelectedDrops.Add(matchingDrop.Key))
+            StateHasChanged();
+
+        return Task.FromResult(true);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_pasteModule is not null)
+        {
+            await _pasteModule.InvokeVoidAsync("detachPasteHandler");
+            await _pasteModule.DisposeAsync();
+        }
+
+        _dotNetReference?.Dispose();
+    }
+}

@@ -1,0 +1,114 @@
+﻿@using Models
+@implements IDisposable
+@inject IJSRuntime JS
+
+<div class="item-hover-container"
+     @onmouseenter="ShowTooltip"
+     @onmouseleave="HideTooltip"
+     @onmousemove="TrackMouse">
+
+    @ChildContent
+
+    @if (_showTooltip)
+    {
+        <div class="item-hover-tooltip"
+             style="@($"left: {_tooltipX}px; top: {_tooltipY}px;")">
+
+            <strong>@Item.Name</strong>
+
+            @if (Item.LevelRequirement > 0)
+            {
+                <div>Requires Level @Item.LevelRequirement</div>
+            }
+
+            @if (Item.ExplicitModifiers.Count > 0)
+            {
+                <ul>
+                    @foreach (var modifier in Item.ExplicitModifiers)
+                    {
+                        <li>@modifier</li>
+                    }
+                </ul>
+            }
+        </div>
+    }
+</div>
+
+<script src="js/tooltip.js"></script>
+
+@code {
+    [Parameter, EditorRequired]
+    public Item Item { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; } = default!;
+
+    private bool _showTooltip;
+    private double _mouseX;
+    private double _mouseY;
+    private double _tooltipX = -10000;
+    private double _tooltipY = -10000;
+
+    private CancellationTokenSource? _hoverCts;
+
+    private async Task ShowTooltip()
+    {
+        _hoverCts?.Cancel();
+        _hoverCts?.Dispose();
+        _hoverCts = new CancellationTokenSource();
+
+        try
+        {
+            //await Task.Delay(5, _hoverCts.Token);
+            _showTooltip = true;
+            UpdateTooltipPosition();
+        }
+        catch (TaskCanceledException)
+        {
+            // Pointer left before the delay elapsed.
+        }
+    }
+
+    private void TrackMouse(MouseEventArgs e)
+    {
+        _mouseX = e.ClientX;
+        _mouseY = e.ClientY;
+
+        if (_showTooltip)
+            UpdateTooltipPosition();
+    }
+
+    private async Task UpdateTooltipPosition()
+    {
+        var position = await JS.InvokeAsync<TooltipPosition>(
+            "itemTooltip.position",
+            _mouseX,
+            _mouseY,
+            320,
+            240);
+
+        _tooltipX = position.X;
+        _tooltipY = position.Y;
+    }
+
+    private sealed class TooltipPosition
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+    }
+
+    private double windowWidth;
+    private double windowHeight;
+
+    private void HideTooltip()
+    {
+        _hoverCts?.Cancel();
+        _showTooltip = false;
+    }
+
+    public void Dispose()
+    {
+        _hoverCts?.Cancel();
+        _hoverCts?.Dispose();
+    }
+}

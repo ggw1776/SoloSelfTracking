@@ -1,0 +1,561 @@
+﻿
+@page "/simulacrum"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Interfaces
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+@using SoloSelfTracking.Repositories
+@using SoloSelfTracking.Utilities
+@inject SimulacrumRecordRepository Repository
+@implements IPastable
+@inject IJSRuntime JS
+
+<PageTitle>Simulacrum Tracker</PageTitle>
+
+<h3>Simulacrum Tracker</h3>
+
+@if (!IsActive)
+{
+    <div class="card simulacrum-card mb-4">
+        <div class="card-header">
+            New Simulacrum
+        </div>
+
+        <div class="card-body">
+            <label class="form-label">Arena</label>
+
+            <select class="form-select mb-3" @bind="SelectedArena">
+                <option value="">Select an arena...</option>
+                @foreach (var arena in Arenas)
+                {
+                    <option value="@arena">@arena</option>
+                }
+            </select>
+
+            <button class="btn btn-primary"
+                    disabled="@string.IsNullOrEmpty(SelectedArena)"
+                    @onclick="StartSimulacrum">
+                Start Simulacrum
+            </button>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row g-3">
+
+        <!-- Main wave panel -->
+        <div class="col-lg-8">
+            <div class="card simulacrum-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0">Wave @CurrentWave / 15</h5>
+                        <small class="text-muted">@SelectedArena</small>
+                    </div>
+                    
+                    <div class="form-check form-switch">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               id="bossWaveOmni"
+                               @bind="CurrentWaveData.IsOmniphobiaWave" />
+                        <label class="form-check-label" for="bossWaveOmni">
+                            Omniphobia, Fear Manifest
+                        </label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               id="bossWaveKosis"
+                               @bind="CurrentWaveData.IsKosisWave" />
+                        <label class="form-check-label" for="bossWaveKosis">
+                            Kosis, The Revelation
+                        </label>
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+                    <!-- Wave navigation -->
+                    <div class="wave-navigation mb-4">
+                        @foreach (var wave in Waves)
+                        {
+                            <button type="button"
+                                    class="wave-button
+                                        @(wave.WaveNumber == CurrentWave ? "active" : "")
+                                        @(VisitedWaves.Contains(wave.WaveNumber) ? "visited" : "")
+                                        @(wave.IsBossWave ? "boss" : "")"
+                                    @onclick="() => SelectWave(wave.WaveNumber)">
+                                @wave.WaveNumber
+                            </button>
+                        }
+                    </div>
+                    <div>
+                        <PerformanceTracker @ref="_performanceTracker" @bind-ElapsedTime="_elapsedTime"
+                                            @bind-Deaths="_deaths" />
+                    </div>
+
+                    <hr />
+
+                    <h5>Record Unique Jewel</h5>
+
+                    <div class="mb-3">
+                        <label class="form-label">Jewel Type</label>
+
+                        <select class="form-select"
+                                @bind="SelectedJewelType">
+                            @foreach (var jewel in JewelTypes)
+                            {
+                                <option value="@jewel">@jewel</option>
+                            }
+                        </select>
+                    </div>
+
+                    <UniqueJewel
+                        Title="@SelectedJewelType"
+                        Options="@CurrentJewelOptions"
+                        SelectionLimit="@CurrentSelectionLimit"
+                        OnCreate="CreateUniqueDrop" />
+
+                    @if (CurrentWaveData.UniqueDrops.Count > 0)
+                    {
+                        <hr />
+
+                        <h5>Jewels Found This Wave</h5>
+
+                        @foreach (var drop in CurrentWaveData.UniqueDrops)
+                        {
+                            <div class="recorded-drop">
+                                <div>
+                                    <strong>@drop.JewelName</strong>
+                                    <div class="text-muted small">
+                                        @string.Join(", ", drop.Options)
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-sm btn-outline-danger"
+                                        @onclick="() => RemoveDrop(drop)">
+                                    Remove
+                                </button>
+                            </div>
+                        }
+                    }
+
+                    <hr />
+
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-secondary"
+                                disabled="@(CurrentWave == 1)"
+                                @onclick="PreviousWave">
+                            Previous Wave
+                        </button>
+
+                        @if (CurrentWave < 15)
+                        {
+                            <button class="btn btn-primary"
+                                    @onclick="NextWave">
+                                Next Wave
+                            </button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary"
+                                    @onclick="CompleteSimulacrum">
+                                Complete Simulacrum
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Running summary -->
+        <div class="col-lg-4">
+            <div class="card simulacrum-card">
+                <div class="card-header">
+                    <h5 class="mb-0">Unique Drops</h5>
+                </div>
+
+                <div class="card-body">
+                    @if (!Waves.SelectMany(x => x.UniqueDrops).Any())
+                    {
+                        <p class="text-muted">No unique jewels recorded yet.</p>
+                    }
+                    else
+                    {
+                        @foreach (var wave in Waves.Where(x => x.UniqueDrops.Any()))
+                        {
+                            <div class="drop-summary-wave">
+                                <div class="drop-summary-heading">
+                                    Wave @wave.WaveNumber
+                                    @if (wave.IsOmniphobiaWave)
+                                    {
+                                        <span class="badge bg-primary">Omniphobia</span>
+                                    }
+                                    @if (wave.IsKosisWave)
+                                    {
+                                        <span class="badge bg-primary">Kosis</span>
+                                    }
+                                </div>
+
+                                @foreach (var drop in wave.UniqueDrops)
+                                {
+                                    <div class="drop-summary-item">
+                                        <strong>@drop.JewelName</strong>
+                                        <small>@string.Join(", ", drop.Options)</small>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    }
+
+                    <hr />
+
+                    <div class="summary-stat">
+                        <span>Total Unique Jewels</span>
+                        <strong>@Waves.Sum(x => x.UniqueDrops.Count)</strong>
+                    </div>
+
+                    <div class="summary-stat">
+                        <span>Boss Waves</span>
+                        <strong>@Waves.Count(x => x.IsBossWave)</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Completed Simulacrums -->
+<div class="mt-4">
+    <h4>Completed Simulacrums</h4>
+
+    @if (CompletedSimulacrums.Count == 0)
+    {
+        <p class="text-muted">No completed Simulacrums yet.</p>
+    }
+    else
+    {
+        <div class="d-flex gap-2 align-items-center">
+            <div class="nav-item px-3">
+                <NavLink class="bi accordion" href="simulacrum-analysis">
+                    Analysis
+                </NavLink>
+            </div>
+        </div>
+        <br />
+        @foreach (var record in CompletedSimulacrums.OrderByDescending(x => x.Date))
+        {
+            <div class="card simulacrum-card mb-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <strong>@record.Arena</strong>
+                        <span class="text-muted">
+                            @record.Date.ToString("yyyy-MM-dd HH:mm")
+                        </span>
+                    </div>
+
+                    <div class="summary-stat mt-2">
+                        <span>Unique Jewels</span>
+                        <strong>@record.UniqueDrops.Count()</strong>
+                    </div>
+
+                    <div class="summary-stat">
+                        <span>Boss Waves</span>
+                        <strong>@record.Waves.Count(x => x.IsBossWave)</strong>
+                    </div>
+
+                    @foreach (var drop in record.UniqueDrops)
+                    {
+                        <div class="drop-summary-item">
+                            <strong>@drop.JewelName</strong>
+                            <small>
+                                Wave @drop.Wave — @string.Join(", ", drop.Options)
+                            </small>
+                        </div>
+                    }
+                    <div class="summary-stat">
+                        <span>Performance</span>
+                        <strong> @string.Format("Completed in {0}:{1}, {2} Deaths", record.ElapsedTime.Minutes.ToString("D2"), record.ElapsedTime.Seconds.ToString("D2"), record.Deaths)</strong>
+                    </div>
+
+                    <button type="button"
+                            class="btn btn-sm btn-outline-danger"
+                            @onclick="() => DeleteRecord(record.Id)">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    private TimeSpan _elapsedTime = TimeSpan.Zero;
+    private int _deaths;
+    private PerformanceTracker? _performanceTracker;
+    private const int TotalWaves = 15;
+
+    private bool IsActive;
+    private int CurrentWave = 0;
+
+    private string SelectedArena = string.Empty;
+    private string SelectedJewelType = "Voices";
+
+    private List<SimulacrumWave> Waves = new();
+    private HashSet<int> VisitedWaves = new();
+
+    // Temporary in-memory storage. Replace with repository later.
+    private List<SimulacrumRecord> CompletedSimulacrums = new();
+
+    private SimulacrumWave CurrentWaveData =>
+        Waves.First(x => x.WaveNumber == CurrentWave);
+
+    private readonly List<string> Arenas = new()
+    {
+        "Lunacy's Watch - Lioneye's Watch (Act 6)",
+        "The Bridge Enraptured - The Bridge Encampment (Act 7)",
+        "The Syndrome Encampment - The Sarn Encampment (Act 8)",
+        "Hysteriagate - Highgate (Act 9)",
+        "Oriath Delusion - Oriath Docks (Act 10)"
+    };
+
+    private readonly List<string> JewelTypes = new()
+    {
+        "Voices",
+        "Split Personality",
+        "Megalomaniac"
+    };
+
+    private List<string> CurrentJewelOptions => SelectedJewelType switch
+    {
+        "Voices" => Uniques.Voices.GetVariants(),
+        "Split Personality" => Uniques.SplitPersonality.GetVariants(),
+        "Megalomaniac" => Uniques.Megalomaniac.GetVariants(),
+        _ => new()
+    };
+
+    private int CurrentSelectionLimit => SelectedJewelType switch
+    {
+        "Voices" => 1,
+        "Split Personality" => 2,
+        "Megalomaniac" => 3,
+        _ => 1
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        CompletedSimulacrums = await Repository.GetAllAsync();
+        CurrentWave = 0;
+    }
+
+    private void StartSimulacrum()
+    {
+        Waves = Enumerable.Range(1, TotalWaves)
+            .Select(number => new SimulacrumWave
+            {
+                WaveNumber = number
+            })
+            .ToList();
+
+        CurrentWave = 1;
+        VisitedWaves = new HashSet<int> { 1 };
+        IsActive = true;
+    }
+
+    private void SelectWave(int wave)
+    {
+        CurrentWave = wave;
+        VisitedWaves.Add(wave);
+    }
+
+    private void PreviousWave()
+    {
+        if (CurrentWave > 1)
+            SelectWave(CurrentWave - 1);
+    }
+
+    private void NextWave()
+    {
+        if (CurrentWave < TotalWaves)
+            SelectWave(CurrentWave + 1);
+    }
+
+    private void CreateUniqueDrop(IReadOnlyList<string> options)
+    {
+        CurrentWaveData.UniqueDrops.Add(new SimulacrumUniqueDrop
+        {
+            JewelName = SelectedJewelType,
+            Options = options.ToList(),
+            Wave = CurrentWave
+        });
+
+        StateHasChanged();
+    }
+
+    private void RemoveDrop(SimulacrumUniqueDrop drop)
+    {
+        CurrentWaveData.UniqueDrops.Remove(drop);
+    }
+
+    private async Task CompleteSimulacrum()
+    {
+        var record = new SimulacrumRecord
+        {
+            Id = CompletedSimulacrums.Count > 0 ? CompletedSimulacrums.OrderBy(x => x.Id).Last().Id + 1 : 0,
+            Date = DateTime.Now,
+            Arena = SelectedArena,
+            Deaths = _deaths,
+            ElapsedTime = _elapsedTime,
+            Waves = Waves.Select(wave => new SimulacrumWave
+            {
+                WaveNumber = wave.WaveNumber,
+                IsOmniphobiaWave = wave.IsOmniphobiaWave,
+                IsKosisWave = wave.IsKosisWave,
+                UniqueDrops = wave.UniqueDrops.Select(drop =>
+                    new SimulacrumUniqueDrop
+                    {
+                        JewelName = drop.JewelName,
+                        Options = drop.Options.ToList(),
+                        Wave = drop.Wave
+                    }).ToList()
+            }).ToList()
+        };
+
+        await Repository.AddAsync(record);
+        CompletedSimulacrums.Add(record);
+
+        // Reset the active session.
+        IsActive = false;
+        CurrentWave = 1;
+        SelectedArena = string.Empty;
+        Waves.Clear();
+        VisitedWaves.Clear();
+        await _performanceTracker.StopTimer();
+    }
+
+
+    // Start IPastable
+    private IJSObjectReference? _pasteModule;
+    private DotNetObjectReference<SimulacrumTracker>? _dotNetReference;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _pasteModule = await JS.InvokeAsync<IJSObjectReference>(
+                "import", "./js/pastehelper.js");
+
+            _dotNetReference = DotNetObjectReference.Create(this);
+
+            await _pasteModule.InvokeVoidAsync(
+                "attachPasteHandler", _dotNetReference);
+            await _pasteModule.InvokeVoidAsync(
+                "attachFocusHandler", _dotNetReference);
+        }
+    }
+
+    [JSInvokable]
+    public async Task<bool> HandlePastedItem(string pastedText)
+    {
+        return await HandlePaste(pastedText);
+    }
+
+    // the same as paste right now but maybe we handle this differently later
+    [JSInvokable]
+    public async Task<bool> HandleFocusedItem(string pastedText)
+    {
+        //return await HandlePaste(pastedText); //maybe we don't want this for simus
+        return false;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_pasteModule is not null)
+        {
+            await _pasteModule.InvokeVoidAsync("detachPasteHandler");
+            await _pasteModule.DisposeAsync();
+        }
+
+        _dotNetReference?.Dispose();
+    }
+
+    private async Task<bool> HandlePaste(string pastedText)
+    {
+        if (!IsActive)
+            return false;
+
+        var lines = pastedText
+                    .Split(new[] { "\r\n", "\n", "\r" },
+                        StringSplitOptions.RemoveEmptyEntries);
+
+        if (lines.Length < 3)
+            return false;
+
+        var name = lines[2].Trim();
+
+        var item = ItemIndex.FindItem(name);
+
+        if (item is null)
+            return false;
+
+        if (item == Uniques.Voices)
+        {
+            SelectedJewelType = "Voices";
+            CreateUniqueDrop(new List<string>(){lines[11]});
+        }
+        else if (item == Uniques.Megalomaniac)
+        {
+            SelectedJewelType = "Megalomaniac";
+            var notableText1 = lines[11];
+            var notableText2 = lines[13];
+            var notableText3 = lines[15];
+
+            var notableIndex = NotableMods.GetVariants();
+
+            List<string> builder = new List<string>();
+
+            foreach (string mod in notableIndex)
+            {
+                var cleanedMod = mod.Split('}')[1];
+                if (notableText1.Contains(cleanedMod, StringComparison.OrdinalIgnoreCase))
+                    builder.Add(cleanedMod);
+                if (notableText2.Contains(cleanedMod, StringComparison.OrdinalIgnoreCase))
+                    builder.Add(cleanedMod);
+                if (notableText3.Contains(cleanedMod, StringComparison.OrdinalIgnoreCase))
+                    builder.Add(cleanedMod);
+            }
+
+            CreateUniqueDrop(builder);
+        }
+        else if (item == Uniques.SplitPersonality)
+        {
+            SelectedJewelType = "Split Personality";
+            var modText1 = lines[14];
+            var modText2 = lines[16];
+
+            var variants = item.GetVariants();
+
+            List<string> builder = new List<string>();
+            foreach (string mod in variants)
+            {
+                if (modText1.Contains(mod, StringComparison.OrdinalIgnoreCase))
+                    builder.Add(mod);
+                if (modText2.Contains(mod, StringComparison.OrdinalIgnoreCase))
+                    builder.Add(mod);
+            }
+
+            CreateUniqueDrop(builder);
+        }
+
+        return true;
+    }
+
+    // End IPastable
+
+    private async Task DeleteRecord(int id)
+    {
+        await Repository.DeleteAsync(id);
+        CompletedSimulacrums.Remove(CompletedSimulacrums.Where(x => x.Id == id).Single());
+    }
+}
