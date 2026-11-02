@@ -421,6 +421,9 @@ else
                     }).ToList()
             }).ToList()
         };
+        await _performanceTracker.StopTimer();
+        _elapsedTime = TimeSpan.Zero;
+        StateHasChanged();
 
         await Repository.AddAsync(record);
         CompletedSimulacrums.Add(record);
@@ -431,7 +434,6 @@ else
         SelectedArena = string.Empty;
         Waves.Clear();
         VisitedWaves.Clear();
-        await _performanceTracker.StopTimer();
     }
 
 
