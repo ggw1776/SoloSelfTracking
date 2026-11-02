@@ -47,6 +47,10 @@
 
                 @if (_dropdownOpen)
                 {
+                    <div class="dropdown-backdrop"
+                         @onclick="() => _dropdownOpen = false">
+                    </div>
+
                     <div class="jewel-option-list">
                         @if (!FilteredOptions.Any())
                         {
