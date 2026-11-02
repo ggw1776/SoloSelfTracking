@@ -94,6 +94,10 @@ else
                                 Boss
                             </button>
                         </th>
+                        @if (Maps.HasValue && Maps.Value == true)
+                        {
+                            <th>Average Map Stats</th>
+                        }
                         <th class="text-end">
                             <button class="btn btn-link p-0 text-reset"
                                     @onclick="() => SortBosses(nameof(BossStat.Kills))">
@@ -123,6 +127,17 @@ else
 
                         <tr @key="boss.Boss">
                             <td>@boss.Boss</td>
+                            @if (Maps.HasValue && Maps.Value == true)
+                            {
+                                @if (Nightmare.HasValue && Nightmare == true)
+                                {
+                                    <td title="IIQ/IIR/Pack Size/Maps/Scarabs/Currency/Div Cards">@string.Format("{0}%/{1}%/{2}%/{3}%/{4}%/{5}%/{6}%", boss.AverageMapQuantity.ToString("0.##"), boss.AverageMapRarity.ToString("0.##"), boss.AverageMapMonsterPackSize.ToString("0.##"), boss.AverageMapMaps.ToString("0.##"), boss.AverageMapScarabs.ToString("0.##"), boss.AverageMapCurrency.ToString("0.##"), boss.AverageMapDivCards.ToString("0.##"))</td>
+                                }
+                                else
+                                {
+                                    <td title="IIQ/IIR">@string.Format("{0}%/{1}%", boss.AverageMapQuantity.ToString("0.##"), boss.AverageMapRarity.ToString("0.##"))</td>
+                                }
+                            }
                             <td class="text-end">@boss.Kills</td>
                             <td class="text-end">
                                 @($"{(int)time.TotalMinutes:D2}:{time.Seconds:D2}")
@@ -212,6 +227,11 @@ else
 
     [Parameter]
     public string Title { get; set; } = "Boss Analysis";
+
+    [Parameter]
+    public bool? Maps { get; set; }
+    [Parameter]
+    public bool? Nightmare { get; set; }
 
     private List<KillRecord> History = new();
     private bool isLoading = true;
@@ -303,6 +323,7 @@ else
                 {
                     var kills = group.Count();
                     var drops = group.Sum(k => k.Drops.Count);
+                    var mapSetKills = group.Where(x => x.IsMapStatsSet()).Count();
 
                     return new BossStat
                     {
@@ -313,11 +334,39 @@ else
                             ? (float)drops / kills
                             : 0,
                         AverageDeaths = kills > 0
-                            ? (double)group.Sum(x => x.Deaths) / kills
+                            ? (double)group.Where(x => x.IsMapStatsSet()).Sum(x => x.Deaths) / kills
                             : 0,
                         AverageTime_Seconds = kills > 0
-                            ? (double)group.Sum(
+                            ? (double)group.Where(x => x.IsMapStatsSet()).Sum(
                                 x => x.ElapsedTime.TotalSeconds) / kills
+                            : 0,
+                        AverageMapQuantity = mapSetKills > 0
+                            ? (double)group.Where(x => x.IsMapStatsSet()).Sum(
+                                x => x.MapQuantity) / mapSetKills
+                            : 0,
+                        AverageMapRarity = mapSetKills > 0
+                            ? (double)group.Where(x => x.IsMapStatsSet()).Sum(
+                                x => x.MapRarity) / mapSetKills
+                            : 0,
+                        AverageMapMonsterPackSize = mapSetKills > 0
+                            ? (double)group.Where(x => x.IsMapStatsSet()).Sum(
+                                x => x.MapMonsterPackSize) / mapSetKills
+                            : 0,
+                        AverageMapMaps = mapSetKills > 0
+                            ? (double)group.Where(x => x.IsMapStatsSet()).Sum(
+                                x => x.MapMaps) / mapSetKills
+                            : 0,
+                        AverageMapCurrency = mapSetKills > 0
+                            ? (double)group.Where(x => x.IsMapStatsSet()).Sum(
+                                x => x.MapCurrency) / mapSetKills
+                            : 0,
+                        AverageMapScarabs = mapSetKills > 0
+                            ? (double)group.Where(x => x.IsMapStatsSet()).Sum(
+                                x => x.MapScarabs) / mapSetKills
+                            : 0,
+                        AverageMapDivCards = mapSetKills > 0
+                            ? (double)group.Where(x => x.IsMapStatsSet()).Sum(
+                                x => x.MapDivCards) / mapSetKills
                             : 0
                     };
                 });
@@ -402,5 +451,12 @@ else
         public float DropsPerKill { get; set; }
         public double AverageDeaths { get; set; }
         public double AverageTime_Seconds { get; set; }
+        public double AverageMapQuantity { get; set; }
+        public double AverageMapRarity { get; set; }
+        public double AverageMapMonsterPackSize { get; set; }
+        public double AverageMapScarabs { get; set; }
+        public double AverageMapMaps { get; set; }
+        public double AverageMapCurrency { get; set; }
+        public double AverageMapDivCards { get; set; }
     }
 }

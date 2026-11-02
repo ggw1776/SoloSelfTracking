@@ -1,0 +1,15 @@
+﻿@page "/invitation-analysis"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+
+<BossAnalysis Title="Invitation Analysis" Bosses="Bosses" Maps="true" />
+
+@code {
+    private static readonly List<string> Bosses = new()
+    {
+        "Exarch",
+        "Eater",
+        "Black Star",
+        "Infinite Hunger"
+    };
+}

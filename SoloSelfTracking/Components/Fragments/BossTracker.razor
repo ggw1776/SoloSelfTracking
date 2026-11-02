@@ -33,6 +33,60 @@
     <div class="card mb-4 p-3">
         <h4>Record @SelectedBoss Kill</h4>
 
+        @if (Maps.HasValue && Maps.Value == true)
+        {
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <div class="map-stat">
+                    <label for="mapQuantity">IIQ</label>
+                    <input id="mapQuantity"
+                           type="number"
+                           @bind="_mapQuantity" />
+                </div>
+
+                <div class="map-stat">
+                    <label for="mapRarity">IIR</label>
+                    <input id="mapRarity"
+                           type="number"
+                           @bind="_mapRarity" />
+                </div>
+
+                @if (NightmareMods.HasValue && NightmareMods == true)
+                {
+                    <div class="map-stat">
+                        <label for="mapPackSize">Monster Pack Size</label>
+                        <input id="mapPackSize"
+                               type="number"
+                               @bind="_mapPackSize" />
+                    </div>
+                    <div class="map-stat">
+                        <label for="mapMaps">More Maps</label>
+                        <input id="mapMaps"
+                               type="number"
+                               @bind="_mapMaps" />
+                    </div>
+                    <div class="map-stat">
+                        <label for="mapScarabs">More Scarabs</label>
+                        <input id="mapScarabs"
+                               type="number"
+                               @bind="_mapScarabs" />
+                    </div>
+                    <div class="map-stat">
+                        <label for="mapCurrency">More Currency</label>
+                        <input id="mapCurrency"
+                               type="number"
+                               @bind="_mapCurrency" />
+                    </div>
+
+                    <div class="map-stat">
+                        <label for="mapDivCards">More Divination Cards</label>
+                        <input id="mapDivCards"
+                               type="number"
+                               @bind="_mapDivCards" />
+                    </div>
+                }
+            </div>
+        }
+
         <div class="d-flex flex-wrap gap-2 mb-3">
             @foreach (var drop in CurrentDrops)
             {
@@ -57,7 +111,7 @@
                 </ItemHoverInfo>
             }
         </div>
-
+        
         <div class="d-flex flex-wrap gap-2">
             <PerformanceTracker @ref="_performanceTracker"
                                 @bind-ElapsedTime="_elapsedTime"
@@ -110,6 +164,10 @@ else
                 <tr>
                     <th>Date and Time</th>
                     <th>Boss</th>
+                    @if (Maps.HasValue && Maps.Value == true)
+                    {
+                        <th>Map Stats</th>
+                    }
                     <th>Drops</th>
                     <th>Time to Kill</th>
                     <th>Deaths</th>
@@ -126,6 +184,18 @@ else
                                 @kill.Boss
                             </span>
                         </td>
+
+                        @if (Maps.HasValue && Maps.Value == true)
+                        {
+                            @if(NightmareMods.HasValue && NightmareMods == true)
+                            {
+                                <td title="IIQ/IIR/Pack Size/Maps/Scarabs/Currency/Div Cards">@string.Format("{0}%/{1}%/{2}%/{3}%/{4}%/{5}%/{6}%", kill.MapQuantity, kill.MapRarity, kill.MapMonsterPackSize, kill.MapMaps, kill.MapScarabs, kill.MapCurrency, kill.MapDivCards)</td>
+                            }
+                            else
+                            {
+                                <td title="IIQ/IIR">@string.Format("{0}%/{1}%", kill.MapQuantity, kill.MapRarity)</td>
+                            }
+                        }
                         <td>
                             @if (kill.Drops.Count == 0)
                             {
@@ -186,6 +256,12 @@ else
     [Parameter]
     public string? AnalysisHref { get; set; }
 
+    [Parameter]
+    public bool? Maps { get; set; }
+
+    [Parameter]
+    public bool? NightmareMods { get; set; }
+
     private string SelectedBoss = string.Empty;
     private string HistoryFilter = "All";
 
@@ -197,6 +273,14 @@ else
     private TimeSpan _elapsedTime = TimeSpan.Zero;
     private int _deaths;
     private PerformanceTracker? _performanceTracker;
+
+    private int _mapQuantity = 0;
+    private int _mapRarity = 0;
+    private int _mapPackSize = 0;
+    private int _mapScarabs = 0;
+    private int _mapCurrency = 0;
+    private int _mapDivCards = 0;
+    private int _mapMaps = 0;
 
     private List<DropOption> CurrentDrops =>
         string.IsNullOrEmpty(SelectedBoss)
@@ -298,6 +382,16 @@ else
             Deaths = _deaths,
             ElapsedTime = _elapsedTime
         };
+        if (Maps.HasValue && Maps.Value == true)
+        {
+            record.MapQuantity = _mapQuantity;
+            record.MapRarity = _mapRarity;
+            record.MapMonsterPackSize = _mapPackSize;
+            record.MapMaps = _mapMaps;
+            record.MapScarabs = _mapScarabs;
+            record.MapCurrency = _mapCurrency;
+            record.MapDivCards = _mapDivCards;
+        }
 
         KillHistory.Add(record);
         await Repository.AddAsync(record);
@@ -374,18 +468,51 @@ else
             .Take(3)
             .Select(x => x.Trim());
 
-        var matchingDrop = CurrentDrops.FirstOrDefault(drop =>
+        var itemType = lines[0].Trim();
+
+        if (string.Equals(itemType, "Item Class: Maps") || string.Equals(itemType, "Item Class: Misc Map Items"))
+        {
+            int currentLineIndex = 5;
+            string currentLine = "";
+            ResetMapStats();
+            while (!string.Equals(currentLine, "--------"))
+            {
+                currentLine = lines[currentLineIndex];
+                if (_mapQuantity == 0)
+                    _mapQuantity = ParseMapData(currentLine, "Item Quantity");
+                if (_mapRarity == 0)
+                    _mapRarity = ParseMapData(currentLine, "Item Rarity");
+                if (_mapPackSize == 0)
+                    _mapPackSize = ParseMapData(currentLine, "Monster Pack Size");
+                if (_mapScarabs == 0)
+                    _mapScarabs = ParseMapData(currentLine, "More Scarabs");
+                if (_mapCurrency == 0)
+                    _mapCurrency = ParseMapData(currentLine, "More Currency");
+                if (_mapDivCards == 0)
+                    _mapDivCards = ParseMapData(currentLine, "More Divination Cards");
+                if (_mapMaps == 0)
+                    _mapMaps = ParseMapData(currentLine, "More Maps");
+                currentLineIndex++;
+            }
+
+            StateHasChanged();
+        }
+        else
+        {
+            var matchingDrop = CurrentDrops.FirstOrDefault(drop =>
             possibleNames.Any(name =>
                 string.Equals(drop.Item.Name, name,
-                    StringComparison.OrdinalIgnoreCase) ||
+            StringComparison.OrdinalIgnoreCase) ||
                 string.Equals(drop.Item.DisplayName, name,
-                    StringComparison.OrdinalIgnoreCase)));
+            StringComparison.OrdinalIgnoreCase)));
 
-        if (matchingDrop is null)
-            return Task.FromResult(false);
+            if (matchingDrop is null)
+                return Task.FromResult(false);
 
-        if (SelectedDrops.Add(matchingDrop.Key))
-            StateHasChanged();
+            if (SelectedDrops.Add(matchingDrop.Key))
+                StateHasChanged();
+        }
+
 
         return Task.FromResult(true);
     }
@@ -399,5 +526,24 @@ else
         }
 
         _dotNetReference?.Dispose();
+    }
+
+    private int ParseMapData(string line, string title)
+    {
+        if (line.Contains(title))
+            return int.Parse(line.Split(string.Format("{0}: +", title))[1].Split('%')[0]);
+
+        return 0;
+    }
+
+    private void ResetMapStats()
+    {
+        _mapQuantity = 0;
+        _mapRarity = 0;
+        _mapPackSize = 0;
+        _mapScarabs = 0;
+        _mapCurrency = 0;
+        _mapDivCards = 0;
+        _mapMaps = 0;
     }
 }
