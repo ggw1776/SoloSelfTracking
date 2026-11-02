@@ -26,7 +26,7 @@ Tracking modules for the following, roughly in this order
 * ~~Simulacrum~~
 * whatever new cool league mechanics pop up
 * Incursion
-* non-uber bosses
+* ~~non-uber bosses~~
 * heists
 * lab
 * wombgift tracking
