@@ -3,7 +3,12 @@
 <div class="performance-tracker">
     <div class="performance-tracker-stat">
         <span class="performance-tracker-label">ELAPSED TIME</span>
-        <span class="performance-tracker-value">@FormattedTime</span>
+        <input type="text"
+               class="performance-tracker-value"
+               value="@_editableTime"
+               @onchange="HandleTimeChanged"
+               @onfocus="() => _isEditingTime = true"
+               @onblur="HandleTimeBlur" />
 
         <div class="performance-tracker-controls">
             <button class="performance-button"
@@ -58,13 +63,21 @@
     private TimeSpan _elapsedBeforeStart;
     private bool IsRunning { get; set; }
 
+    private string _editableTime = "00:00:00";
+    private bool _isEditingTime;
+
     private string FormattedTime =>
         ElapsedTime.ToString(@"hh\:mm\:ss");
 
     protected override void OnParametersSet()
     {
         if (!IsRunning)
+        {
             _elapsedBeforeStart = ElapsedTime;
+
+            if (!_isEditingTime)
+                _editableTime = FormattedTime;
+        }
     }
 
     private async Task ToggleTimer()
@@ -97,6 +110,10 @@
                       (DateTime.UtcNow - _startedAt.Value);
 
         await UpdateElapsedTime(elapsed);
+
+        if (!_isEditingTime)
+            _editableTime = FormattedTime;
+
         StateHasChanged();
     }
 
@@ -150,5 +167,30 @@
     public void Dispose()
     {
         _timer?.Dispose();
+    }
+
+    private async Task HandleTimeChanged(ChangeEventArgs e)
+    {
+        var value = e.Value?.ToString();
+
+        if (TimeSpan.TryParse(value, out var elapsed) && elapsed >= TimeSpan.Zero)
+        {
+            _elapsedBeforeStart = elapsed;
+
+            if (IsRunning)
+            {
+                _startedAt = DateTime.UtcNow;
+            }
+
+            await UpdateElapsedTime(elapsed);
+        }
+
+        _editableTime = FormattedTime;
+    }
+
+    private void HandleTimeBlur(FocusEventArgs e)
+    {
+        _isEditingTime = false;
+        _editableTime = FormattedTime;
     }
 }
