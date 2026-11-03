@@ -1,0 +1,470 @@
+﻿@page "/incursion-tracking"
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Interfaces
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+@using SoloSelfTracking.Repositories
+@using SoloSelfTracking.Utilities
+@using static SoloSelfTracking.Models.IncursionRecord
+@rendermode InteractiveServer
+@implements IPastable
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+@inject IncursionRecordRepository Repository
+
+<PageTitle>Incursion Temple</PageTitle>
+
+<div class="temple-page">
+    <div class="temple-header">
+        <h3>Incursion Temple</h3>
+        <div class="temple-area-level">
+            <label for="areaLevel">AREA LEVEL</label>
+            <input id="areaLevel"
+                   type="number"
+                   min="1"
+                   max="100"
+                   @bind="AreaLevel" />
+        </div>
+    </div>
+
+    <div class="temple-section">
+        <div class="temple-section-header">
+            <h4>OPEN ROOMS</h4>
+            <button class="temple-button"
+                    @onclick="() => AddRoom(OpenRooms)">
+                + ADD ROOM
+            </button>
+        </div>
+
+        @if (OpenRooms.Count == 0)
+        {
+            <p class="temple-empty">No open rooms recorded.</p>
+        }
+
+        @foreach (var room in OpenRooms)
+        {
+            <div class="temple-room" @key="room">
+                <input class="temple-room-name"
+                       type="text"
+                       placeholder="Room name"
+                       @bind="room.Name" />
+
+                <div class="temple-tier">
+                    <label>Tier</label>
+                    <input type="number"
+                           min="1"
+                           max="3"
+                           @bind="room.Tier" />
+                </div>
+
+                <button class="temple-remove"
+                        title="Remove room"
+                        @onclick="() => RemoveRoom(OpenRooms, room)">
+                    ×
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="temple-section">
+        <div class="temple-section-header">
+            <h4>OBSTRUCTED ROOMS</h4>
+            <button class="temple-button"
+                    @onclick="() => AddRoom(ObstructedRooms)">
+                + ADD ROOM
+            </button>
+        </div>
+
+        @if (ObstructedRooms.Count == 0)
+        {
+            <p class="temple-empty">No obstructed rooms recorded.</p>
+        }
+
+        @foreach (var room in ObstructedRooms)
+        {
+            <div class="temple-room" @key="room">
+                <input class="temple-room-name"
+                       type="text"
+                       placeholder="Room name"
+                       @bind="room.Name" />
+
+                <div class="temple-tier">
+                    <label>Tier</label>
+                    <input type="number"
+                           min="1"
+                           max="3"
+                           @bind="room.Tier" />
+                </div>
+
+                <button class="temple-remove"
+                        title="Remove room"
+                        @onclick="() => RemoveRoom(ObstructedRooms, room)">
+                    ×
+                </button>
+            </div>
+        }
+    </div>
+
+    <BossTracker Title="Boss Tracker"
+                 Bosses="bosses"
+                 DropProvider="GetBossDrops"
+                 AnalysisHref="boss-analysis"
+                 IsSubPage="true"
+                 OnRecordKill="HandleRecordKill"
+                 @ref="_bossTracker" />
+
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+        <h4>History</h4>
+
+        <div class="d-flex gap-2 align-items-center">
+            <div class="nav-item px-3">
+                <NavLink class="bi accordion" href="incursion-analysis">
+                    Analysis
+                </NavLink>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Date and Time</th>
+                    <th>Drops</th>
+                    <th>Temple Time</th>
+                    <th>Deaths</th>
+                    <th>Open Rooms</th>
+                    <th>Obstructed Rooms</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var kill in TempleKillRecords)
+                {
+                    <tr @key="kill.Id">
+                        <td>@kill.Date.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                        <td>
+                            @if (kill.Drops.Count == 0)
+                            {
+                                <span class="text-muted">
+                                    No notable drops
+                                </span>
+                            }
+                            else
+                            {
+                                @foreach (var drop in kill.Drops)
+                                {
+                                    <span class="badge bg-secondary me-1 mb-1">
+                                        <ItemHoverInfo Item="ItemIndex.FindItem(drop.Drop)">
+                                            @drop.Drop
+                                            @if (drop.Count > 1)
+                                            {
+                                                <span>(@drop.Count)</span>
+                                            }
+                                        </ItemHoverInfo>
+                                    </span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary me-1 mb-1">
+                                @FormatDuration(kill.ElapsedTime)
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary me-1 mb-1">
+                                @kill.Deaths
+                            </span>
+                        </td>
+                        <td>
+                            @if (kill.OpenRooms.Count == 0)
+                            {
+                                <span class="text-muted">
+                                    No open rooms
+                                </span>
+                            }
+                            else
+                            {
+                                @foreach (var room in kill.OpenRooms)
+                                {
+                                    <span class="badge bg-secondary me-1 mb-1" title="@string.Format("Room Tier {0}", room.Tier)">
+                                        @string.Format("{0}", room.Name)
+                                    </span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @if (kill.ObstructedRooms.Count == 0)
+                            {
+                                <span class="text-muted">
+                                    No obstructed rooms
+                                </span>
+                            }
+                            else
+                            {
+                                @foreach (var room in kill.ObstructedRooms)
+                                {
+                                    <span class="badge bg-secondary me-1 mb-1" title="@string.Format("Room Tier {0}", room.Tier)">
+                                        @string.Format("{0}", room.Name)
+                                    </span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <button type="button"
+                                    class="btn btn-sm btn-outline-danger"
+                                    @onclick="() => DeleteKill(kill.Id)">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@code {
+    private string AreaLevel { get; set; } = string.Empty;
+    private int _nextKillId;
+
+    private List<TempleRoom> OpenRooms { get; set; } = new();
+    private List<TempleRoom> ObstructedRooms { get; set; } = new();
+
+    private BossTracker _bossTracker;
+
+    private enum RoomSection
+    {
+        None,
+        Open,
+        Obstructed
+    }
+
+    private List<IncursionRecord> TempleKillRecords = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        TempleKillRecords = await Repository.GetAllAsync();
+
+        _nextKillId = TempleKillRecords.Count > 0
+            ? TempleKillRecords.Max(x => x.Id) + 1
+            : 0;
+    }
+
+    private async Task HandleRecordKill(KillRecord killRecord)
+    {
+        if (OpenRooms.Any() || ObstructedRooms.Any())
+        {
+            var record = new IncursionRecord()
+            {
+                OpenRooms = OpenRooms,
+                ObstructedRooms = ObstructedRooms,
+                AreaLevel = int.Parse(AreaLevel),
+                Id = _nextKillId++
+            };
+            record.ApplyKillRecord(killRecord);
+
+            await Repository.AddAsync(record);
+
+            TempleKillRecords = await Repository.GetAllAsync();
+            _nextKillId = TempleKillRecords.Count > 0
+                ? TempleKillRecords.Max(x => x.Id) + 1
+                : 0;
+            OpenRooms.Clear();
+            ObstructedRooms.Clear();
+            AreaLevel = "";
+            _bossTracker.ResetTracker();
+            StateHasChanged();
+        }
+    }
+
+    private async Task DeleteKill(int id)
+    {
+        TempleKillRecords.RemoveAll(k => k.Id == id);
+        await Repository.DeleteAsync(id);
+    }
+
+    // Clipboard handling
+
+    private IJSObjectReference? _pasteModule;
+    private DotNetObjectReference<IncursionTracker>? _dotNetReference;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        _pasteModule = await JS.InvokeAsync<IJSObjectReference>(
+            "import", "./js/pastehelper.js");
+
+        _dotNetReference = DotNetObjectReference.Create(this);
+
+        await _pasteModule.InvokeVoidAsync(
+            "attachPasteHandler", _dotNetReference);
+
+        await _pasteModule.InvokeVoidAsync(
+            "attachFocusHandler", _dotNetReference);
+    }
+
+    [JSInvokable]
+    public async Task<bool> HandlePastedItem(string pastedText)
+    {
+        var result = HandlePaste(pastedText);
+
+        if (result)
+            await InvokeAsync(StateHasChanged);
+
+        return result;
+    }
+
+    [JSInvokable]
+    public async Task<bool> HandleFocusedItem(string pastedText)
+    {
+        var result = HandlePaste(pastedText);
+
+        if (result)
+            await InvokeAsync(StateHasChanged);
+
+        return result;
+    }
+
+    private bool HandlePaste(string pastedText)
+    {
+        if (string.IsNullOrWhiteSpace(pastedText))
+            return false;
+
+        if (!pastedText.Contains("Open Rooms:", StringComparison.OrdinalIgnoreCase) ||
+            !pastedText.Contains("Obstructed Rooms:", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        var newOpenRooms = new List<TempleRoom>();
+        var newObstructedRooms = new List<TempleRoom>();
+
+        var section = RoomSection.None;
+
+        foreach (var rawLine in pastedText.Split(
+                     new[] { '\r', '\n' },
+                     StringSplitOptions.RemoveEmptyEntries))
+        {
+            var line = rawLine.Trim();
+
+            if (line.StartsWith("Area Level:", StringComparison.OrdinalIgnoreCase))
+            {
+                AreaLevel = line["Area Level:".Length..].Trim();
+                continue;
+            }
+
+            if (line.Equals("Open Rooms:", StringComparison.OrdinalIgnoreCase))
+            {
+                section = RoomSection.Open;
+                continue;
+            }
+
+            if (line.Equals("Obstructed Rooms:", StringComparison.OrdinalIgnoreCase))
+            {
+                section = RoomSection.Obstructed;
+                continue;
+            }
+
+            if (section == RoomSection.None)
+                continue;
+
+            // Stop parsing when we reach the flavor text section.
+            if (line == "Apex of Atzoatl" ||
+                line.StartsWith('"') ||
+                line.StartsWith("Right click", StringComparison.OrdinalIgnoreCase) ||
+                line.StartsWith("Can be used", StringComparison.OrdinalIgnoreCase))
+            {
+                section = RoomSection.None;
+                continue;
+            }
+
+            // Ignore separator lines.
+            if (line.All(c => c == '-'))
+                continue;
+
+            var room = ParseRoom(line);
+
+            if (string.IsNullOrWhiteSpace(room.Name))
+                continue;
+
+            if (section == RoomSection.Open)
+                newOpenRooms.Add(room);
+            else if (section == RoomSection.Obstructed)
+                newObstructedRooms.Add(room);
+        }
+
+        OpenRooms = newOpenRooms;
+        ObstructedRooms = newObstructedRooms;
+
+        return true;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_pasteModule is not null)
+        {
+            await _pasteModule.InvokeVoidAsync("detachPasteHandler");
+            await _pasteModule.DisposeAsync();
+        }
+
+        _dotNetReference?.Dispose();
+    }
+
+    private static TempleRoom ParseRoom(string line)
+    {
+        var room = new TempleRoom();
+
+        var tierIndex = line.LastIndexOf(
+            " (Tier ",
+            StringComparison.OrdinalIgnoreCase);
+
+        if (tierIndex >= 0 && line.EndsWith(')'))
+        {
+            room.Name = line[..tierIndex].Trim();
+            room.Tier = int.Parse(line[(tierIndex + 7)..^1]);
+        }
+        else
+        {
+            room.Name = line;
+            room.Tier = 0;
+        }
+
+        return room;
+    }
+
+    private static void AddRoom(List<TempleRoom> rooms)
+    {
+        rooms.Add(new TempleRoom());
+    }
+
+    private static void RemoveRoom(
+        List<TempleRoom> rooms,
+        TempleRoom room)
+    {
+        rooms.Remove(room);
+    }
+
+    private readonly string[] bosses =
+    {
+        "Incursion"        
+    };
+
+    private List<BossDrop> GetBossDrops(string boss)
+    {
+        return boss switch
+        {
+            "Incursion" => BossDrops.Incursion,
+            _ => new List<BossDrop>()
+        };
+    }
+
+    private static string FormatDuration(TimeSpan duration)
+    {
+        return $"{(int)duration.TotalHours:D2}:{duration.Minutes:D2}:{duration.Seconds:D2}";
+    }
+}

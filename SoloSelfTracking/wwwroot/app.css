@@ -1056,3 +1056,103 @@ hr {
         width: 55px;
         text-align: center;
     }
+
+
+.temple-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 16px;
+}
+
+.temple-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+    .temple-header h3 {
+        margin: 0;
+    }
+
+.temple-area-level {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+    .temple-area-level label,
+    .temple-tier label {
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+
+    .temple-area-level input {
+        width: 65px;
+        text-align: center;
+    }
+
+.temple-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.temple-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--poe-border);
+    padding-bottom: 6px;
+}
+
+    .temple-section-header h4 {
+        margin: 0;
+    }
+
+.temple-room {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.temple-room-name {
+    width: 220px;
+    max-width: 50%;
+    flex: 0 1 220px;
+    min-width: 0;
+}
+
+.temple-tier {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+    .temple-tier input {
+        width: 55px;
+        text-align: center;
+    }
+
+.temple-button,
+.temple-remove {
+    cursor: pointer;
+}
+
+.temple-button {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+}
+
+.temple-remove {
+    width: 28px;
+    height: 28px;
+    font-size: 1.1rem;
+}
+
+.temple-empty {
+    opacity: 0.6;
+    font-size: 0.9rem;
+    margin: 4px 0;
+}

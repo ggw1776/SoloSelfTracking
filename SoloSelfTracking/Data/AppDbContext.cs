@@ -14,6 +14,7 @@ namespace SoloSelfTracking.Data
 
         public DbSet<KillRecord> KillRecords => Set<KillRecord>();
         public DbSet<SimulacrumRecord> SimulacrumRecords => Set<SimulacrumRecord>();
+        public DbSet<IncursionRecord> IncursionRecords => Set<IncursionRecord>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,6 +34,8 @@ namespace SoloSelfTracking.Data
 
             modelBuilder.Entity<KillRecord>(entity =>
             {
+                entity.HasDiscriminator<string>("RecordType");
+
                 entity.HasKey(x => x.Id);
 
                 entity.Property(x => x.Date)
@@ -69,6 +72,22 @@ namespace SoloSelfTracking.Data
                     .IsRequired(); 
                 
                 entity.Ignore(x => x.UniqueDrops);
+            });
+
+            modelBuilder.Entity<IncursionRecord>(entity =>
+            {
+                entity.Property(x => x.Date)
+                    .IsRequired();
+
+                entity.Property(x => x.Boss)
+                    .IsRequired();
+
+                entity.Property(x => x.Drops)
+                    .HasConversion(dropsConverter)
+                    .IsRequired();
+
+                entity.HasMany(x => x.OpenRooms).WithOne().OnDelete(DeleteBehavior.Cascade);
+                entity.HasMany(x => x.ObstructedRooms).WithOne().OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

@@ -589,5 +589,37 @@
             new(DivinationCards.SomethingDark, 1f),
             new(DivinationCards.TheEscape, 91f),
         ];
+
+        public readonly static List<BossDrop> Incursion =
+        [
+            new(Uniques.StringofServitude, 0f),
+            new(Uniques.TemperedFlesh, 0f),
+            new(Uniques.TemperedMind, 0f),
+            new(Uniques.TemperedSpirit, 0f),
+            new(Uniques.SoulCatcher, 0f),
+            new(Uniques.SacrificialHeart, 0f),
+            new(Uniques.Shadowstitch, 0f),
+            new(Uniques.ApepsSlumber, 0f),
+            new(Uniques.ArchitectsHand, 0f),
+            new(Uniques.CowardsChains, 0f),
+            new(Uniques.DanceoftheOffered, 0f),
+            new(Uniques.MaskoftheSpiritDrinker, 0f),
+            new(Uniques.StoryoftheVaal, 0f),
+            new(MiscItems.VialofDominance, 0f),
+            new(MiscItems.VialofSummoning, 0f),
+            new(MiscItems.VialofAwakening, 0f),
+            new(MiscItems.VialoftheRitual, 0f),
+            new(MiscItems.VialofFate, 0f),
+            new(MiscItems.VialofConsequence, 0f),
+            new(MiscItems.VialofTranscendence, 0f),
+            new(MiscItems.VialoftheGhost, 0f),
+            new(MiscItems.VialofSacrifice, 0f),
+            new(MiscItems.CitaqualotlBase, 0f),
+            new(MiscItems.GuatelitziBase, 0f),
+            new(MiscItems.MatatlBase, 0f),
+            new(MiscItems.PuhuarteBase, 0f),
+            new(MiscItems.TacatiBase, 0f),
+            new(MiscItems.XopecBase, 0f)
+        ];
     }
 }

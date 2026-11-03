@@ -34,5 +34,21 @@
         public static readonly MiscItem ZorathsEyeoftheInevitable = new("Zoraths Eye of the Inevitable");
         public static readonly MiscItem ZorathsEyeoftheEndless = new("Zoraths Eye of the Endless");
         public static readonly MiscItem FleshofXesht = new("Flesh of Xesht");
+
+        public static readonly MiscItem VialofDominance = new("Vial of Dominance");
+        public static readonly MiscItem VialofSummoning = new("Vial of Summoning");
+        public static readonly MiscItem VialofAwakening = new("Vial of Awakening");
+        public static readonly MiscItem VialoftheRitual = new("Vial of the Ritual");
+        public static readonly MiscItem VialofFate = new("Vial of Fate");
+        public static readonly MiscItem VialofConsequence = new("Vial of Consequence");
+        public static readonly MiscItem VialofTranscendence = new("Vial of Transcendence");
+        public static readonly MiscItem VialoftheGhost = new("Vial of the Ghost");
+        public static readonly MiscItem VialofSacrifice = new("Vial of Sacrifice");
+        public static readonly MiscItem CitaqualotlBase = new("Citaqualotl Base");
+        public static readonly MiscItem GuatelitziBase = new("Guatelitzi Base");
+        public static readonly MiscItem MatatlBase = new("Matatl Base");
+        public static readonly MiscItem PuhuarteBase = new("Puhuarte Base");
+        public static readonly MiscItem TacatiBase = new("Tacati Base");
+        public static readonly MiscItem XopecBase = new("Xopec Base");
     }
 }

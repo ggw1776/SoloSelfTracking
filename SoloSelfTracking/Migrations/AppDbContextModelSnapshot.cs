@@ -17,6 +17,34 @@ namespace SoloSelfTracking.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.13");
 
+            modelBuilder.Entity("SoloSelfTracking.Models.IncursionRecord+TempleRoom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("IncursionRecordId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("IncursionRecordId1")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Tier")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IncursionRecordId");
+
+                    b.HasIndex("IncursionRecordId1");
+
+                    b.ToTable("TempleRoom");
+                });
+
             modelBuilder.Entity("SoloSelfTracking.Models.KillRecord", b =>
                 {
                     b.Property<int>("Id")
@@ -61,9 +89,18 @@ namespace SoloSelfTracking.Migrations
                     b.Property<int>("MapScarabs")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("RecordType")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("KillRecords");
+
+                    b.HasDiscriminator<string>("RecordType").HasValue("KillRecord");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("SoloSelfTracking.Models.SimulacrumRecord", b =>
@@ -92,6 +129,36 @@ namespace SoloSelfTracking.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SimulacrumRecords");
+                });
+
+            modelBuilder.Entity("SoloSelfTracking.Models.IncursionRecord", b =>
+                {
+                    b.HasBaseType("SoloSelfTracking.Models.KillRecord");
+
+                    b.Property<int>("AreaLevel")
+                        .HasColumnType("INTEGER");
+
+                    b.HasDiscriminator().HasValue("IncursionRecord");
+                });
+
+            modelBuilder.Entity("SoloSelfTracking.Models.IncursionRecord+TempleRoom", b =>
+                {
+                    b.HasOne("SoloSelfTracking.Models.IncursionRecord", null)
+                        .WithMany("ObstructedRooms")
+                        .HasForeignKey("IncursionRecordId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SoloSelfTracking.Models.IncursionRecord", null)
+                        .WithMany("OpenRooms")
+                        .HasForeignKey("IncursionRecordId1")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SoloSelfTracking.Models.IncursionRecord", b =>
+                {
+                    b.Navigation("ObstructedRooms");
+
+                    b.Navigation("OpenRooms");
                 });
 #pragma warning restore 612, 618
         }

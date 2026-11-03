@@ -1,10 +1,11 @@
 # HOW TO INSTALL
+
 1. Download the lastest release.
 2. Unzip the release somewhere.
 3. Launch the app with SoloSelfTracking.exe
 4. Navigate to http://localhost:7730 in your browser.
 
-The database file is saved in your AppData\Local as tracking.db. If you wish to change to a different profile, change the database name in appsettings.json.
+The database file is saved in your AppData\\Local as tracking.db. If you wish to change to a different profile, change the database name in appsettings.json.
 To change the port, update the ServerPort value in appsettings.json. If you don't know what that means, don't mess with it.
 
 # WHAT DOES THIS EVEN DO
@@ -23,7 +24,8 @@ Existing tools are focused on trade and track things like div/hour. This tool wi
 
 # CURRENT FEATURES
 
-nightmare map tracking and tracking for many bosses (tbd make this actually descriptive later)
+nightmare map tracking and tracking for many bosses, incursions (tbd make this actually descriptive later)
+all pages support copy/paste for maps and drops. only simulacrum currently supports unid'd uniques.
 
 
 # PLANNED FEATURES
@@ -32,7 +34,7 @@ Tracking modules for the following, roughly in this order
 
 * ~~Simulacrum~~
 * whatever new cool league mechanics pop up
-* Incursion
+* ~~Incursion~~
 * ~~non-uber bosses~~
 * heists
 * lab
@@ -54,6 +56,7 @@ Improved copy/paste functionality, including screenshot parsing for extra quick 
 NO FUCK OFF
 
 # GGG TERMS OF SERVICE CONCERNS
+
 At time of writing, the app does not interact with the PoE Executable at all.
 There is an optional feature to read the Client.txt file, but it is opt-in only and has no additional functionality. GGG does not comment on what is allowed from a third-party tool perspective, but the app does not (and likely will not in the future) perform any actions that would violate ToS.
 
@@ -66,10 +69,13 @@ idk make a PR and I'll look at it
 A local LLM was leveraged for code formatting (e.g. EBaseType), some light linting, and CSS class creation. All mission-critical code was architected and written by a flesh-and-blood human. Contributors to this repository are encouraged to use LLM-generated code minimally and disclose LLM usage in pull requests.
 
 
+
 # CREDITS
 
 All Path of Exile related content, including item descriptions Copyright (c) Grinding Gear Games
 https://github.com/PathOfBuildingCommunity/PathOfBuilding/ - Unique item definitions
 
 https://favicon.io/favicon-generator/ - Favicon Designer
+
+https://game-icons.net/tags/skull.html - Icons
 

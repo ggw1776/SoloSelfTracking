@@ -10,23 +10,26 @@
 
 <PageTitle>@Title</PageTitle>
 
-<h1>@Title</h1>
+@if(Bosses.Count() > 1)
+{
+    <h1>@Title</h1>
 
-<div class="mb-4">
-    <ul class="nav nav-tabs flex-wrap">
-        @foreach (var boss in Bosses)
-        {
-            <li class="nav-item" @key="boss">
-                <button type="button"
-                        class="nav-link @(SelectedBoss == boss ? "active" : "")"
-                        aria-current="@(SelectedBoss == boss ? "page" : null)"
-                        @onclick="() => SelectBoss(boss)">
-                    @boss
-                </button>
-            </li>
-        }
-    </ul>
-</div>
+    <div class="mb-4">
+        <ul class="nav nav-tabs flex-wrap">
+            @foreach (var boss in Bosses)
+            {
+                <li class="nav-item" @key="boss">
+                    <button type="button"
+                            class="nav-link @(SelectedBoss == boss ? "active" : "")"
+                            aria-current="@(SelectedBoss == boss ? "page" : null)"
+                            @onclick="() => SelectBoss(boss)">
+                        @boss
+                    </button>
+                </li>
+            }
+        </ul>
+    </div>
+}
 
 @if (!string.IsNullOrEmpty(SelectedBoss))
 {
@@ -126,38 +129,43 @@
     </div>
 }
 
-<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
-    <h4>History</h4>
 
-    <div class="d-flex gap-2 align-items-center">
-        @if (!string.IsNullOrWhiteSpace(AnalysisHref))
-        {
-            <div class="nav-item px-3">
-                <NavLink class="bi accordion" href="@AnalysisHref">
-                    Analysis
-                </NavLink>
-            </div>
-        }
 
-        <label for="historyFilter">Show:</label>
-        <select id="historyFilter"
-                class="form-select"
-                @bind="HistoryFilter">
-            <option value="All">All bosses</option>
-            @foreach (var boss in Bosses)
-            {
-                <option value="@boss">@boss</option>
-            }
-        </select>
-    </div>
-</div>
-
-@if (!FilteredHistory.Any())
+@if (IsSubPage.HasValue && IsSubPage == true)
+{
+    
+}
+else if (!FilteredHistory.Any())
 {
     <p class="text-muted">No kills recorded for this selection.</p>
 }
 else
 {
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+        <h4>History</h4>
+
+        <div class="d-flex gap-2 align-items-center">
+            @if (!string.IsNullOrWhiteSpace(AnalysisHref))
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="bi accordion" href="@AnalysisHref">
+                        Analysis
+                    </NavLink>
+                </div>
+            }
+
+            <label for="historyFilter">Show:</label>
+            <select id="historyFilter"
+                    class="form-select"
+                    @bind="HistoryFilter">
+                <option value="All">All bosses</option>
+                @foreach (var boss in Bosses)
+                {
+                    <option value="@boss">@boss</option>
+                }
+            </select>
+        </div>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped align-middle">
             <thead>
@@ -261,6 +269,13 @@ else
 
     [Parameter]
     public bool? NightmareMods { get; set; }
+
+    [Parameter]
+    public bool? IsSubPage { get; set; }
+
+    [Parameter]
+    public EventCallback<KillRecord> OnRecordKill { get; set; }
+
 
     private string SelectedBoss = string.Empty;
     private string HistoryFilter = "All";
@@ -393,14 +408,27 @@ else
             record.MapDivCards = _mapDivCards;
         }
 
-        KillHistory.Add(record);
-        await Repository.AddAsync(record);
+        if (IsSubPage.HasValue && IsSubPage == true)
+        {
+            await OnRecordKill.InvokeAsync(record);
+            return;
+        }
+        else
+        {
+            KillHistory.Add(record);
+            await Repository.AddAsync(record);
+            ResetTracker();
+        }
+    }
 
+    public void ResetTracker()
+    {
         ResetMapStats();
         SelectedDrops.Clear();
         CurrentMultidropRecords.Clear();
         _elapsedTime = TimeSpan.Zero;
         _deaths = 0;
+        StateHasChanged();
     }
 
     private async Task DeleteKill(int id)
