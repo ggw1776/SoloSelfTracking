@@ -396,6 +396,7 @@ else
         KillHistory.Add(record);
         await Repository.AddAsync(record);
 
+        ResetMapStats();
         SelectedDrops.Clear();
         CurrentMultidropRecords.Clear();
         _elapsedTime = TimeSpan.Zero;
