@@ -50,5 +50,10 @@
         public static readonly MiscItem PuhuarteBase = new("Puhuarte Base");
         public static readonly MiscItem TacatiBase = new("Tacati Base");
         public static readonly MiscItem XopecBase = new("Xopec Base");
+
+        public static readonly MiscItem FragmentofKnowledge = new("Fragment of Knowledge");
+        public static readonly MiscItem FragmentofShape = new("Fragment of Shape");
+        public static readonly MiscItem FragmentofTerror = new("Fragment of Terror");
+        public static readonly MiscItem FragmentofEmptiness = new("Fragment of Emptiness");
     }
 }

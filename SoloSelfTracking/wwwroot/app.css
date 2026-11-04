@@ -1048,14 +1048,28 @@ hr {
 }
 
     .map-stat label {
+        color: #999;
         font-size: 0.8rem;
-        font-weight: bold;
+        font-weight: 600;
     }
 
     .map-stat input {
         width: 55px;
         text-align: center;
+        background: #151515;
+        color: #e0e0e0;
+        border: 1px solid #444;
+        border-radius: 4px;
+        padding: 6px 8px;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
+
+        .map-stat input:focus {
+            border-color: #8b6fc0;
+            box-shadow: 0 0 0 2px rgba(139, 111, 192, 0.2);
+        }
 
 
 .temple-page {
@@ -1082,16 +1096,29 @@ hr {
     gap: 8px;
 }
 
-    .temple-area-level label,
-    .temple-tier label {
+    .temple-area-level label {
+        color: #999;
         font-size: 0.8rem;
-        font-weight: bold;
+        font-weight: 600;
     }
 
     .temple-area-level input {
         width: 65px;
+        background: #151515;
+        color: #e0e0e0;
+        border: 1px solid #444;
+        border-radius: 4px;
+        padding: 6px 8px;
+        font-size: 0.9rem;
         text-align: center;
+        outline: none;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
+
+        .temple-area-level input:focus {
+            border-color: #8b6fc0;
+            box-shadow: 0 0 0 2px rgba(139, 111, 192, 0.2);
+        }
 
 .temple-section {
     display: flex;
@@ -1102,9 +1129,8 @@ hr {
 .temple-section-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--poe-border);
-    padding-bottom: 6px;
+    justify-content: flex-start;
+    margin-bottom: 10px;
 }
 
     .temple-section-header h4 {
@@ -1141,9 +1167,23 @@ hr {
 }
 
 .temple-button {
-    padding: 4px 10px;
+    padding: 7px 12px;
+    background: #252525;
+    color: #b89a6a;
+    border: 1px solid #555;
+    border-radius: 4px;
     font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    margin-left:20px;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
+    .temple-button:hover {
+        background: #2b2621;
+        color: #d1b574;
+        border-color: #b89a6a;
+    }
 
 .temple-remove {
     width: 28px;
@@ -1241,3 +1281,58 @@ hr {
         background: rgba(255, 80, 80, 0.1);
         border-color: rgba(255, 80, 80, 0.25);
     }
+
+.drop-search {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 240px;
+    margin-bottom: 12px;
+}
+
+.drop-search-input {
+    width: 100%;
+    background: #151515;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 7px 30px 7px 10px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+    .drop-search-input:focus {
+        border-color: #b89a6a;
+        box-shadow: 0 0 0 2px rgba(139, 111, 192, 0.2);
+    }
+
+    .drop-search-input::placeholder {
+        color: #666;
+    }
+
+.drop-search-clear {
+    position: absolute;
+    right: 7px;
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+    .drop-search-clear:hover {
+        color: #ff6b6b;
+    }
+
+.drop-search-match {
+    border-color: #b89a6a !important;
+    background-color: #2b2621 !important;
+    color: #d1b574 !important;
+    box-shadow: 0 0 0 1px rgba(139, 111, 192, 0.25);
+}
+
+.drop-search-dimmed {
+    opacity: 0.4;
+}
