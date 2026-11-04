@@ -164,12 +164,15 @@ else
                 <table class="table table-striped table-hover align-middle">
                     <thead>
                         <tr>
-                            <th>
-                                <button class="btn btn-link p-0 text-reset"
-                                        @onclick="() => SortDropRates(nameof(DropRateRow.Boss))">
-                                    Boss
-                                </button>
-                            </th>
+                            @if(Bosses.Count > 1)
+                            {
+                                <th>
+                                    <button class="btn btn-link p-0 text-reset"
+                                            @onclick="() => SortDropRates(nameof(DropRateRow.Boss))">
+                                        Boss
+                                    </button>
+                                </th>
+                            }
                             <th>
                                 <button class="btn btn-link p-0 text-reset"
                                         @onclick="() => SortDropRates(nameof(DropRateRow.Item))">
@@ -192,7 +195,10 @@ else
                         @foreach (var row in DropRateRows)
                         {
                             <tr @key="(row.Boss, row.Item)">
-                                <td>@row.Boss</td>
+                                @if (Bosses.Count > 1)
+                                {
+                                    <td>@row.Boss</td>
+                                }
                                 <td>
                                     <span class="badge bg-secondary me-1 mb-1">
                                         <ItemHoverInfo Item="ItemIndex.FindItem(row.Item)">

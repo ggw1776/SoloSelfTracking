@@ -464,7 +464,7 @@
     {
         return boss switch
         {
-            "Incursion" => BossDrops.Incursion,
+            "Incursion" => BossDrops.Incursion.Concat(BossDrops.Atziri).ToList(),
             _ => new List<BossDrop>()
         };
     }
