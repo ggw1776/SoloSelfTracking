@@ -81,5 +81,5 @@ https://github.com/PathOfBuildingCommunity/PathOfBuilding/ - Unique item definit
 
 https://favicon.io/favicon-generator/ - Favicon Designer
 
-https://game-icons.net/tags/skull.html - Icons
+https://game-icons.net/ - Icons
 
