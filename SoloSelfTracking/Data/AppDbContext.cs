@@ -15,6 +15,7 @@ namespace SoloSelfTracking.Data
         public DbSet<KillRecord> KillRecords => Set<KillRecord>();
         public DbSet<SimulacrumRecord> SimulacrumRecords => Set<SimulacrumRecord>();
         public DbSet<IncursionRecord> IncursionRecords => Set<IncursionRecord>();
+        public DbSet<Settings> Settings => Set<Settings>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -89,6 +90,9 @@ namespace SoloSelfTracking.Data
                 entity.HasMany(x => x.OpenRooms).WithOne().OnDelete(DeleteBehavior.Cascade);
                 entity.HasMany(x => x.ObstructedRooms).WithOne().OnDelete(DeleteBehavior.Cascade);
             });
+
+            modelBuilder.Entity<Settings>()
+                .HasKey(x => x.Id);
         }
     }
 }

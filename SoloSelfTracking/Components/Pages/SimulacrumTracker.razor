@@ -7,6 +7,7 @@
 @using SoloSelfTracking.Models.StaticClasses
 @using SoloSelfTracking.Repositories
 @using SoloSelfTracking.Utilities
+@inject SettingsRepository SettingsRepository
 @inject SimulacrumRecordRepository Repository
 @implements IPastable
 @inject IJSRuntime JS
@@ -308,6 +309,8 @@ else
     // Temporary in-memory storage. Replace with repository later.
     private List<SimulacrumRecord> CompletedSimulacrums = new();
 
+    private Settings UserSettings;
+
     private SimulacrumWave CurrentWaveData =>
         Waves.First(x => x.WaveNumber == CurrentWave);
 
@@ -346,6 +349,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         CompletedSimulacrums = await Repository.GetAllAsync();
+        UserSettings = await SettingsRepository.GetAsync();
         CurrentWave = 0;
     }
 
@@ -467,7 +471,8 @@ else
     [JSInvokable]
     public async Task<bool> HandleFocusedItem(string pastedText)
     {
-        //return await HandlePaste(pastedText); //maybe we don't want this for simus
+        if (UserSettings.EnablePasteOnFocusIn)
+            return await HandlePaste(pastedText);
         return false;
     }
 
@@ -571,6 +576,10 @@ else
             CreateUniqueDrop(new List<string>() { "Unidentified" });
         }
 
+        if (UserSettings.ClearClipboardOnValidPaste)
+        {
+            await JS.InvokeAsync<bool>("clipboardUtilities.clear");
+        }
         return true;
     }
 

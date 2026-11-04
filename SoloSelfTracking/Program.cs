@@ -24,6 +24,7 @@ builder.Services.AddDbContextFactory<AppDbContext>(options =>
 builder.Services.AddScoped<KillRecordRepository>();
 builder.Services.AddScoped<SimulacrumRecordRepository>();
 builder.Services.AddScoped<IncursionRecordRepository>();
+builder.Services.AddScoped<SettingsRepository>();
 
 
 
