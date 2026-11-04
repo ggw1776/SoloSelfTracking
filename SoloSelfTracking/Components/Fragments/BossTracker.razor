@@ -54,14 +54,15 @@
                            @bind="_mapRarity" />
                 </div>
 
+                <div class="map-stat">
+                    <label for="mapPackSize">Monster Pack Size</label>
+                    <input id="mapPackSize"
+                           type="number"
+                           @bind="_mapPackSize" />
+                </div>
+
                 @if (NightmareMods.HasValue && NightmareMods == true)
                 {
-                    <div class="map-stat">
-                        <label for="mapPackSize">Monster Pack Size</label>
-                        <input id="mapPackSize"
-                               type="number"
-                               @bind="_mapPackSize" />
-                    </div>
                     <div class="map-stat">
                         <label for="mapMaps">More Maps</label>
                         <input id="mapMaps"
@@ -231,7 +232,7 @@ else
                             }
                             else
                             {
-                                <td title="IIQ/IIR">@string.Format("{0}%/{1}%", kill.MapQuantity, kill.MapRarity)</td>
+                                <td title="IIQ/IIR">@string.Format("{0}%/{1}%/{2}", kill.MapQuantity, kill.MapRarity, kill.MapMonsterPackSize)</td>
                             }
                         }
                         <td>
