@@ -51,6 +51,7 @@ Tracking modules for the following, roughly in this order
 * sanctum (if I must)
 * delve
 * vestigial uniques
+* syndicate tracker
 
 Improved copy/paste functionality, including screenshot parsing for extra quick extraction using ethical machine learning algorithms TRUST
 
