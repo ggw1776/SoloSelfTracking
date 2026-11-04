@@ -61,28 +61,6 @@
             </div>
         </div>
 
-        <div class="settings-section">
-            <h5>Application</h5>
-
-            <div class="setting-row">
-                <div class="setting-info">
-                    <label for="enableIframing">Enable iframing</label>
-                    <p>
-                        Allow the application to be embedded in an iframe. (doesn't work right now)
-                    </p>
-                </div>
-
-                <label class="setting-switch">
-                    <input id="enableIframing"
-                           type="checkbox"
-                           checked="@StoredSettings.EnableIframing"
-                           @onchange="e => UpdateSetting(
-                               nameof(StoredSettings.EnableIframing), e)" />
-                           <span class="setting-slider"></span>
-                       </label>
-            </div>
-        </div>
-
         <div class="settings-save-status">
             @if (IsSaving)
             {
