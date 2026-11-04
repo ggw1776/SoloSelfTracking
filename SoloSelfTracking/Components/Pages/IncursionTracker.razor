@@ -38,7 +38,7 @@
 
         @if (OpenRooms.Count == 0)
         {
-            <p class="temple-empty">No open rooms recorded.</p>
+            <p class="temple-empty">No open rooms recorded. Paste a temple chronicle to load rooms.</p>
         }
 
         @foreach (var room in OpenRooms)
@@ -56,6 +56,11 @@
                            max="3"
                            @bind="room.Tier" />
                 </div>
+
+                @if (RoomHasUnique(room))
+                {
+                    <span class="badge bg-secondary me-1 mb-1">Chests may contain unique!</span>
+                }
 
                 <button class="temple-remove"
                         title="Remove room"
@@ -77,7 +82,7 @@
 
         @if (ObstructedRooms.Count == 0)
         {
-            <p class="temple-empty">No obstructed rooms recorded.</p>
+            <p class="temple-empty">No obstructed rooms recorded. Paste a temple chronicle to load rooms.</p>
         }
 
         @foreach (var room in ObstructedRooms)
@@ -336,7 +341,7 @@
         if (string.IsNullOrWhiteSpace(pastedText))
             return false;
 
-        if (!pastedText.Contains("Open Rooms:", StringComparison.OrdinalIgnoreCase) ||
+        if (!pastedText.Contains("Open Rooms:", StringComparison.OrdinalIgnoreCase) &&
             !pastedText.Contains("Obstructed Rooms:", StringComparison.OrdinalIgnoreCase))
         {
             return false;
@@ -467,5 +472,15 @@
     private static string FormatDuration(TimeSpan duration)
     {
         return $"{(int)duration.TotalHours:D2}:{duration.Minutes:D2}:{duration.Seconds:D2}";
+    }
+
+    private bool RoomHasUnique(TempleRoom room)
+    {
+        List<string> RoomsWithUnique = new List<string>() { "Toxic Grove", "Defense Research Lab", "Hybridisation Chamber", "Conduit of Lightning", "Sanctum of Immortality", "Crucible of Flame" };
+        if (RoomsWithUnique.Where(x => string.Equals(x, room.Name, StringComparison.InvariantCultureIgnoreCase)).Any())
+        {
+            return true;
+        }
+        return false;
     }
 }
