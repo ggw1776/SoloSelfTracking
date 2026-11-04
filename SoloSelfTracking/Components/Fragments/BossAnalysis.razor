@@ -13,7 +13,7 @@
 }
 else if (History.Count == 0)
 {
-    <p class="text-muted">No kill records available for analysis.</p>
+    <p class="text-muted">No @Verb records available for analysis.</p>
 }
 else
 {
@@ -25,23 +25,26 @@ else
         ? kills.Max(k => k.Date)
         : (DateTime?)null;
 
-    <div class="mb-3">
-        <label class="form-label">Boss filter</label>
-        <select class="form-select" style="max-width: 300px"
-                @bind="selectedBoss">
-            <option value="All bosses">All bosses</option>
-            @foreach (var boss in BossOptions)
-            {
-                <option value="@boss">@boss</option>
-            }
-        </select>
-    </div>
+    @if(Bosses.Count > 1)
+    {
+        <div class="mb-3">
+            <label class="form-label">Boss filter</label>
+            <select class="form-select" style="max-width: 300px"
+                    @bind="selectedBoss">
+                <option value="All bosses">All bosses</option>
+                @foreach (var boss in BossOptions)
+                {
+                    <option value="@boss">@boss</option>
+                }
+            </select>
+        </div>
+    }
 
     <div class="row g-3 mb-4">
         <div class="col-6 col-xl-3">
             <div class="card h-100">
                 <div class="card-body">
-                    <div class="text-muted small">Total kills</div>
+                    <div class="text-muted small">Total @VerbPlural</div>
                     <h3>@totalKills</h3>
                 </div>
             </div>
@@ -59,20 +62,7 @@ else
         <div class="col-6 col-xl-3">
             <div class="card h-100">
                 <div class="card-body">
-                    <div class="text-muted small">Kills per drop</div>
-                    <h3>
-                        @(totalDrops > 0
-                            ? (totalKills / (double)totalDrops).ToString("0.##")
-                            : "N/A")
-                    </h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-6 col-xl-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="text-muted small">Most recent kill</div>
+                    <div class="text-muted small">Most recent @Verb</div>
                     <h3>
                         @(mostRecentKill?.ToString("g") ?? "N/A")
                     </h3>
@@ -81,80 +71,83 @@ else
         </div>
     </div>
 
-    <section class="mb-5">
-        <h4>Boss Stats</h4>
+    @if (Bosses.Count > 1)
+    {
+        <section class="mb-5">
+            <h4>Boss Stats</h4>
 
-        <div class="table-responsive">
-            <table class="table table-striped table-hover align-middle">
-                <thead>
-                    <tr>
-                        <th>
-                            <button class="btn btn-link p-0 text-reset"
-                                    @onclick="() => SortBosses(nameof(BossStat.Boss))">
-                                Boss
-                            </button>
-                        </th>
-                        @if (Maps.HasValue && Maps.Value == true)
-                        {
-                            <th>Average Map Stats</th>
-                        }
-                        <th class="text-end">
-                            <button class="btn btn-link p-0 text-reset"
-                                    @onclick="() => SortBosses(nameof(BossStat.Kills))">
-                                Kills
-                            </button>
-                        </th>
-                        <th class="text-end">Average Time</th>
-                        <th class="text-end">Average Deaths</th>
-                        <th class="text-end">
-                            <button class="btn btn-link p-0 text-reset"
-                                    @onclick="() => SortBosses(nameof(BossStat.Drops))">
-                                Drops
-                            </button>
-                        </th>
-                        <th class="text-end">
-                            <button class="btn btn-link p-0 text-reset"
-                                    @onclick="() => SortBosses(nameof(BossStat.DropsPerKill))">
-                                Drops per kill
-                            </button>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var boss in BossStats)
-                    {
-                        var time = TimeSpan.FromSeconds(boss.AverageTime_Seconds);
-
-                        <tr @key="boss.Boss">
-                            <td>@boss.Boss</td>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>
+                                <button class="btn btn-link p-0 text-reset"
+                                        @onclick="() => SortBosses(nameof(BossStat.Boss))">
+                                    Boss
+                                </button>
+                            </th>
                             @if (Maps.HasValue && Maps.Value == true)
                             {
-                                @if (Nightmare.HasValue && Nightmare == true)
-                                {
-                                    <td title="IIQ/IIR/Pack Size/Maps/Scarabs/Currency/Div Cards">@string.Format("{0}%/{1}%/{2}%/{3}%/{4}%/{5}%/{6}%", boss.AverageMapQuantity.ToString("0.##"), boss.AverageMapRarity.ToString("0.##"), boss.AverageMapMonsterPackSize.ToString("0.##"), boss.AverageMapMaps.ToString("0.##"), boss.AverageMapScarabs.ToString("0.##"), boss.AverageMapCurrency.ToString("0.##"), boss.AverageMapDivCards.ToString("0.##"))</td>
-                                }
-                                else
-                                {
-                                    <td title="IIQ/IIR">@string.Format("{0}%/{1}%", boss.AverageMapQuantity.ToString("0.##"), boss.AverageMapRarity.ToString("0.##"))</td>
-                                }
+                                <th>Average Map Stats</th>
                             }
-                            <td class="text-end">@boss.Kills</td>
-                            <td class="text-end">
-                                @($"{(int)time.TotalMinutes:D2}:{time.Seconds:D2}")
-                            </td>
-                            <td class="text-end">
-                                @boss.AverageDeaths.ToString("0.##")
-                            </td>
-                            <td class="text-end">@boss.Drops</td>
-                            <td class="text-end">
-                                @boss.DropsPerKill.ToString("0.##")
-                            </td>
+                            <th class="text-end">
+                                <button class="btn btn-link p-0 text-reset"
+                                        @onclick="() => SortBosses(nameof(BossStat.Kills))">
+                                    Kills
+                                </button>
+                            </th>
+                            <th class="text-end">Average Time</th>
+                            <th class="text-end">Average Deaths</th>
+                            <th class="text-end">
+                                <button class="btn btn-link p-0 text-reset"
+                                        @onclick="() => SortBosses(nameof(BossStat.Drops))">
+                                    Drops
+                                </button>
+                            </th>
+                            <th class="text-end">
+                                <button class="btn btn-link p-0 text-reset"
+                                        @onclick="() => SortBosses(nameof(BossStat.DropsPerKill))">
+                                    Drops per kill
+                                </button>
+                            </th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </section>
+                    </thead>
+                    <tbody>
+                        @foreach (var boss in BossStats)
+                        {
+                            var time = TimeSpan.FromSeconds(boss.AverageTime_Seconds);
+
+                            <tr @key="boss.Boss">
+                                <td>@boss.Boss</td>
+                                @if (Maps.HasValue && Maps.Value == true)
+                                {
+                                    @if (Nightmare.HasValue && Nightmare == true)
+                                    {
+                                        <td title="IIQ/IIR/Pack Size/Maps/Scarabs/Currency/Div Cards">@string.Format("{0}%/{1}%/{2}%/{3}%/{4}%/{5}%/{6}%", boss.AverageMapQuantity.ToString("0.##"), boss.AverageMapRarity.ToString("0.##"), boss.AverageMapMonsterPackSize.ToString("0.##"), boss.AverageMapMaps.ToString("0.##"), boss.AverageMapScarabs.ToString("0.##"), boss.AverageMapCurrency.ToString("0.##"), boss.AverageMapDivCards.ToString("0.##"))</td>
+                                    }
+                                    else
+                                    {
+                                        <td title="IIQ/IIR">@string.Format("{0}%/{1}%", boss.AverageMapQuantity.ToString("0.##"), boss.AverageMapRarity.ToString("0.##"))</td>
+                                    }
+                                }
+                                <td class="text-end">@boss.Kills</td>
+                                <td class="text-end">
+                                    @($"{(int)time.TotalMinutes:D2}:{time.Seconds:D2}")
+                                </td>
+                                <td class="text-end">
+                                    @boss.AverageDeaths.ToString("0.##")
+                                </td>
+                                <td class="text-end">@boss.Drops</td>
+                                <td class="text-end">
+                                    @boss.DropsPerKill.ToString("0.##")
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    }
 
     <section class="mb-5">
         <h4>Drop-rate analysis</h4>
@@ -183,9 +176,9 @@ else
                                     Item
                                 </button>
                             </th>
-                            <th class="text-end">Boss kills</th>
+                            <th class="text-end">@Verb Count</th>
                             <th class="text-end">Drop count</th>
-                            <th class="text-end">Kills with drop</th>
+                            <th class="text-end">@VerbPlural with drop</th>
                             <th class="text-end">
                                 <button class="btn btn-link p-0 text-reset"
                                         @onclick="() => SortDropRates(nameof(DropRateRow.Rate))">
@@ -232,6 +225,12 @@ else
     public bool? Maps { get; set; }
     [Parameter]
     public bool? Nightmare { get; set; }
+
+    [Parameter]
+    public string Verb { get; set; } = "Kill";
+
+    [Parameter]
+    public string VerbPlural { get; set; } = "Kills";
 
     private List<KillRecord> History = new();
     private bool isLoading = true;
@@ -324,6 +323,7 @@ else
                     var kills = group.Count();
                     var drops = group.Sum(k => k.Drops.Count);
                     var mapSetKills = group.Where(x => x.IsMapStatsSet()).Count();
+                    var timeSetKills = group.Where(x => x.ElapsedTime != TimeSpan.Zero).Count();
 
                     return new BossStat
                     {
@@ -334,11 +334,11 @@ else
                             ? (float)drops / kills
                             : 0,
                         AverageDeaths = kills > 0
-                            ? (double)group.Where(x => x.IsMapStatsSet()).Sum(x => x.Deaths) / kills
+                            ? (double)group.Sum(x => x.Deaths) / kills
                             : 0,
                         AverageTime_Seconds = kills > 0
-                            ? (double)group.Sum(
-                                x => x.ElapsedTime.TotalSeconds) / kills
+                            ? (double)group.Where(x => x.ElapsedTime != TimeSpan.Zero).Sum(
+                                x => x.ElapsedTime.TotalSeconds) / timeSetKills
                             : 0,
                         AverageMapQuantity = mapSetKills > 0
                             ? (double)group.Where(x => x.IsMapStatsSet()).Sum(

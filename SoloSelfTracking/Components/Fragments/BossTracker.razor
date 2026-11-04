@@ -34,7 +34,7 @@
 @if (!string.IsNullOrEmpty(SelectedBoss))
 {
     <div class="card mb-4 p-3">
-        <h4>Record @SelectedBoss Kill</h4>
+        <h4>Record @SelectedBoss @Verb</h4>
 
         @if (Maps.HasValue && Maps.Value == true)
         {
@@ -123,7 +123,7 @@
             <button type="button"
                     class="btn btn-primary"
                     @onclick="RecordKill">
-                Record Kill
+                Record @Verb
             </button>
         </div>
     </div>
@@ -137,7 +137,7 @@
 }
 else if (!FilteredHistory.Any())
 {
-    <p class="text-muted">No kills recorded for this selection.</p>
+    <p class="text-muted">No @Verb recorded for this selection.</p>
 }
 else
 {
@@ -177,7 +177,7 @@ else
                         <th>Map Stats</th>
                     }
                     <th>Drops</th>
-                    <th>Time to Kill</th>
+                    <th>Time</th>
                     <th>Deaths</th>
                     <th></th>
                 </tr>
@@ -275,6 +275,9 @@ else
 
     [Parameter]
     public EventCallback<KillRecord> OnRecordKill { get; set; }
+
+    [Parameter]
+    public string Verb { get; set; } = "Kill";
 
 
     private string SelectedBoss = string.Empty;

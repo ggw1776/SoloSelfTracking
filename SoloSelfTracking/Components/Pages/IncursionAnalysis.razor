@@ -1,0 +1,147 @@
+﻿@page "/incursion-analysis"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Repositories
+@inject IncursionRecordRepository Repository
+
+<BossAnalysis Title="Incursion Analysis" Bosses="Bosses" Verb="Temple" VerbPlural="Temples" />
+
+@if (isLoading)
+{
+}
+else
+{
+    <section class="mb-5">
+        <h4>Room analysis</h4>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Room</th>
+                        <th>Tier</th>
+                        <th class="text-end">Room Appearances</th>
+                        <th class="text-end">Open Room Count</th>
+                        <th class="text-end">Open Room Overall Rate</th>
+                        <th class="text-end">Obstructed Room Count</th>
+                        <th class="text-end">Obstructed Overall Rate</th>
+                        <th class="text-end">Missing Count</th>
+                        <th class="text-end">Missing Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var room in IncursionAnalysisRecords)
+                    {
+                        <tr>
+                            <td>@room.RoomName</td>
+                            <td class="text-end">@room.RoomTier</td>
+                            <td class="text-end">@room.RoomAppearances</td>
+                            <td class="text-end">@room.OpenRoomCount</td>
+                            <td class="text-end">@room.OpenRoomOverallRate.ToString("F1")%</td>
+                            <td class="text-end">@room.ObstructedRoomCount</td>
+                            <td class="text-end">@room.ObstructedOverallRate.ToString("F1")%</td>
+                            <td class="text-end">@room.MissingCount</td>
+                            <td class="text-end">@room.MissingRate.ToString("F1")%</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+}
+
+
+@code {
+    private static readonly List<string> Bosses = new()
+    {
+        "Incursion"
+    };
+
+    private List<IncursionAnalysisRecord> IncursionAnalysisRecords = new();
+    private List<IncursionRecord> History = new();
+    private bool isLoading = true;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            History = (await Repository.GetAllAsync()).ToList();
+            GenerateRoomStatistics();
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void GenerateRoomStatistics()
+    {
+        IncursionAnalysisRecords.Clear();
+
+        int totalRecords = History.Count;
+
+        if (totalRecords == 0)
+            return;
+
+        var roomNames = History
+            .SelectMany(r => r.OpenRooms.Concat(r.ObstructedRooms))
+            .Select(r => r.Name)
+            .Distinct(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var name in roomNames)
+        {
+            int openCount = History.Count(r =>
+                r.OpenRooms.Any(room =>
+                    string.Equals(room.Name, name,
+                        StringComparison.OrdinalIgnoreCase)));
+
+            int obstructedCount = History.Count(r =>
+                r.ObstructedRooms.Any(room =>
+                    string.Equals(room.Name, name,
+                        StringComparison.OrdinalIgnoreCase)));
+
+            int missingCount = totalRecords - openCount - obstructedCount;
+
+            IncursionAnalysisRecords.Add(new IncursionAnalysisRecord
+            {
+                RoomName = name,
+                RoomTier = History.SelectMany(r => r.OpenRooms.Concat(r.ObstructedRooms)).Where(x => x.Name == name).First().Tier,
+                RoomAppearances = openCount + obstructedCount,
+
+                OpenRoomCount = openCount,
+                OpenRoomOverallRate = (double)openCount / totalRecords * 100,
+
+                ObstructedRoomCount = obstructedCount,
+                ObstructedOverallRate = (double)obstructedCount / totalRecords * 100,
+
+                MissingCount = missingCount,
+                MissingRate = (double)missingCount / totalRecords * 100
+            });
+        }
+
+        IncursionAnalysisRecords = IncursionAnalysisRecords
+            .OrderByDescending(x => x.RoomAppearances)
+            .ThenBy(x => x.RoomName)
+            .ToList();
+    }
+
+
+    public class IncursionAnalysisRecord
+    {
+        public string RoomName { get; set; } = string.Empty;
+        public int RoomTier { get; set; }
+
+        public int RoomAppearances { get; set; }
+
+        public int OpenRoomCount { get; set; }
+        public double OpenRoomOverallRate { get; set; }
+
+        public int ObstructedRoomCount { get; set; }
+        public double ObstructedOverallRate { get; set; }
+
+        public int MissingCount { get; set; }
+        public double MissingRate { get; set; }
+    }
+}
