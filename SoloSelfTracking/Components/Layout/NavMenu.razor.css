@@ -64,6 +64,9 @@
 .bi-nightmare-fill-nav-menu {
     background-image: url('../../img/radioactive.svg');
 }
+.bi-settings-fill-nav-menu {
+    background-image: url('../../img/cog.svg');
+}
 
 .nav-item {
     font-size: 0.9rem;
