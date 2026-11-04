@@ -55,3 +55,16 @@ export function detachPasteHandler() {
     pasteHandler = null;
     focusHandler = null;
 }
+
+window.clipboardUtilities = {
+    clear: async function () {
+        try {
+            await navigator.clipboard.writeText("Cleared by SoloSelfTracking");
+            return true;
+        }
+        catch (error) {
+            console.error("Failed to clear clipboard:", error);
+            return false;
+        }
+    }
+};

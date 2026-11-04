@@ -6,6 +6,7 @@
 @implements IPastable
 @implements IAsyncDisposable
 @inject KillRecordRepository Repository
+@inject SettingsRepository UserSettingsRepository
 @inject IJSRuntime JS
 
 <PageTitle>@Title</PageTitle>
@@ -332,6 +333,8 @@ else
     private int _mapDivCards = 0;
     private int _mapMaps = 0;
 
+    Settings UserSettings;
+
     private List<DropOption> CurrentDrops =>
         string.IsNullOrEmpty(SelectedBoss)
             ? new()
@@ -363,6 +366,8 @@ else
         _nextKillId = completeHistory.Count > 0
             ? completeHistory.Max(x => x.Id) + 1
             : 0;
+
+        UserSettings = await UserSettingsRepository.GetAsync();
     }
 
     private void SelectBoss(string boss)
@@ -516,17 +521,19 @@ else
     [JSInvokable]
     public async Task<bool> HandleFocusedItem(string pastedText)
     {
-        return await HandlePaste(pastedText);
+        if (UserSettings.EnablePasteOnFocusIn)
+            return await HandlePaste(pastedText);
+        return false;
     }
 
-    private Task<bool> HandlePaste(string pastedText)
+    private async Task<bool> HandlePaste(string pastedText)
     {
         var lines = pastedText.Split(
             new[] { "\r\n", "\n", "\r" },
             StringSplitOptions.RemoveEmptyEntries);
 
         if (lines.Length < 3)
-            return Task.FromResult(false);
+            return false;
 
         var possibleNames = lines
             .Take(3)
@@ -571,14 +578,17 @@ else
             StringComparison.OrdinalIgnoreCase)));
 
             if (matchingDrop is null)
-                return Task.FromResult(false);
+                return false;
 
             if (SelectedDrops.Add(matchingDrop.Key))
                 StateHasChanged();
         }
 
-
-        return Task.FromResult(true);
+        if (UserSettings.ClearClipboardOnValidPaste)
+        {
+            await JS.InvokeAsync<bool>("clipboardUtilities.clear");
+        }
+        return true;
     }
 
     public async ValueTask DisposeAsync()

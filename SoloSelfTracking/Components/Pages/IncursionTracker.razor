@@ -11,6 +11,7 @@
 @implements IAsyncDisposable
 @inject IJSRuntime JS
 @inject IncursionRecordRepository Repository
+@inject SettingsRepository SettingsRepository
 
 <PageTitle>Incursion Temple</PageTitle>
 
@@ -257,11 +258,13 @@
     }
 
     private List<IncursionRecord> TempleKillRecords = new();
+    private Settings UserSettings;
 
 
     protected override async Task OnInitializedAsync()
     {
         TempleKillRecords = await Repository.GetAllAsync();
+        UserSettings = await SettingsRepository.GetAsync();
 
         _nextKillId = TempleKillRecords.Count > 0
             ? TempleKillRecords.Max(x => x.Id) + 1
@@ -326,7 +329,7 @@
     [JSInvokable]
     public async Task<bool> HandlePastedItem(string pastedText)
     {
-        var result = HandlePaste(pastedText);
+        var result = await HandlePaste(pastedText);
 
         if (result)
             await InvokeAsync(StateHasChanged);
@@ -337,15 +340,18 @@
     [JSInvokable]
     public async Task<bool> HandleFocusedItem(string pastedText)
     {
-        var result = HandlePaste(pastedText);
-
-        if (result)
-            await InvokeAsync(StateHasChanged);
+        var result = false;
+        if (UserSettings.EnablePasteOnFocusIn)
+        {
+            result = await HandlePaste(pastedText);
+            if (result)
+                await InvokeAsync(StateHasChanged);
+        }
 
         return result;
     }
 
-    private bool HandlePaste(string pastedText)
+    private async Task<bool> HandlePaste(string pastedText)
     {
         if (string.IsNullOrWhiteSpace(pastedText))
             return false;
@@ -415,6 +421,11 @@
 
         OpenRooms = newOpenRooms;
         ObstructedRooms = newObstructedRooms;
+
+        if (UserSettings.ClearClipboardOnValidPaste)
+        {
+            await JS.InvokeAsync<bool>("clipboardUtilities.clear");
+        }
 
         return true;
     }

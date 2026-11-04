@@ -103,6 +103,26 @@ namespace SoloSelfTracking.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("SoloSelfTracking.Models.Settings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("ClearClipboardOnValidPaste")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableIframing")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnablePasteOnFocusIn")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Settings");
+                });
+
             modelBuilder.Entity("SoloSelfTracking.Models.SimulacrumRecord", b =>
                 {
                     b.Property<int>("Id")

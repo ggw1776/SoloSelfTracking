@@ -1,0 +1,147 @@
+﻿@page "/settings"
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Repositories
+@rendermode InteractiveServer
+@inject SettingsRepository SettingsRepository
+
+<PageTitle>Settings</PageTitle>
+
+<div class="settings-page">
+    <h3>Settings</h3>
+    <p class="settings-description">
+        Configure application behavior and preferences.
+    </p>
+
+    @if (StoredSettings == null)
+    {
+        <p>Loading settings...</p>
+    }
+    else
+    {
+        <div class="settings-section">
+            <h5>Clipboard</h5>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="pasteOnFocus">Enable Paste on Focus-In</label>
+                    <p>
+                        Automatically trigger paste handling when the tab receives focus (note: your browser may prompt you for this permission as well).
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="pasteOnFocus"
+                           type="checkbox"
+                           checked="@StoredSettings.EnablePasteOnFocusIn"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnablePasteOnFocusIn), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="clearClipboard">
+                        Clear Clipboard After Valid Paste
+                    </label>
+                    <p>
+                        Clear clipboard contents after successfully processing
+                        a valid paste.
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="clearClipboard"
+                           type="checkbox"
+                           checked="@StoredSettings.ClearClipboardOnValidPaste"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.ClearClipboardOnValidPaste), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h5>Application</h5>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="enableIframing">Enable iframing</label>
+                    <p>
+                        Allow the application to be embedded in an iframe. (doesn't work right now)
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="enableIframing"
+                           type="checkbox"
+                           checked="@StoredSettings.EnableIframing"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnableIframing), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
+        </div>
+
+        <div class="settings-save-status">
+            @if (IsSaving)
+            {
+                <span>Saving...</span>
+            }
+            else if (HasSaved)
+            {
+                <span>Settings saved.</span>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private Settings? StoredSettings;
+    private bool IsSaving;
+    private bool HasSaved;
+
+    protected override async Task OnInitializedAsync()
+    {
+        StoredSettings = await SettingsRepository.GetAsync();
+    }
+
+    private async Task UpdateSetting(string settingName, ChangeEventArgs args)
+    {
+        if (StoredSettings == null)
+            return;
+
+        bool value = args.Value is bool enabled && enabled;
+
+        switch (settingName)
+        {
+            case nameof(StoredSettings.EnablePasteOnFocusIn):
+                StoredSettings.EnablePasteOnFocusIn = value;
+                break;
+
+            case nameof(StoredSettings.ClearClipboardOnValidPaste):
+                StoredSettings.ClearClipboardOnValidPaste = value;
+                break;
+
+            case nameof(StoredSettings.EnableIframing):
+                StoredSettings.EnableIframing = value;
+                break;
+
+            default:
+                return;
+        }
+
+        IsSaving = true;
+        HasSaved = false;
+
+        try
+        {
+            await SettingsRepository.SaveAsync(StoredSettings);
+            HasSaved = true;
+        }
+        finally
+        {
+            IsSaving = false;
+        }
+    }
+}
