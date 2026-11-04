@@ -53,7 +53,7 @@ else
         <div class="col-6 col-xl-3">
             <div class="card h-100">
                 <div class="card-body">
-                    <div class="text-muted small">Drops</div>
+                    <div class="text-muted small">Total Drops</div>
                     <h3>@totalDrops</h3>
                 </div>
             </div>
@@ -179,9 +179,7 @@ else
                                     Item
                                 </button>
                             </th>
-                            <th class="text-end">@Verb Count</th>
                             <th class="text-end">Drop count</th>
-                            <th class="text-end">@VerbPlural with drop</th>
                             <th class="text-end">
                                 <button class="btn btn-link p-0 text-reset"
                                         @onclick="() => SortDropRates(nameof(DropRateRow.Rate))">
@@ -206,9 +204,7 @@ else
                                         </ItemHoverInfo>
                                     </span>
                                 </td>
-                                <td class="text-end">@row.BossKills</td>
                                 <td class="text-end">@row.DropCount</td>
-                                <td class="text-end">@row.KillsWithDrop</td>
                                 <td class="text-end">@row.Rate.ToString("P2")</td>
                                 <td class="text-end">@row.ReportedRate%</td>
                             </tr>
