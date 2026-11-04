@@ -27,7 +27,9 @@
             new(MiscItems.CosmicReliquaryKey, 1f),
             new(Gems.VoidstormSupport, 10f),
             new(Currencies.ShapersExaltedOrb, 13f),
-            new(Currencies.OrbOfDominance, 3f)
+            new(Currencies.OrbOfDominance, 3f),
+            new(MiscItems.FragmentofKnowledge, 50f),
+            new(MiscItems.FragmentofShape, 50f),
         ];
 
         public readonly static List<BossDrop> UberUberElder =
@@ -194,7 +196,8 @@
             new(Uniques.MalachaisMark, 5f),
             new(Gems.UnholyTrinitySupport, 5f),
             new(MiscItems.AwakeningFragment, 0f, true),
-            new(MiscItems.RealityFragment, 0f, true)
+            new(MiscItems.RealityFragment, 0f, true),
+            new(DivinationCards.TheVoid, 0f, true)
         ];
 
         public readonly static List<BossDrop> Citadel =
@@ -202,7 +205,8 @@
             new(Uniques.Manastorm, 5f),
             new(Gems.CastOnWardBreakSupport, 5f),
             new(MiscItems.CosmicFragment, 0f, true),
-            new(MiscItems.SynthesisingFragment, 0f, true)
+            new(MiscItems.SynthesisingFragment, 0f, true),
+            new(DivinationCards.TheVoid, 0f, true)
         ];
 
         public readonly static List<BossDrop> Fortress =
@@ -210,7 +214,8 @@
             new(Uniques.YokeOfSuffering, 5f),
             new(Gems.OverloadedIntensitySupport, 5f),
             new(MiscItems.DecayingFragment, 0f, true),
-            new(MiscItems.SynthesisingFragment, 0f, true)
+            new(MiscItems.SynthesisingFragment, 0f, true),
+            new(DivinationCards.TheVoid, 0f, true)
         ];
 
         public readonly static List<BossDrop> Sanctuary =
@@ -221,7 +226,8 @@
             new(Gems.PactOfLycia, 1f),
             new(MiscItems.LonelyFragment, 0f, true),
             new(MiscItems.TraumaticFragment, 0f, true),
-            new(MiscItems.ReverentFragment, 0f, true)
+            new(MiscItems.ReverentFragment, 0f, true),
+            new(DivinationCards.TheVoid, 0f, true)
         ];
 
         public readonly static List<BossDrop> Ziggaurat =
@@ -229,7 +235,8 @@
             new(Uniques.Wraithlord, 5f),
             new(Gems.CommunionSupport, 5f),
             new(MiscItems.BlazingFragment, 0f, true),
-            new(MiscItems.DevouringFragment, 0f, true)
+            new(MiscItems.DevouringFragment, 0f, true),
+            new(DivinationCards.TheVoid, 0f, true)
         ];
 
         public readonly static List<BossDrop> Shaper =
@@ -240,7 +247,9 @@
             new(Uniques.DyingSun, 3f),
             new(Gems.VoidstormSupport, 10f),
             new(Currencies.ShapersExaltedOrb, 13f, true),
-            new(Currencies.OrbOfDominance, 3f)
+            new(Currencies.OrbOfDominance, 3f),
+            new(MiscItems.FragmentofKnowledge, 50f),
+            new(MiscItems.FragmentofShape, 50f),
         ];
 
         public readonly static List<BossDrop> Elder =
@@ -259,7 +268,9 @@
             new(Gems.EldrichBlasphemySupport, 10f),
             new(Currencies.OrbOfDominance, 2f),
             new(Currencies.EldersExaltedOrb, 12f),
-            new(DivinationCards.VoidOfTheElements, 0.5f)
+            new(DivinationCards.VoidOfTheElements, 0.5f),
+            new(MiscItems.FragmentofTerror, 50f),
+            new(MiscItems.FragmentofEmptiness, 50f),
         ];
         public readonly static List<BossDrop> Cortex =
         [

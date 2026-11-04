@@ -90,25 +90,54 @@
             </div>
         }
 
+        <div class="drop-search">
+            <input type="text"
+                   class="drop-search-input"
+                   placeholder="Search drops..."
+                   @bind="DropSearch"
+                   @bind:event="oninput" />
+
+            @if (!string.IsNullOrWhiteSpace(DropSearch))
+            {
+                <button class="drop-search-clear"
+                        type="button"
+                        @onclick="() => DropSearch = string.Empty">
+                    ×
+                </button>
+            }
+        </div>
+
         <div class="d-flex flex-wrap gap-2 mb-3">
             @foreach (var drop in CurrentDrops)
             {
+                var isSelected = SelectedDrops.Contains(drop.Key);
+                var isMatch = !string.IsNullOrWhiteSpace(DropSearch) &&
+                    drop.Item.DisplayName.Contains(
+                        DropSearch,
+                        StringComparison.OrdinalIgnoreCase);
                 <ItemHoverInfo Item="drop.Item">
                     <button type="button"
-                            class="btn @(SelectedDrops.Contains(drop.Key)
+                            class="btn @(isSelected
                                 ? "btn-success"
-                                : "btn-outline-secondary")"
+                                : "btn-outline-secondary")
+                        @(isMatch ? "drop-search-match" : "")
+                        @(!string.IsNullOrWhiteSpace(DropSearch) && !isMatch ? "drop-search-dimmed" : "")"
                             @onclick="() => ToggleDrop(drop)"
                             @oncontextmenu="() => DecrementDrop(drop)"
                             @oncontextmenu:preventDefault>
                         @drop.Item.DisplayName
-                        @if (SelectedDrops.Contains(drop.Key) && !drop.IsMultiple)
+
+                        @if (isSelected && !drop.IsMultiple)
                         {
                             <span> ✓</span>
                         }
-                        else if (SelectedDrops.Contains(drop.Key) && drop.IsMultiple)
+                        else if (isSelected && drop.IsMultiple)
                         {
-                            <span> &nbsp (@CurrentMultidropRecords.Where(x => string.Equals(x, drop.Key)).Count()) </span>
+                            <span>
+                                &nbsp (@CurrentMultidropRecords
+                                .Where(x => string.Equals(x, drop.Key))
+                                .Count())
+                            </span>
                         }
                     </button>
                 </ItemHoverInfo>
@@ -278,10 +307,13 @@ else
 
     [Parameter]
     public string Verb { get; set; } = "Kill";
+    [Parameter]
+    public string VerbPlural { get; set; } = "Kills";
 
 
     private string SelectedBoss = string.Empty;
     private string HistoryFilter = "All";
+    private string DropSearch = string.Empty;
 
     private int _nextKillId;
     private HashSet<string> SelectedDrops = new();
