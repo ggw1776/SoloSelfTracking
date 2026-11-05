@@ -32,6 +32,10 @@
         </ul>
     </div>
 }
+else if (ShowSoloTitle)
+{
+    <h1>@Title</h1>
+}
 
 @if (!string.IsNullOrEmpty(SelectedBoss))
 {
@@ -151,7 +155,8 @@
         <div class="d-flex flex-wrap gap-2">
             <PerformanceTracker @ref="_performanceTracker"
                                 @bind-ElapsedTime="_elapsedTime"
-                                @bind-Deaths="_deaths" />
+                                @bind-Deaths="_deaths"
+                                OnePortal="OnePortal"/>
 
             <button type="button"
                     class="btn btn-primary"
@@ -204,14 +209,20 @@ else
             <thead>
                 <tr>
                     <th>Date and Time</th>
-                    <th>Boss</th>
+                    @if(Bosses.Count > 1)
+                    {
+                        <th>Boss</th>
+                    }
                     @if (Maps.HasValue && Maps.Value == true)
                     {
                         <th>Map Stats</th>
                     }
                     <th>Drops</th>
                     <th>Time</th>
-                    <th>Deaths</th>
+                    @if (!OnePortal)
+                    {
+                        <th>Deaths</th>
+                    }
                     <th></th>
                 </tr>
             </thead>
@@ -220,11 +231,14 @@ else
                 {
                     <tr @key="kill.Id">
                         <td>@kill.Date.ToString("yyyy-MM-dd HH:mm:ss")</td>
-                        <td>
-                            <span class="badge bg-primary">
-                                @kill.Boss
-                            </span>
-                        </td>
+                        @if(Bosses.Count > 1)
+                        {
+                            <td>
+                                <span class="badge bg-primary">
+                                    @kill.Boss
+                                </span>
+                            </td>
+                        }
 
                         @if (Maps.HasValue && Maps.Value == true)
                         {
@@ -265,11 +279,14 @@ else
                                 @FormatDuration(kill.ElapsedTime)
                             </span>
                         </td>
-                        <td>
-                            <span class="badge bg-secondary me-1 mb-1">
-                                @kill.Deaths
-                            </span>
-                        </td>
+                        @if(!OnePortal)
+                        {
+                            <td>
+                                <span class="badge bg-secondary me-1 mb-1">
+                                    @kill.Deaths
+                                </span>
+                            </td>
+                        }
                         <td>
                             <button type="button"
                                     class="btn btn-sm btn-outline-danger"
@@ -314,7 +331,12 @@ else
     [Parameter]
     public string VerbPlural { get; set; } = "Kills";
     [Parameter]
-    public string NavigationPrefix { get; set; }
+    public string NavigationPrefix { get; set; } = "";
+
+    [Parameter]
+    public bool OnePortal { get; set; } = false;
+    [Parameter]
+    public bool ShowSoloTitle { get; set; } = false;
 
 
     private string SelectedBoss = string.Empty;

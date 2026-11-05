@@ -1328,5 +1328,17 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Unique Megalomaniac = new("Megalomaniac", EItemType.MediumClusterJewel) { ImplicitModifiers = { "Adds 4 Passive Skills", "Added small passive skills grant nothing" }, ExplicitModifiers = NotableMods.GetVariants() };
 
         public static readonly Unique ForbiddenShako = new("Forbidden Shako", EItemType.GreatCrown);
+
+        public static readonly Unique TheHourOfDivinity = new ("The Hour Of Divinity", EItemType.CenserRelic);
+        public static readonly Unique TheNightLamp = new ("The Night Lamp", EItemType.UrnRelic);
+        public static readonly Unique TheBloodOfInnocence = new ("The Blood Of Innocence", EItemType.CenserRelic);
+        public static readonly Unique TheFirstCrest = new ("The First Crest", EItemType.CofferRelic);
+        public static readonly Unique TheChainsOfCastigation = new ("The Chains Of Castigation", EItemType.ProcessionalRelic);
+        public static readonly Unique TheBrokenCenser = new ("The Broken Censer", EItemType.TomeRelic);
+        public static readonly Unique TheGildedChalice = new ("The Gilded Chalice", EItemType.ProcessionalRelic);
+        public static readonly Unique ThePowerAndthePromise = new ("The Power and the Promise", EItemType.TomeRelic);
+        public static readonly Unique TheSecondSacrament = new ("The Second Sacrament", EItemType.CandlestickRelic);
+        public static readonly Unique TheOriginalScripture = new ("The Original Scripture", EItemType.PapyrusRelic);
+        public static readonly Unique BalanceOfTerror = new ("Balance Of Terror", EItemType.CobaltJewel); //todo variations
     }
 }

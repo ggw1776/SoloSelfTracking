@@ -1,0 +1,12 @@
+﻿@page "/sanctum-analysis"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+
+<BossAnalysis Title="Sanctum Analysis" Bosses="Bosses" Verb="Run" VerbPlural="Runs" />
+
+@code {
+    private static readonly List<string> Bosses = new()
+    {
+        "Sanctum"
+    };
+}

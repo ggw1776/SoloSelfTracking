@@ -401,6 +401,13 @@
         JaggedMaul,
         Piledriver,
         ImperialMaul,
-        DreadMaul
+        DreadMaul,
+        CenserRelic,
+        UrnRelic,
+        CofferRelic,
+        ProcessionalRelic,
+        TomeRelic,
+        CandlestickRelic,
+        PapyrusRelic
     }
 }
