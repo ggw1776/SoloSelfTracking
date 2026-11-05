@@ -67,6 +67,9 @@
 .bi-settings-fill-nav-menu {
     background-image: url('../../img/cog.svg');
 }
+.bi-anomaly-fill-nav-menu {
+    background-image: url('../../img/perspective-dice-six-faces-random.svg');
+}
 
 .nav-item {
     font-size: 0.9rem;
