@@ -630,7 +630,16 @@
             new(MiscItems.MatatlBase, 0f),
             new(MiscItems.PuhuarteBase, 0f),
             new(MiscItems.TacatiBase, 0f),
-            new(MiscItems.XopecBase, 0f)
+            new(MiscItems.XopecBase, 0f),
+            //copy of atziri's stuff...
+            new(Uniques.AtzirisPromise, 48f),
+            new(Uniques.TriumvirateAuthority, 18f),
+            new(Uniques.AtzirisStep, 15f),
+            new(Uniques.DoryanisInvitation, 15f),
+            new(Uniques.DoryanisCatalyst, 3f),
+            new(Uniques.PledgeofHands, 0.5f),
+            new(DivinationCards.ThePriceOfDevotion, 0.1f),
+            new(new EquipmentItem( "Sacrificial Garb", Enumerations.EItemType.SacrificialGarb, Enumerations.EItemRarity.Normal), 15f)
         ];
     }
 }
