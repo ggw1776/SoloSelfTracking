@@ -1,0 +1,30 @@
+﻿@page "/sanctum"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+
+<BossTracker Title="Sanctum Tracker"
+             Bosses="bosses"
+             DropProvider="GetBossDrops"
+             AnalysisHref="sanctum-analysis"
+             Verb="Run"
+             VerbPlural="Runs"
+             OnePortal="true"
+             ShowSoloTitle="true"/>
+
+@code {
+    private readonly string[] bosses =
+    {
+        "Sanctum"
+    };
+
+    private List<BossDrop> GetBossDrops(string boss)
+    {
+        return boss switch
+        {
+            "Sanctum" => BossDrops.Sanctum,
+            _ => new List<BossDrop>()
+        };
+    }
+}

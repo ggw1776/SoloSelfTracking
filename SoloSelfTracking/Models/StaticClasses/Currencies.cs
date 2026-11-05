@@ -33,5 +33,36 @@
         public static readonly CurrencyItem VeiledExaltedOrb = new("Veiled Exalted Orb");
         public static readonly CurrencyItem AllflameEmberOfKulemak = new("Allflame Ember Of Kulemak");
         public static readonly CurrencyItem CorruptedCatalyst = new("Corrupted Catalyst");
+
+        public static readonly CurrencyItem ArmourersScrap = new("Armourer's Scrap");
+        public static readonly CurrencyItem BlacksmithsWhetstone = new("Blacksmith's Whetstone");
+        public static readonly CurrencyItem OrbOfAugmentation = new("Orb Of Augmentation");
+        public static readonly CurrencyItem OrbOfTransmutation = new("Orb Of Transmutation");
+        public static readonly CurrencyItem GlassblowersBauble = new("Glassblower's Bauble");
+        public static readonly CurrencyItem OrbOfAlchemy = new("Orb Of Alchemy");
+        public static readonly CurrencyItem OrbOfAlteration = new("Orb Of Alteration");
+        public static readonly CurrencyItem OrbOfChance = new("Orb Of Chance");
+        public static readonly CurrencyItem OrbOfRegret = new("Orb Of Regret");
+        public static readonly CurrencyItem JewellersOrb = new("Jeweller's Orb");
+        public static readonly CurrencyItem OrbOfFusing = new("Orb Of Fusing");
+        public static readonly CurrencyItem ChaosOrb = new("Chaos Orb");
+        public static readonly CurrencyItem GemcuttersPrism = new("Gemcutter's Prism");
+        public static readonly CurrencyItem OrbOfScouring = new("Orb Of Scouring");
+        public static readonly CurrencyItem RegalOrb = new("Regal Orb");
+        public static readonly CurrencyItem VaalOrb = new("Vaal Orb");
+        public static readonly CurrencyItem ChromaticOrb = new("Chromatic Orb");
+        public static readonly CurrencyItem OrbOfBinding = new("Orb Of Binding");
+        public static readonly CurrencyItem AncientOrb = new("Ancient Orb");
+        public static readonly CurrencyItem BlessedOrb = new("Blessed Orb");
+        public static readonly CurrencyItem DivineOrb = new("Divine Orb");
+        public static readonly CurrencyItem ExaltedOrb = new("Exalted Orb");
+        public static readonly CurrencyItem MirrorOfKalandra = new("Mirror Of Kalandra");
+        public static readonly CurrencyItem OrbOfAnnulment = new("Orb Of Annulment");
+        public static readonly CurrencyItem SacredOrb = new("Sacred Orb");
+        public static readonly CurrencyItem EnkindlingOrb = new("Enkindling Orb");
+        public static readonly CurrencyItem InstillingOrb = new("Instilling Orb");
+        public static readonly CurrencyItem FracturingOrb = new("Fracturing Orb");
+        public static readonly CurrencyItem OrbOfUnmaking = new("Orb Of Unmaking");
+        public static readonly CurrencyItem VolatileVaalOrb = new("Volatile Vaal Orb");
     }
 }

@@ -70,6 +70,9 @@
 .bi-anomaly-fill-nav-menu {
     background-image: url('../../img/perspective-dice-six-faces-random.svg');
 }
+.bi-sanctum-fill-nav-menu {
+    background-image: url('../../img/book-cover.svg');
+}
 
 .nav-item {
     font-size: 0.9rem;
