@@ -9,6 +9,7 @@
 @using SoloSelfTracking.Utilities
 @inject SettingsRepository SettingsRepository
 @inject SimulacrumRecordRepository Repository
+@inject TriggerService TriggerService
 @implements IPastable
 @inject IJSRuntime JS
 
@@ -310,6 +311,7 @@ else
     private List<SimulacrumRecord> CompletedSimulacrums = new();
 
     private Settings UserSettings;
+    private TriggerService _triggerService;
 
     private SimulacrumWave CurrentWaveData =>
         Waves.First(x => x.WaveNumber == CurrentWave);
@@ -459,6 +461,23 @@ else
             await _pasteModule.InvokeVoidAsync(
                 "attachFocusHandler", _dotNetReference);
         }
+
+
+        _triggerService.OnTriggerTimerAsync = HandleTimerTrigger;
+        _triggerService.OnTriggerDeathAsync = HandleDeathTrigger;
+    }
+
+    private async Task HandleTimerTrigger()
+    {
+        await _performanceTracker.StartTimer();
+        await Task.CompletedTask;
+    }
+
+    private async Task HandleDeathTrigger()
+    {
+        await _performanceTracker.IncreaseDeaths();
+        StateHasChanged();
+        await Task.CompletedTask;
     }
 
     [JSInvokable]
