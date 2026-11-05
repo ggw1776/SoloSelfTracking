@@ -313,6 +313,8 @@ else
     public string Verb { get; set; } = "Kill";
     [Parameter]
     public string VerbPlural { get; set; } = "Kills";
+    [Parameter]
+    public string NavigationPrefix { get; set; }
 
 
     private string SelectedBoss = string.Empty;
@@ -636,6 +638,8 @@ else
 
     private async Task HandleNavigationTrigger(string location)
     {
+        if (!string.IsNullOrEmpty(NavigationPrefix))
+            location = string.Format("{0} {1}", NavigationPrefix, location);
         SelectBoss(location);
         await Task.CompletedTask;
     }
