@@ -7,6 +7,7 @@
 @implements IAsyncDisposable
 @inject KillRecordRepository Repository
 @inject SettingsRepository UserSettingsRepository
+@inject TriggerService TriggerNavigateService
 @inject IJSRuntime JS
 
 <PageTitle>@Title</PageTitle>
@@ -114,9 +115,12 @@
             {
                 var isSelected = SelectedDrops.Contains(drop.Key);
                 var isMatch = !string.IsNullOrWhiteSpace(DropSearch) &&
-                    drop.Item.DisplayName.Contains(
+                    (drop.Item.DisplayName.Contains(
                         DropSearch,
-                        StringComparison.OrdinalIgnoreCase);
+                        StringComparison.OrdinalIgnoreCase) || 
+                    drop.Item.BaseType.ToString().Contains(
+                        DropSearch.Replace(" ", ""),
+                        StringComparison.OrdinalIgnoreCase));
                 <ItemHoverInfo Item="drop.Item">
                     <button type="button"
                             class="btn @(isSelected
@@ -309,6 +313,8 @@ else
     public string Verb { get; set; } = "Kill";
     [Parameter]
     public string VerbPlural { get; set; } = "Kills";
+    [Parameter]
+    public string NavigationPrefix { get; set; }
 
 
     private string SelectedBoss = string.Empty;
@@ -332,7 +338,8 @@ else
     private int _mapDivCards = 0;
     private int _mapMaps = 0;
 
-    Settings UserSettings;
+    private Settings UserSettings;
+    private TriggerService _navigateService;
 
     private List<DropOption> CurrentDrops =>
         string.IsNullOrEmpty(SelectedBoss)
@@ -367,12 +374,20 @@ else
             : 0;
 
         UserSettings = await UserSettingsRepository.GetAsync();
+        _navigateService = TriggerNavigateService;
+        _navigateService.OnTriggerAsync = HandleNavigationTrigger;
+        _navigateService.OnTriggerTimerAsync = HandleTimerTrigger;
+        _navigateService.OnTriggerDeathAsync = HandleDeathTrigger;
     }
 
     private void SelectBoss(string boss)
     {
-        SelectedBoss = boss;
-        SelectedDrops.Clear();
+        if (SelectedBoss != boss)
+        {
+            SelectedBoss = boss;
+            SelectedDrops.Clear();
+            StateHasChanged();
+        }
     }
 
     private void ToggleDrop(DropOption drop)
@@ -618,5 +633,27 @@ else
         _mapCurrency = 0;
         _mapDivCards = 0;
         _mapMaps = 0;
+    }
+
+
+    private async Task HandleNavigationTrigger(string location)
+    {
+        if (!string.IsNullOrEmpty(NavigationPrefix))
+            location = string.Format("{0} {1}", NavigationPrefix, location);
+        SelectBoss(location);
+        await Task.CompletedTask;
+    }
+
+    private async Task HandleTimerTrigger()
+    {
+        await _performanceTracker.StartTimer();
+        await Task.CompletedTask;
+    }
+
+    private async Task HandleDeathTrigger()
+    {
+        await _performanceTracker.IncreaseDeaths();
+        StateHasChanged();
+        await Task.CompletedTask;
     }
 }

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SoloSelfTracking.Components;
 using SoloSelfTracking.Data;
 using SoloSelfTracking.Repositories;
+using SoloSelfTracking.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,8 @@ builder.Services.AddScoped<KillRecordRepository>();
 builder.Services.AddScoped<SimulacrumRecordRepository>();
 builder.Services.AddScoped<IncursionRecordRepository>();
 builder.Services.AddScoped<SettingsRepository>();
+
+builder.Services.AddScoped<TriggerService>();
 
 
 

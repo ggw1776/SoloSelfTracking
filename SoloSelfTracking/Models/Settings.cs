@@ -12,5 +12,8 @@
         public bool EnableShopMusic { get; set;  } = false;
         public bool EnableMoralSupport { get; set; } = false;
         public bool EnableTradieDetector { get; set; } = false;
+        public bool EnableAutoTabNavigation { get; set; } = false;
+        public bool EnableAutoDeathCounter { get; set; } = false;
+        public bool EnableAutoMapParse { get; set; } = false;
     }
 }

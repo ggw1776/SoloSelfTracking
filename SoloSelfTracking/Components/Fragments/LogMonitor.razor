@@ -1,8 +1,10 @@
 ﻿@using System.Text
 @using Repositories
+@using SoloSelfTracking.Utilities
 @rendermode InteractiveServer
 @implements IAsyncDisposable
 @inject SettingsRepository Repository
+@inject TriggerService TriggerService
 @inject IJSRuntime JS
 
 <div class="terminal-widget">
@@ -59,7 +61,7 @@
 
 @code {
     private const string StorageKey = "terminal-file-path";
-    private const int LineCount = 10;
+    private const int LineCount = 8;
 
     private string _path = string.Empty;
     private string? _error;
@@ -75,17 +77,34 @@
 
     private bool _enableTpScrollAlarm = false;
     private readonly int MAX_HIDEOUT_BEFORE_TP_SCROLL_ALARM = 35;
-    private List<string> _detectedLines = new List<string>();
+    private List<string> _detectedHideoutLines = new List<string>();
+    private List<string> _detectedDeathLines = new List<string>();
+
+    private bool _enableTabNavigate = false;
+    private bool _enableTimerStart = false;
+    private bool _enableAutoDeathCounter = false;
+    private TriggerService _trigger; 
 
     private readonly SemaphoreSlim _refreshLock = new(1, 1);
+
+    protected override async Task OnInitializedAsync()
+    {
+        var settingsRepo = await Repository.GetAsync();
+        _enableTpScrollAlarm = settingsRepo.EnableTeleportScrollNotification;
+        _enableTabNavigate = settingsRepo.EnableAutoTabNavigation;
+        _enableTimerStart = settingsRepo.EnableAutomaticTimerStart;
+        _enableAutoDeathCounter = settingsRepo.EnableAutoDeathCounter;
+
+        _trigger = TriggerService;
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (!firstRender || _initialized)
             return;
 
+
         _initialized = true;
-        _enableTpScrollAlarm = (await Repository.GetAsync()).EnableTeleportScrollNotification;
 
         try
         {
@@ -157,7 +176,7 @@
     private async Task PollAsync(CancellationToken token)
     {
         using var timer = new PeriodicTimer(
-            TimeSpan.FromSeconds(5));
+            TimeSpan.FromSeconds(2));
 
         try
         {
@@ -185,7 +204,22 @@
                 token);
 
             if (_enableTpScrollAlarm)
-                await HandleTpScrollAlarm();    
+                await HandleTpScrollAlarm();
+
+            if (_enableTabNavigate)
+            {
+                var navigateLocation = FindNavigationTrigger();
+                if (navigateLocation != "NOTFOUND")
+                {
+                    await _trigger.TriggerNavigateAsync(navigateLocation);
+                    if (_enableTimerStart)
+                        await _trigger.TriggerTimerAsync();
+                }
+            }
+
+            if (_enableAutoDeathCounter)
+                await HandleDeathDetection();
+
 
             _lastUpdated = DateTime.Now;
             _error = null;
@@ -202,21 +236,144 @@
         await InvokeAsync(StateHasChanged);
     }
 
+    private string FindNavigationTrigger()
+    {
+        string location = "NOTFOUND";
+        var navTrigger = new List<string>(_lines);
+        navTrigger.Reverse();
+        foreach(var line in navTrigger)
+        {
+            if (line.Contains("LOADING SCREEN"))
+            {
+                var text = line.Split("[LOADING SCREEN] (")[1].Split(')')[0];
+                location = MatchLocation(text);
+                break;
+            }
+        }
+        return location;
+    }
+
+    private string MatchLocation(string location)
+    {
+        string result = "NOTFOUND";
+        switch(location)
+        {
+            case "Citadel":
+            case "Abomination":
+            case "Fortress":
+            case "Sanctuary":
+            case "Ziggaurat":
+            case "Cortex":
+                result = location;
+                break;
+            case "Absence of Patience and Wisdom":
+                result = "Exarch";
+                break;
+            case "Absence of Symmetry and Harmony":
+                result = "Eater";
+                break;
+            case "Polaric Void":
+                result = "Black Star";
+                break;
+            case "Seething Chyme":
+                result = "Infinite Hunger";
+                break;
+            case "Eye of the Strom":
+                result = "Sirus";
+                break;
+            case "Absence of Mercy and Empathy":
+                result = "Maven";
+                break;
+            case "The Apex of Sacrifice":
+            case "The Alluring Abyss":
+                result = "Atziri";
+                break;
+            case "Moment of Reverence":
+                result = "Incarnation of Dread";
+                break;
+            case "Moment of Loneliness":
+                result = "Incarnation of Neglect";
+                break;
+            case "Moment of Trauma":
+                result = "Incarnation of Fear";
+                break;
+            case "The Lightless Hollow":
+                result = "Zorath";                
+                break;
+            case "Farrul's Den":
+                result = "Farrul";
+                break;
+            case "Saqawal's Roost":
+                result = "Saqawal";
+                break;
+            case "Craiceann's Cove":
+                result = "Craiceann";
+                break;
+            case "Fenumus' Lair":
+                result = "Fenumus";
+                break;
+            case "Vaal Nexus": //wasn't able to confirm this
+                result = "Ahuatotli";
+                break;
+            case "The Lich's Tomb":
+                result = "Kurgal";
+                break;
+            case "The Crystal King's Throne":
+                result = "Aul";
+                break;
+            case "Mastermind's Lair":
+                result = "Catarina";
+                break;
+            case "The Sacred Grove":
+                result = "Oshabi";
+                break;
+            case "Crux of Nothingness":
+                result = "King in the Mists";
+                break;
+            case "Hive Colony":
+                result = "It That Was";
+                break;
+            case "The Shaper's Realm": // too mnany bosses in this location, cancel navigation
+            default:
+                break;
+        }
+        return result;
+    }
+
     private async Task HandleTpScrollAlarm()
     {
         var hideoutLines = _lines.Where(x => x.Contains("Hideout")).ToList();
         foreach (var line in hideoutLines)
         {
-            if (!_detectedLines.Contains(line))
+            if (!_detectedHideoutLines.Contains(line))
             {
-                _detectedLines.Add(line);
+                _detectedHideoutLines.Add(line);
             }
         }
 
-        if (_detectedLines.Count > MAX_HIDEOUT_BEFORE_TP_SCROLL_ALARM)
+        if (_detectedHideoutLines.Count > MAX_HIDEOUT_BEFORE_TP_SCROLL_ALARM)
         {
             await JS.InvokeAsync<string?>("notificationUtilities.warning", "You might be running low on teleportation scrolls!");
-            _detectedLines.Clear();
+            _detectedHideoutLines.Clear();
+        }
+    }
+
+
+    private async Task HandleDeathDetection()
+    {
+        var deathLines = _lines.Where(x => x.Contains("has been slain") || x.Contains("suicide"));
+        foreach (var line in deathLines)
+        {
+            if (!_detectedDeathLines.Contains(line))
+            {
+                _detectedDeathLines.Add(line);
+                await _trigger.OnTriggerDeathAsync();
+            }
+        }
+
+        if (_detectedDeathLines.Count > LineCount) // very sloppy rolling counter but i care very little
+        {
+            _detectedDeathLines.RemoveAt(0);
         }
     }
 
