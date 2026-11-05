@@ -88,6 +88,14 @@
         }
         else
         {
+            await StartTimer();
+        }
+    }
+
+    public async Task StartTimer()
+    {
+        if (!IsRunning)
+        {
             _startedAt = DateTime.UtcNow;
             IsRunning = true;
 
@@ -133,7 +141,7 @@
         await UpdateElapsedTime(TimeSpan.Zero);
     }
 
-    private async Task IncreaseDeaths()
+    public async Task IncreaseDeaths()
     {
         Deaths++;
         await DeathsChanged.InvokeAsync(Deaths);

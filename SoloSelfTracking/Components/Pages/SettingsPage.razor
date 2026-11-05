@@ -102,13 +102,34 @@
                        </label>
             </div>
 
+            
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableAutoTabNavigation">
+                        Enable Auto Navigation
+                    </label>
+                    <p>
+                        Moves you to the appropriate tab when navigating into a zone. Does not change page.
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="EnableAutoTabNavigation"
+                           type="checkbox"
+                           checked="@StoredSettings.EnableAutoTabNavigation"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnableAutoTabNavigation), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
+
             <div class="setting-row">
                 <div class="setting-info">
                     <label for="EnableAutomaticTimerStart">
-                        Enable Automatic Timer Start
+                        Enable Auto Timer Start
                     </label>
                     <p>
-                        Starts your timer automatically when entering the appropriate zone (currently non-functional).
+                        Starts your timer automatically when entering the appropriate zone. Requires Auto Navigation.
                     </p>
                 </div>
 
@@ -118,6 +139,27 @@
                            checked="@StoredSettings.EnableAutomaticTimerStart"
                            @onchange="e => UpdateSetting(
                                nameof(StoredSettings.EnableAutomaticTimerStart), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
+
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableAutoDeathCounter">
+                        Enable Auto Death Counter
+                    </label>
+                    <p>
+                        Increments the death counter automatically.
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="EnableAutoDeathCounter"
+                           type="checkbox"
+                           checked="@StoredSettings.EnableAutoDeathCounter"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnableAutoDeathCounter), e)" />
                            <span class="setting-slider"></span>
                        </label>
             </div>
@@ -243,6 +285,15 @@
                 break;
             case nameof(StoredSettings.EnableTradieDetector):
                 StoredSettings.EnableTradieDetector = value;
+                break;
+            case nameof(StoredSettings.EnableAutoTabNavigation):
+                StoredSettings.EnableAutoTabNavigation = value;
+                break;
+            case nameof(StoredSettings.EnableAutoDeathCounter):
+                StoredSettings.EnableAutoDeathCounter = value;
+                break;
+            case nameof(StoredSettings.EnableAutoMapParse):
+                StoredSettings.EnableAutoMapParse = value;
                 break;
             default:
                 return;

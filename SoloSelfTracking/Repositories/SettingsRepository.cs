@@ -56,6 +56,9 @@ public class SettingsRepository
             existing.EnableShopMusic = settings.EnableShopMusic;
             existing.EnableMoralSupport = settings.EnableMoralSupport;
             existing.EnableTradieDetector = settings.EnableTradieDetector;
+            existing.EnableAutoTabNavigation = settings.EnableAutoTabNavigation;
+            existing.EnableAutoDeathCounter = settings.EnableAutoDeathCounter;
+            existing.EnableAutoMapParse = settings.EnableAutoMapParse;
         }
 
         await db.SaveChangesAsync();
