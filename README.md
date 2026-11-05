@@ -77,9 +77,11 @@ A local LLM was leveraged for code formatting (e.g. EBaseType), some light linti
 # CREDITS
 
 All Path of Exile related content, including item descriptions Copyright (c) Grinding Gear Games
+
 https://github.com/PathOfBuildingCommunity/PathOfBuilding/ - Unique item definitions
 
 https://favicon.io/favicon-generator/ - Favicon Designer
 
 https://game-icons.net/ - Icons
 
+Notification by IENBA -- https://freesound.org/s/545495/ -- License: Attribution 4.0

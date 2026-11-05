@@ -49,6 +49,13 @@ public class SettingsRepository
             existing.EnablePasteOnFocusIn = settings.EnablePasteOnFocusIn;
             existing.ClearClipboardOnValidPaste = settings.ClearClipboardOnValidPaste;
             existing.EnableIframing = settings.EnableIframing;
+            existing.EnableLogReader = settings.EnableLogReader;
+            existing.ClearClipboardOnValidPaste = settings.ClearClipboardOnValidPaste;
+            existing.EnableTeleportScrollNotification = settings.EnableTeleportScrollNotification;
+            existing.EnableAutomaticTimerStart = settings.EnableAutomaticTimerStart;
+            existing.EnableShopMusic = settings.EnableShopMusic;
+            existing.EnableMoralSupport = settings.EnableMoralSupport;
+            existing.EnableTradieDetector = settings.EnableTradieDetector;
         }
 
         await db.SaveChangesAsync();

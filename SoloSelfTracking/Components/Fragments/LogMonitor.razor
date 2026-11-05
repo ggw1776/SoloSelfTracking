@@ -1,6 +1,8 @@
 ﻿@using System.Text
+@using Repositories
 @rendermode InteractiveServer
 @implements IAsyncDisposable
+@inject SettingsRepository Repository
 @inject IJSRuntime JS
 
 <div class="terminal-widget">
@@ -53,6 +55,7 @@
             Client.txt monitor
     </button>
 </div>
+<script src="js/notifications.js"></script>
 
 @code {
     private const string StorageKey = "terminal-file-path";
@@ -70,6 +73,10 @@
     private CancellationTokenSource? _pollingCts;
     private Task? _pollingTask;
 
+    private bool _enableTpScrollAlarm = false;
+    private readonly int MAX_HIDEOUT_BEFORE_TP_SCROLL_ALARM = 35;
+    private List<string> _detectedLines = new List<string>();
+
     private readonly SemaphoreSlim _refreshLock = new(1, 1);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -78,6 +85,7 @@
             return;
 
         _initialized = true;
+        _enableTpScrollAlarm = (await Repository.GetAsync()).EnableTeleportScrollNotification;
 
         try
         {
@@ -176,6 +184,9 @@
                 () => ReadLastLines(_path, LineCount),
                 token);
 
+            if (_enableTpScrollAlarm)
+                await HandleTpScrollAlarm();    
+
             _lastUpdated = DateTime.Now;
             _error = null;
         }
@@ -189,6 +200,24 @@
         }
 
         await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task HandleTpScrollAlarm()
+    {
+        var hideoutLines = _lines.Where(x => x.Contains("Hideout")).ToList();
+        foreach (var line in hideoutLines)
+        {
+            if (!_detectedLines.Contains(line))
+            {
+                _detectedLines.Add(line);
+            }
+        }
+
+        if (_detectedLines.Count > MAX_HIDEOUT_BEFORE_TP_SCROLL_ALARM)
+        {
+            await JS.InvokeAsync<string?>("notificationUtilities.warning", "You might be running low on teleportation scrolls!");
+            _detectedLines.Clear();
+        }
     }
 
     private static List<string> ReadLastLines(string path, int count)
