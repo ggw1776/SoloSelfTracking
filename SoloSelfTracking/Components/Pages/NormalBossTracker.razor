@@ -37,34 +37,34 @@
         "It That Was"
     };
 
-    private List<BossDrop> GetBossDrops(string boss)
+    private List<DropTableEntry> GetBossDrops(string boss)
     {
         return boss switch
         {
-            "Sirus" => BossDrops.Sirus,
-            "Shaper" => BossDrops.Shaper,
-            "Elder" => BossDrops.Elder,
-            "Maven" => BossDrops.Maven,
-            "Cortex" => BossDrops.Cortex,
-            "Atziri" => BossDrops.Atziri,
-            "Incarnation of Neglect" => BossDrops.IncarnationOfNeglect,
-            "Incarnation of Fear" => BossDrops.IncarnationOfFear,
-            "Incarnation of Dread" => BossDrops.IncarnationOfDread,
-            "Zorath" => BossDrops.Zorath,
-            "Farrul" => BossDrops.Farrul,
-            "Saqawal" => BossDrops.Saqawal,
-            "Fenumus" => BossDrops.Fenumus,
-            "Craiceann" => BossDrops.Craiceann,
-            "Ahuatotli" => BossDrops.Ahuatotli,
-            "Kurgal" => BossDrops.Kurgal,
-            "Aul" => BossDrops.Aul,
-            "Catarina" => BossDrops.Catarina,
-            "Oshabi" => BossDrops.Oshabi,
-            "Trialmaster" => BossDrops.Trialmaster,
-            "King in the Mists" => BossDrops.KingInTheMists,
-            "Black Knight" => BossDrops.BlackKnight,
-            "It That Was" => BossDrops.ItThatWas,
-            _ => new List<BossDrop>()
+            "Sirus" => DropTables.Sirus,
+            "Shaper" => DropTables.Shaper,
+            "Elder" => DropTables.Elder,
+            "Maven" => DropTables.Maven,
+            "Cortex" => DropTables.Cortex,
+            "Atziri" => DropTables.Atziri,
+            "Incarnation of Neglect" => DropTables.IncarnationOfNeglect,
+            "Incarnation of Fear" => DropTables.IncarnationOfFear,
+            "Incarnation of Dread" => DropTables.IncarnationOfDread,
+            "Zorath" => DropTables.Zorath,
+            "Farrul" => DropTables.Farrul,
+            "Saqawal" => DropTables.Saqawal,
+            "Fenumus" => DropTables.Fenumus,
+            "Craiceann" => DropTables.Craiceann,
+            "Ahuatotli" => DropTables.Ahuatotli,
+            "Kurgal" => DropTables.Kurgal,
+            "Aul" => DropTables.Aul,
+            "Catarina" => DropTables.Catarina,
+            "Oshabi" => DropTables.Oshabi,
+            "Trialmaster" => DropTables.Trialmaster,
+            "King in the Mists" => DropTables.KingInTheMists,
+            "Black Knight" => DropTables.BlackKnight,
+            "It That Was" => DropTables.ItThatWas,
+            _ => new List<DropTableEntry>()
         };
     }
 }

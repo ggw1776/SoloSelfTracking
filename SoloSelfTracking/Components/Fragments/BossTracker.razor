@@ -306,7 +306,7 @@ else
     public IReadOnlyList<string> Bosses { get; set; } = Array.Empty<string>();
 
     [Parameter, EditorRequired]
-    public Func<string, List<BossDrop>> DropProvider { get; set; } = null!;
+    public Func<string, List<DropTableEntry>> DropProvider { get; set; } = null!;
 
     [Parameter]
     public string Title { get; set; } = "Boss Tracker";

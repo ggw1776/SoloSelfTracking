@@ -19,12 +19,12 @@
         "Sanctum"
     };
 
-    private List<BossDrop> GetBossDrops(string boss)
+    private List<DropTableEntry> GetBossDrops(string boss)
     {
         return boss switch
         {
-            "Sanctum" => BossDrops.Sanctum,
-            _ => new List<BossDrop>()
+            "Sanctum" => DropTables.Sanctum,
+            _ => new List<DropTableEntry>()
         };
     }
 }

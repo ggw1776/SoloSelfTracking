@@ -8,12 +8,12 @@ namespace SoloSelfTracking.Utilities
     {
         public static float? Find(string bossName, string itemName)
         {
-            var fields = typeof(BossDrops).GetFields(
+            var fields = typeof(DropTables).GetFields(
                     BindingFlags.Public | BindingFlags.Static);
 
             foreach (var field in fields)
             {
-                if (field.GetValue(null) is List<BossDrop> dropTable && string.Equals(field.Name, bossName.Replace(" ", ""), StringComparison.OrdinalIgnoreCase))
+                if (field.GetValue(null) is List<DropTableEntry> dropTable && string.Equals(field.Name, bossName.Replace(" ", ""), StringComparison.OrdinalIgnoreCase))
                 {
                     return dropTable.SingleOrDefault(x => string.Equals(x.Drop.Name, itemName))?.DropRate;
                 }
