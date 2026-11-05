@@ -463,8 +463,8 @@ else
         }
 
 
-        _triggerService.OnTriggerTimerAsync = HandleTimerTrigger;
-        _triggerService.OnTriggerDeathAsync = HandleDeathTrigger;
+        _triggerService?.OnTriggerTimerAsync = HandleTimerTrigger;
+        _triggerService?.OnTriggerDeathAsync = HandleDeathTrigger;
     }
 
     private async Task HandleTimerTrigger()

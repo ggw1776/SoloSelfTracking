@@ -1,0 +1,36 @@
+﻿@page "/anomaly"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+
+<BossTracker Title="Anomaly Rush Tracker"
+             Bosses="bosses"
+             DropProvider="GetBossDrops"
+             AnalysisHref="anomaly-analysis"
+             Maps="true"
+             NightmareMods="true"
+             Verb="Map" 
+             VerbPlural="Maps" />
+
+@code {
+    private readonly string[] bosses =
+    {
+        "North West",
+        "North East",
+        "South West",
+        "South East"
+    };
+
+    private List<BossDrop> GetBossDrops(string boss)
+    {
+        return boss switch
+        {
+            "North West" => BossDrops.NorthWest,
+            "North East" => BossDrops.NorthEast,
+            "South West" => BossDrops.SouthWest,
+            "South East" => BossDrops.SouthEast,
+            _ => new List<BossDrop>()
+        };
+    }
+}
