@@ -112,6 +112,15 @@ namespace SoloSelfTracking.Migrations
                     b.Property<bool>("ClearClipboardOnValidPaste")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EnableAutoDeathCounter")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableAutoMapParse")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableAutoTabNavigation")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EnableAutomaticTimerStart")
                         .HasColumnType("INTEGER");
 
