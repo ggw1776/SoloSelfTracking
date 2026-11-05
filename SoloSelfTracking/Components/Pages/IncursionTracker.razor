@@ -481,12 +481,12 @@
         "Incursion"        
     };
 
-    private List<BossDrop> GetBossDrops(string boss)
+    private List<DropTableEntry> GetBossDrops(string boss)
     {
         return boss switch
         {
-            "Incursion" => BossDrops.Incursion,
-            _ => new List<BossDrop>()
+            "Incursion" => DropTables.Incursion,
+            _ => new List<DropTableEntry>()
         };
     }
 

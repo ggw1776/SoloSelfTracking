@@ -1,8 +1,8 @@
 ﻿namespace SoloSelfTracking.Models.StaticClasses
 {
-    public static class BossDrops
+    public static class DropTables
     {
-        public readonly static List<BossDrop> UberSirus =
+        public readonly static List<DropTableEntry> UberSirus =
         [
             new(Uniques.ThreadofHope, 44f),
             new(Uniques.TheTempestRising, 28f),
@@ -16,7 +16,7 @@
             new(DivinationCards.AFateWorseThanDeath, 4f)
         ];
 
-        public readonly static List<BossDrop> UberShaper =
+        public readonly static List<DropTableEntry> UberShaper =
         [
             new(Uniques.Starforge, 2f),
             new(Uniques.SublimeVision, 2f), //todo - variants
@@ -32,7 +32,7 @@
             new(MiscItems.FragmentofShape, 50f),
         ];
 
-        public readonly static List<BossDrop> UberUberElder =
+        public readonly static List<DropTableEntry> UberUberElder =
         [
             new(Uniques.WatchersEye, 35f), //todo watchers eye handling
             new(Uniques.Voidforge, 1.5f),
@@ -52,7 +52,7 @@
             new(DivinationCards.AuspiciousAmbitions, 0.5f)
         ];
 
-        public readonly static List<BossDrop> UberMaven = [
+        public readonly static List<DropTableEntry> UberMaven = [
             new(Uniques.ViridisVeil, 52f),
             new(Uniques.ImpossibleEscape, 31.5f), //todo escape handling
             new(Uniques.GraceoftheGoddess, 14f),
@@ -68,7 +68,7 @@
             new(DivinationCards.AuspiciousAmbitions, 0.05f)
         ];
 
-        public readonly static List<BossDrop> UberCortex = [
+        public readonly static List<DropTableEntry> UberCortex = [
             new(Uniques.Nebulis, 34f),
             new(Uniques.MaskoftheTribunal, 34f),
             new(Uniques.CircleofAmbition, 19f),
@@ -80,7 +80,7 @@
             new(DivinationCards.ImperfectMemories, 0.5f)
         ];
 
-        public readonly static List<BossDrop> UberExarch = [
+        public readonly static List<DropTableEntry> UberExarch = [
             new(Uniques.TheAnnihilatingLight, 45.5f),
             new(Uniques.AnnihilationsApproach, 29f),
             new(Uniques.CrystallisedOmniscience, 24f),
@@ -96,7 +96,7 @@
             new(DivinationCards.AuspiciousAmbitions, 1f)
         ];
 
-        public readonly static List<BossDrop> UberEater = [
+        public readonly static List<DropTableEntry> UberEater = [
 
             new(Uniques.RavenousPassion, 68f),
             new(Uniques.AshesOfTheStars, 30f),
@@ -112,7 +112,7 @@
             new(DivinationCards.AuspiciousAmbitions, 1f)
         ];
 
-        public readonly static List<BossDrop> UberAtziri = [
+        public readonly static List<DropTableEntry> UberAtziri = [
             new(Uniques.AtzirisSplendour, 42f), //todo - does anyone care about the variants
             new(Uniques.TheVertex, 40f),
             new(Uniques.AtzirisAcuity, 6f),
@@ -127,7 +127,7 @@
             new(new EquipmentItem( "Sacrificial Garb", Enumerations.EItemType.SacrificialGarb, Enumerations.EItemRarity.Normal), 15f)
         ];
 
-        public readonly static List<BossDrop> UberIncarnationOfFear = [
+        public readonly static List<DropTableEntry> UberIncarnationOfFear = [
             new(Uniques.TheCagedMammoth, 60f),
             new(Uniques.CoilingWhisper, 36f),
             new(Uniques.WingoftheWyvern, 2f),
@@ -148,7 +148,7 @@
             new(Currencies.TimelessAstrolabe, 7.5f),
             new(DivinationCards.Monochrome, 3f)
         ];
-        public readonly static List<BossDrop> UberIncarnationOfNeglect = [
+        public readonly static List<DropTableEntry> UberIncarnationOfNeglect = [
             new(Uniques.RefugeinIsolation, 55f),
             new(Uniques.BitterInstinct, 30f),
             new(Uniques.HauntingMemories, 13f),
@@ -168,7 +168,7 @@
             new(Currencies.TimelessAstrolabe, 7.5f),
             new(DivinationCards.Monochrome, 3f)
         ];
-        public readonly static List<BossDrop> UberIncarnationOfDread = [
+        public readonly static List<DropTableEntry> UberIncarnationOfDread = [
             new(Uniques.TheHallowedMonarch, 54f),
             new(Uniques.WhispersOfInfinity, 30f),
             new(Uniques.WellwaterPhylactery, 14f),
@@ -191,7 +191,7 @@
 
         // NMs
 
-        public readonly static List<BossDrop> Abomination =
+        public readonly static List<DropTableEntry> Abomination =
         [
             new(Uniques.MalachaisMark, 5f),
             new(Gems.UnholyTrinitySupport, 5f),
@@ -200,7 +200,7 @@
             new(DivinationCards.TheVoid, 0f, true)
         ];
 
-        public readonly static List<BossDrop> Citadel =
+        public readonly static List<DropTableEntry> Citadel =
         [
             new(Uniques.Manastorm, 5f),
             new(Gems.CastOnWardBreakSupport, 5f),
@@ -209,7 +209,7 @@
             new(DivinationCards.TheVoid, 0f, true)
         ];
 
-        public readonly static List<BossDrop> Fortress =
+        public readonly static List<DropTableEntry> Fortress =
         [
             new(Uniques.YokeOfSuffering, 5f),
             new(Gems.OverloadedIntensitySupport, 5f),
@@ -218,7 +218,7 @@
             new(DivinationCards.TheVoid, 0f, true)
         ];
 
-        public readonly static List<BossDrop> Sanctuary =
+        public readonly static List<DropTableEntry> Sanctuary =
         [
             new(Uniques.TheDarkSeer, 5f),
             new(Uniques.UnholyAccomplice, 0.1f),
@@ -230,7 +230,7 @@
             new(DivinationCards.TheVoid, 0f, true)
         ];
 
-        public readonly static List<BossDrop> Ziggaurat =
+        public readonly static List<DropTableEntry> Ziggaurat =
         [
             new(Uniques.Wraithlord, 5f),
             new(Gems.CommunionSupport, 5f),
@@ -239,7 +239,7 @@
             new(DivinationCards.TheVoid, 0f, true)
         ];
 
-        public readonly static List<BossDrop> Shaper =
+        public readonly static List<DropTableEntry> Shaper =
         [
             new(Uniques.ShapersTouch, 56f),
             new(Uniques.Voidwalker, 30f),
@@ -252,7 +252,7 @@
             new(MiscItems.FragmentofShape, 50f),
         ];
 
-        public readonly static List<BossDrop> Elder =
+        public readonly static List<DropTableEntry> Elder =
         [
             new(Uniques.CyclopeanCoil, 30f),
             new(Uniques.BlasphemersGrasp, 26f),
@@ -272,7 +272,7 @@
             new(MiscItems.FragmentofTerror, 50f),
             new(MiscItems.FragmentofEmptiness, 50f),
         ];
-        public readonly static List<BossDrop> Cortex =
+        public readonly static List<DropTableEntry> Cortex =
         [
             new(Uniques.OfferingtotheSerpent, 43f),
             new(Uniques.Perepiteia, 43f),
@@ -282,7 +282,7 @@
             new(DivinationCards.TheHook, 5f),
             new(DivinationCards.ImperfectMemories, 0.5f)
         ];
-        public readonly static List<BossDrop> Sirus =
+        public readonly static List<DropTableEntry> Sirus =
         [
             new(Uniques.HandsoftheHighTemplar, 43f),
             new(Uniques.CrownoftheInwardEye, 32f),
@@ -294,7 +294,7 @@
             new(DivinationCards.AFateWorseThanDeath, 4f)
         ];
 
-        public readonly static List<BossDrop> Maven = 
+        public readonly static List<DropTableEntry> Maven = 
         [
             new(Uniques.LegacyofFury, 41f),
             new(Uniques.GravensSecret, 17f),
@@ -306,7 +306,7 @@
             new(DivinationCards.AuspiciousAmbitions, 0.05f)
         ];
 
-        public readonly static List<BossDrop> Exarch = 
+        public readonly static List<DropTableEntry> Exarch = 
         [
             new(Uniques.Dawnbreaker, 63f),
             new(Uniques.Dawnstrider, 35f),
@@ -320,7 +320,7 @@
             new(DivinationCards.AuspiciousAmbitions, 1f)
         ];
 
-        public readonly static List<BossDrop> Eater = 
+        public readonly static List<DropTableEntry> Eater = 
         [
             new(Uniques.InextricableFate, 55f),
             new(Uniques.TheGluttonousTide, 43f),
@@ -334,7 +334,7 @@
             new(DivinationCards.AuspiciousAmbitions, 1f)
         ];
 
-        public readonly static List<BossDrop> Atziri = 
+        public readonly static List<DropTableEntry> Atziri = 
         [
             new(Uniques.AtzirisPromise, 48f),
             new(Uniques.TriumvirateAuthority, 18f),
@@ -346,7 +346,7 @@
             new(new EquipmentItem( "Sacrificial Garb", Enumerations.EItemType.SacrificialGarb, Enumerations.EItemRarity.Normal), 15f)
         ];
 
-        public readonly static List<BossDrop> IncarnationOfFear = [
+        public readonly static List<DropTableEntry> IncarnationOfFear = [
             new(Uniques.ServantofDecay, 50f),
             new(Uniques.TheUnseenHue, 37f),
             new(Uniques.EnmitysEmbrace, 11f),
@@ -366,7 +366,7 @@
             new(Currencies.TimelessAstrolabe, 7.5f),
             new(DivinationCards.Monochrome, 3f)
         ];
-        public readonly static List<BossDrop> IncarnationOfNeglect = [
+        public readonly static List<DropTableEntry> IncarnationOfNeglect = [
             new(Uniques.BetrayalsSting, 50f),
             new(Uniques.TheArkhonsTools, 38f),
             new(Uniques.VenariusAstrolabe, 10f),
@@ -385,7 +385,7 @@
             new(Currencies.TimelessAstrolabe, 7.5f),
             new(DivinationCards.Monochrome, 3f)
         ];
-        public readonly static List<BossDrop> IncarnationOfDread = [
+        public readonly static List<DropTableEntry> IncarnationOfDread = [
             new(Uniques.Bonemeld, 55f),
             new(Uniques.TheDarkMonarch, 35f),
             new(Uniques.SevenTeachings, 8f),
@@ -405,7 +405,7 @@
             new(DivinationCards.Monochrome, 3f)
         ];
 
-        public readonly static List<BossDrop> Zorath =
+        public readonly static List<DropTableEntry> Zorath =
         [
             new(Uniques.SubsumetheSource, 40f),
             new(Uniques.Spinesnatch, 20f),
@@ -416,7 +416,7 @@
             new(Gems.CrystalfallSupport, 10f)
         ];
 
-        public readonly static List<BossDrop> BlackStar =
+        public readonly static List<DropTableEntry> BlackStar =
         [
             new(Uniques.PolaricDevastation, 5f),
             new(Uniques.SuddenDawn, 5f),
@@ -428,7 +428,7 @@
             new(Currencies.GreaterEldritchEmber, 20f)
         ];
 
-        public readonly static List<BossDrop> InfiniteHunger =
+        public readonly static List<DropTableEntry> InfiniteHunger =
         [
             new(Uniques.CeaselessFeast, 5f),
             new(Uniques.BlackZenith, 5f),
@@ -441,7 +441,7 @@
             new(DivinationCards.ChokingGuilt, 1f)
         ];
 
-        public readonly static List<BossDrop> Farrul =
+        public readonly static List<DropTableEntry> Farrul =
         [
             new(Uniques.NaturalHierarchy, 1f),
             new(Uniques.NightSHold, 1f),
@@ -455,7 +455,7 @@
             new(DivinationCards.HuntersReward, 1f),
             new(DivinationCards.SilenceAndFrost, 1f)
         ];
-        public readonly static List<BossDrop> Saqawal =
+        public readonly static List<DropTableEntry> Saqawal =
         [
             new(Uniques.NaturalHierarchy, 1f),
             new(Uniques.NightSHold, 1f),
@@ -469,7 +469,7 @@
             new(DivinationCards.HuntersReward, 1f),
             new(DivinationCards.SilenceAndFrost, 1f)
         ];
-        public readonly static List<BossDrop> Fenumus =
+        public readonly static List<DropTableEntry> Fenumus =
         [
             new(Uniques.NaturalHierarchy, 1f),
             new(Uniques.NightSHold, 1f),
@@ -483,7 +483,7 @@
             new(DivinationCards.HuntersReward, 1f),
             new(DivinationCards.SilenceAndFrost, 1f)
         ];
-        public readonly static List<BossDrop> Craiceann =
+        public readonly static List<DropTableEntry> Craiceann =
         [
             new(Uniques.NaturalHierarchy, 1f),
             new(Uniques.NightSHold, 1f),
@@ -498,7 +498,7 @@
             new(DivinationCards.SilenceAndFrost, 1f)
         ];
 
-        public readonly static List<BossDrop> Ahuatotli =
+        public readonly static List<DropTableEntry> Ahuatotli =
         [
             new(Uniques.AhkelisMountain, 1f),
             new(Uniques.CerberusLimb, 60f),
@@ -508,7 +508,7 @@
             new(MiscItems.Curiosity, 40f)
         ];
 
-        public readonly static List<BossDrop> Kurgal =
+        public readonly static List<DropTableEntry> Kurgal =
         [
             new(Uniques.AhkelisValley, 10f),
             new(Uniques.CommandofthePit, 20f),
@@ -519,7 +519,7 @@
             new(MiscItems.ZorathsEyeoftheInevitable, 50f)
         ];
 
-        public readonly static List<BossDrop> Aul =
+        public readonly static List<DropTableEntry> Aul =
         [
             new(Uniques.AhkelisMeadow, 8f),
             new(Uniques.AulSUprising,  61f),
@@ -530,7 +530,7 @@
             new(DivinationCards.LuminousTrove, 16f)
         ];
 
-        public readonly static List<BossDrop> Catarina =
+        public readonly static List<DropTableEntry> Catarina =
         [
             new(Uniques.CinderswallowUrn, 30f),
             new(Uniques.Spinehail, 20f),
@@ -545,7 +545,7 @@
             new(DivinationCards.NooksCrown, 0.5f),
             new(DivinationCards.KeepersCorruption, 1f)
         ];
-        public readonly static List<BossDrop> Oshabi =
+        public readonly static List<DropTableEntry> Oshabi =
         [
             new(Uniques.ForbiddenShako, 50f),
             new(Uniques.LawOfTheWilds, 19f),
@@ -556,7 +556,7 @@
             new(DivinationCards.TheAspirant, 14f)
         ];
 
-        public readonly static List<BossDrop> Trialmaster =
+        public readonly static List<DropTableEntry> Trialmaster =
         [
             new(Uniques.IxchelsTemptation, 40f),
             new(Uniques.GlimpseofChaos, 40f),
@@ -568,7 +568,7 @@
             new(Currencies.CorruptedCatalyst, 100f, true),
         ];
 
-        public readonly static List<BossDrop> KingInTheMists =
+        public readonly static List<DropTableEntry> KingInTheMists =
         [
             new(Uniques.TheUntouchedSoul, 40f),
             new(Uniques.Pragmatism, 35f),
@@ -579,12 +579,12 @@
             new(DivinationCards.TheEndlessDarkness, 1f),
         ];
 
-        public readonly static List<BossDrop> BlackKnight =
+        public readonly static List<DropTableEntry> BlackKnight =
         [
             new(Uniques.Svalinn, 4f)
         ];
 
-        public readonly static List<BossDrop> ItThatWas =
+        public readonly static List<DropTableEntry> ItThatWas =
         [
             new(Uniques.TheWillofEsh, 17f),
             new(Uniques.TheWillofTul, 17f),
@@ -601,7 +601,7 @@
             new(DivinationCards.TheEscape, 91f),
         ];
 
-        public readonly static List<BossDrop> Incursion =
+        public readonly static List<DropTableEntry> Incursion =
         [
             new(Uniques.StringofServitude, 46f),
             new(Uniques.TemperedFlesh, 7f),
@@ -643,7 +643,7 @@
         ];
 
 
-        public readonly static List<BossDrop> NorthWest = [
+        public readonly static List<DropTableEntry> NorthWest = [
             new(Currencies.TemplarAstrolabe, 33f),
             new(Currencies.ChaoticAstrolabe, 7.5f),
             new(Currencies.DeceptiveAstrolabe, 7.5f),
@@ -659,7 +659,7 @@
             new(MiscItems.UntaintedParadise, 0f)
         ];
 
-        public readonly static List<BossDrop> NorthEast = [
+        public readonly static List<DropTableEntry> NorthEast = [
             new(Currencies.TemplarAstrolabe, 33f),
             new(Currencies.ChaoticAstrolabe, 7.5f),
             new(Currencies.DeceptiveAstrolabe, 7.5f),
@@ -675,7 +675,7 @@
             new(MiscItems.ForgottenShrine, 0f)
         ];
 
-        public readonly static List<BossDrop> SouthWest = [
+        public readonly static List<DropTableEntry> SouthWest = [
             new(Currencies.TemplarAstrolabe, 33f),
             new(Currencies.ChaoticAstrolabe, 7.5f),
             new(Currencies.DeceptiveAstrolabe, 7.5f),
@@ -691,7 +691,7 @@
             new(MiscItems.GamblingDistrict, 0f)
         ];
 
-        public readonly static List<BossDrop> SouthEast = [
+        public readonly static List<DropTableEntry> SouthEast = [
             new(Currencies.TemplarAstrolabe, 33f),
             new(Currencies.ChaoticAstrolabe, 7.5f),
             new(Currencies.DeceptiveAstrolabe, 7.5f),
@@ -706,7 +706,7 @@
             new(MiscItems.UnchartedExpedition, 0f),
         ];
 
-        public readonly static List<BossDrop> Sanctum = [
+        public readonly static List<DropTableEntry> Sanctum = [
             new(Currencies.ArmourersScrap, 0f, true),
             new(Currencies.BlacksmithsWhetstone, 0f, true),
             new(Currencies.OrbOfAugmentation, 0f, true),

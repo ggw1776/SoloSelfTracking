@@ -19,15 +19,15 @@
         "Infinite Hunger"
     };
 
-    private List<BossDrop> GetBossDrops(string boss)
+    private List<DropTableEntry> GetBossDrops(string boss)
     {
         return boss switch
         {
-            "Exarch" => BossDrops.Exarch,
-            "Eater" => BossDrops.Eater,
-            "Black Star" => BossDrops.BlackStar,
-            "Infinite Hunger" => BossDrops.InfiniteHunger,
-            _ => new List<BossDrop>()
+            "Exarch" => DropTables.Exarch,
+            "Eater" => DropTables.Eater,
+            "Black Star" => DropTables.BlackStar,
+            "Infinite Hunger" => DropTables.InfiniteHunger,
+            _ => new List<DropTableEntry>()
         };
     }
 }

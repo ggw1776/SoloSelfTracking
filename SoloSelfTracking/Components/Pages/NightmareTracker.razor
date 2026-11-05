@@ -21,16 +21,16 @@
         "Ziggaurat"
     };
 
-    private List<BossDrop> GetBossDrops(string boss)
+    private List<DropTableEntry> GetBossDrops(string boss)
     {
         return boss switch
         {
-            "Citadel" => BossDrops.Citadel,
-            "Abomination" => BossDrops.Abomination,
-            "Fortress" => BossDrops.Fortress,
-            "Sanctuary" => BossDrops.Sanctuary,
-            "Ziggaurat" => BossDrops.Ziggaurat,
-            _ => new List<BossDrop>()
+            "Citadel" => DropTables.Citadel,
+            "Abomination" => DropTables.Abomination,
+            "Fortress" => DropTables.Fortress,
+            "Sanctuary" => DropTables.Sanctuary,
+            "Ziggaurat" => DropTables.Ziggaurat,
+            _ => new List<DropTableEntry>()
         };
     }
 }

@@ -22,15 +22,15 @@
         "South East"
     };
 
-    private List<BossDrop> GetBossDrops(string boss)
+    private List<DropTableEntry> GetBossDrops(string boss)
     {
         return boss switch
         {
-            "North West" => BossDrops.NorthWest,
-            "North East" => BossDrops.NorthEast,
-            "South West" => BossDrops.SouthWest,
-            "South East" => BossDrops.SouthEast,
-            _ => new List<BossDrop>()
+            "North West" => DropTables.NorthWest,
+            "North East" => DropTables.NorthEast,
+            "South West" => DropTables.SouthWest,
+            "South East" => DropTables.SouthEast,
+            _ => new List<DropTableEntry>()
         };
     }
 }
