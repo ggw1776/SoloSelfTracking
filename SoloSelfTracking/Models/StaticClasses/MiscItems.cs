@@ -55,5 +55,17 @@
         public static readonly MiscItem FragmentofShape = new("Fragment of Shape");
         public static readonly MiscItem FragmentofTerror = new("Fragment of Terror");
         public static readonly MiscItem FragmentofEmptiness = new("Fragment of Emptiness");
+
+        public static readonly MiscItem RiversEnd = new("River's End");
+        public static readonly MiscItem SyndicateHideout = new("Syndicate Hideout");
+        public static readonly MiscItem UntaintedParadise = new("Untainted Paradise");
+        public static readonly MiscItem LakeIslet = new("Lake Islet");
+        public static readonly MiscItem OvergrownGrove = new("Overgrown Grove");
+        public static readonly MiscItem ForgottenShrine = new("Forgotten Shrine");
+        public static readonly MiscItem ManorFoyer = new("Manor Foyer");
+        public static readonly MiscItem PlannedHeist = new("Planned Heist");
+        public static readonly MiscItem GamblingDistrict = new("Gambling District");
+        public static readonly MiscItem CourtofChaos = new("Court of Chaos");
+        public static readonly MiscItem UnchartedExpedition = new("Uncharted Expedition");
     }
 }

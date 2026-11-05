@@ -641,5 +641,69 @@
             new(DivinationCards.ThePriceOfDevotion, 0.1f),
             new(new EquipmentItem( "Sacrificial Garb", Enumerations.EItemType.SacrificialGarb, Enumerations.EItemRarity.Normal), 15f)
         ];
+
+
+        public readonly static List<BossDrop> NorthWest = [
+            new(Currencies.TemplarAstrolabe, 33f),
+            new(Currencies.ChaoticAstrolabe, 7.5f),
+            new(Currencies.DeceptiveAstrolabe, 7.5f),
+            new(Currencies.FruitingAstrolabe, 7.5f),
+            new(Currencies.FungalAstrolabe, 7.5f),
+            new(Currencies.GraspingAstrolabe, 7.5f),
+            new(Currencies.LightlessAstrolabe, 7.5f),
+            new(Currencies.NamelessAstrolabe, 7.5f),
+            new(Currencies.RunicAstrolabe, 7.5f),
+            new(Currencies.TimelessAstrolabe, 7.5f),
+            new(MiscItems.RiversEnd, 0f),
+            new(MiscItems.SyndicateHideout, 0f),
+            new(MiscItems.UntaintedParadise, 0f)
+        ];
+
+        public readonly static List<BossDrop> NorthEast = [
+            new(Currencies.TemplarAstrolabe, 33f),
+            new(Currencies.ChaoticAstrolabe, 7.5f),
+            new(Currencies.DeceptiveAstrolabe, 7.5f),
+            new(Currencies.FruitingAstrolabe, 7.5f),
+            new(Currencies.FungalAstrolabe, 7.5f),
+            new(Currencies.GraspingAstrolabe, 7.5f),
+            new(Currencies.LightlessAstrolabe, 7.5f),
+            new(Currencies.NamelessAstrolabe, 7.5f),
+            new(Currencies.RunicAstrolabe, 7.5f),
+            new(Currencies.TimelessAstrolabe, 7.5f),
+            new(MiscItems.LakeIslet, 0f),
+            new(MiscItems.OvergrownGrove, 0f),
+            new(MiscItems.ForgottenShrine, 0f)
+        ];
+
+        public readonly static List<BossDrop> SouthWest = [
+            new(Currencies.TemplarAstrolabe, 33f),
+            new(Currencies.ChaoticAstrolabe, 7.5f),
+            new(Currencies.DeceptiveAstrolabe, 7.5f),
+            new(Currencies.FruitingAstrolabe, 7.5f),
+            new(Currencies.FungalAstrolabe, 7.5f),
+            new(Currencies.GraspingAstrolabe, 7.5f),
+            new(Currencies.LightlessAstrolabe, 7.5f),
+            new(Currencies.NamelessAstrolabe, 7.5f),
+            new(Currencies.RunicAstrolabe, 7.5f),
+            new(Currencies.TimelessAstrolabe, 7.5f),
+            new(MiscItems.ManorFoyer, 0f),
+            new(MiscItems.PlannedHeist, 0f),
+            new(MiscItems.GamblingDistrict, 0f)
+        ];
+
+        public readonly static List<BossDrop> SouthEast = [
+            new(Currencies.TemplarAstrolabe, 33f),
+            new(Currencies.ChaoticAstrolabe, 7.5f),
+            new(Currencies.DeceptiveAstrolabe, 7.5f),
+            new(Currencies.FruitingAstrolabe, 7.5f),
+            new(Currencies.FungalAstrolabe, 7.5f),
+            new(Currencies.GraspingAstrolabe, 7.5f),
+            new(Currencies.LightlessAstrolabe, 7.5f),
+            new(Currencies.NamelessAstrolabe, 7.5f),
+            new(Currencies.RunicAstrolabe, 7.5f),
+            new(Currencies.TimelessAstrolabe, 7.5f),
+            new(MiscItems.CourtofChaos, 0f),
+            new(MiscItems.UnchartedExpedition, 0f),
+        ];
     }
 }

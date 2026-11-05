@@ -28,10 +28,10 @@ else
     @if(Bosses.Count > 1)
     {
         <div class="mb-3">
-            <label class="form-label">Boss filter</label>
+            <label class="form-label">@Noun filter</label>
             <select class="form-select" style="max-width: 300px"
                     @bind="selectedBoss">
-                <option value="All bosses">All bosses</option>
+                <option value="All bosses">All @NounPlural</option>
                 @foreach (var boss in BossOptions)
                 {
                     <option value="@boss">@boss</option>
@@ -62,7 +62,7 @@ else
         <div class="col-6 col-xl-3">
             <div class="card h-100">
                 <div class="card-body">
-                    <div class="text-muted small">Most recent @Verb</div>
+                    <div class="text-muted small">Most Recent @Verb</div>
                     <h3>
                         @(mostRecentKill?.ToString("g") ?? "N/A")
                     </h3>
@@ -74,7 +74,7 @@ else
     @if (Bosses.Count > 1)
     {
         <section class="mb-5">
-            <h4>Boss Stats</h4>
+            <h4>@Noun Stats</h4>
 
             <div class="table-responsive">
                 <table class="table table-striped table-hover align-middle">
@@ -83,7 +83,7 @@ else
                             <th>
                                 <button class="btn btn-link p-0 text-reset"
                                         @onclick="() => SortBosses(nameof(BossStat.Boss))">
-                                    Boss
+                                    @Noun
                                 </button>
                             </th>
                             @if (Maps.HasValue && Maps.Value == true)
@@ -115,7 +115,11 @@ else
                     <tbody>
                         @foreach (var boss in BossStats)
                         {
-                            var time = TimeSpan.FromSeconds(boss.AverageTime_Seconds);
+                            TimeSpan time = TimeSpan.Zero;
+                            if (boss.AverageTime_Seconds is not double.NaN)
+                            {
+                                time = TimeSpan.FromSeconds(boss.AverageTime_Seconds);
+                            }
 
                             <tr @key="boss.Boss">
                                 <td>@boss.Boss</td>
@@ -169,7 +173,7 @@ else
                                 <th>
                                     <button class="btn btn-link p-0 text-reset"
                                             @onclick="() => SortDropRates(nameof(DropRateRow.Boss))">
-                                        Boss
+                                        @Noun
                                     </button>
                                 </th>
                             }
@@ -227,6 +231,11 @@ else
     public bool? Maps { get; set; }
     [Parameter]
     public bool? Nightmare { get; set; }
+
+    [Parameter]
+    public string Noun { get; set; } = "Boss";
+    [Parameter]
+    public string NounPlural { get; set; } = "Bosses";
 
     [Parameter]
     public string Verb { get; set; } = "Kill";
