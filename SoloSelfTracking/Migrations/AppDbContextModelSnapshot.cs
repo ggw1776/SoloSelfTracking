@@ -112,10 +112,28 @@ namespace SoloSelfTracking.Migrations
                     b.Property<bool>("ClearClipboardOnValidPaste")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EnableAutomaticTimerStart")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EnableIframing")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EnableLogReader")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableMoralSupport")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EnablePasteOnFocusIn")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableShopMusic")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableTeleportScrollNotification")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableTradieDetector")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

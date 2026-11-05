@@ -61,6 +61,130 @@
             </div>
         </div>
 
+        <div class="settings-section">
+            <h5>Client.txt Monitor</h5>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableLogReader">Enable Log Monitor</label>
+                    <p>
+                        Shows a Client.txt monitor on most pages.
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="EnableLogReader"
+                           type="checkbox"
+                           checked="@StoredSettings.EnableLogReader"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnableLogReader), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableTeleportScrollNotification">
+                        Enable Teleport Scroll Reminder
+                    </label>
+                    <p>
+                        Shows a pop-up and plays a sound after the Client.txt monitor every 35 times returning to hideout.
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="EnableTeleportScrollNotification"
+                           type="checkbox"
+                           checked="@StoredSettings.EnableTeleportScrollNotification"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnableTeleportScrollNotification), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableAutomaticTimerStart">
+                        Enable Automatic Timer Start
+                    </label>
+                    <p>
+                        Starts your timer automatically when entering the appropriate zone (currently non-functional).
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="EnableAutomaticTimerStart"
+                           type="checkbox"
+                           checked="@StoredSettings.EnableAutomaticTimerStart"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnableAutomaticTimerStart), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h5>Fun Settings</h5>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableShopMusic">Enable Shop Music</label>
+                    <p>
+                        Plays shop music whenever engaging with a window shopping-type mechanic.
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="EnableShopMusic"
+                           type="checkbox"
+                           checked="@StoredSettings.EnableShopMusic"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnableShopMusic), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableMoralSupport">
+                        Enable Moral Support
+                    </label>
+                    <p>
+                        Shows the moral support page, for when you're feeling down.
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="EnableMoralSupport"
+                           type="checkbox"
+                           checked="@StoredSettings.EnableMoralSupport"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnableMoralSupport), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableTradieDetector">
+                        Enable Tr*die Detector
+                    </label>
+                    <p>
+                        Shows the tradie detector page, for when you notice people getting a slightly too lucky.
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="EnableTradieDetector"
+                           type="checkbox"
+                           checked="@StoredSettings.EnableTradieDetector"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnableTradieDetector), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
+        </div>
+
         <div class="settings-save-status">
             @if (IsSaving)
             {
@@ -96,15 +220,30 @@
             case nameof(StoredSettings.EnablePasteOnFocusIn):
                 StoredSettings.EnablePasteOnFocusIn = value;
                 break;
-
             case nameof(StoredSettings.ClearClipboardOnValidPaste):
                 StoredSettings.ClearClipboardOnValidPaste = value;
                 break;
-
             case nameof(StoredSettings.EnableIframing):
                 StoredSettings.EnableIframing = value;
                 break;
-
+            case nameof(StoredSettings.EnableLogReader):
+                StoredSettings.EnableLogReader = value;
+                break;
+            case nameof(StoredSettings.EnableTeleportScrollNotification):
+                StoredSettings.EnableTeleportScrollNotification = value;
+                break;
+            case nameof(StoredSettings.EnableAutomaticTimerStart):
+                StoredSettings.EnableAutomaticTimerStart = value;
+                break;
+            case nameof(StoredSettings.EnableShopMusic):
+                StoredSettings.EnableShopMusic = value;
+                break;
+            case nameof(StoredSettings.EnableMoralSupport):
+                StoredSettings.EnableMoralSupport = value;
+                break;
+            case nameof(StoredSettings.EnableTradieDetector):
+                StoredSettings.EnableTradieDetector = value;
+                break;
             default:
                 return;
         }

@@ -1,5 +1,7 @@
 ﻿@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Repositories
 @inherits LayoutComponentBase
+@inject SettingsRepository Repository
 
 <div class="page">
     <div class="sidebar">
@@ -18,3 +20,16 @@
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@if (EnableLogReader)
+{
+    <LogMonitor />
+}
+
+@code{
+    private bool EnableLogReader = false;
+    protected override async Task OnInitializedAsync()
+    {
+        EnableLogReader = (await Repository.GetAsync()).EnableLogReader;
+    }
+}
