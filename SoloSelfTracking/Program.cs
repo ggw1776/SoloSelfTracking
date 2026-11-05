@@ -1,4 +1,3 @@
-using ApexCharts;
 using Microsoft.EntityFrameworkCore;
 using SoloSelfTracking.Components;
 using SoloSelfTracking.Data;
@@ -22,8 +21,6 @@ var databasePath = Path.Combine(dataDirectory, builder.Configuration.GetValue<st
 
 builder.Services.AddDbContextFactory<AppDbContext>(options =>
     options.UseSqlite($"Data Source={databasePath}"));
-
-builder.Services.AddApexCharts();
 
 builder.Services.AddScoped<KillRecordRepository>();
 builder.Services.AddScoped<SimulacrumRecordRepository>();
