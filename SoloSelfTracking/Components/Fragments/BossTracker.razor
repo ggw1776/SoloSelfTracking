@@ -136,9 +136,7 @@
                         else if (isSelected && drop.IsMultiple)
                         {
                             <span>
-                                &nbsp (@CurrentMultidropRecords
-                                .Where(x => string.Equals(x, drop.Key))
-                                .Count())
+                                &nbsp (@CurrentMultidropRecords.Where(x => string.Equals(x, drop.Key)).Count())
                             </span>
                         }
                     </button>
