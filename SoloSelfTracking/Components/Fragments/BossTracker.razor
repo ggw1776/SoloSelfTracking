@@ -115,9 +115,12 @@
             {
                 var isSelected = SelectedDrops.Contains(drop.Key);
                 var isMatch = !string.IsNullOrWhiteSpace(DropSearch) &&
-                    drop.Item.DisplayName.Contains(
+                    (drop.Item.DisplayName.Contains(
                         DropSearch,
-                        StringComparison.OrdinalIgnoreCase);
+                        StringComparison.OrdinalIgnoreCase) || 
+                    drop.Item.BaseType.ToString().Contains(
+                        DropSearch.Replace(" ", ""),
+                        StringComparison.OrdinalIgnoreCase));
                 <ItemHoverInfo Item="drop.Item">
                     <button type="button"
                             class="btn @(isSelected

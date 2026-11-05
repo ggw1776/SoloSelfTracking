@@ -1,4 +1,6 @@
-﻿@using Models
+﻿@using System.Text.RegularExpressions
+@using Models
+@using SoloSelfTracking.Enumerations
 @implements IDisposable
 @inject IJSRuntime JS
 
@@ -15,6 +17,7 @@
              style="@($"left: {_tooltipX}px; top: {_tooltipY}px;")">
 
             <strong>@Item.Name</strong>
+            <p>@GetTypeString(Item.BaseType)</p>
 
             @if (Item.LevelRequirement > 0)
             {
@@ -89,6 +92,15 @@
 
         _tooltipX = position.X;
         _tooltipY = position.Y;
+    }
+
+    private string GetTypeString(EItemType type)
+    {
+        if (type == EItemType.Unknown)
+            return "";
+
+
+        return Regex.Replace(type.ToString(), "(\\B[A-Z])", " $1"); //magic string from stack overflow fuck regex
     }
 
     private sealed class TooltipPosition
