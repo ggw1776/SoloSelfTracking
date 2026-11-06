@@ -399,6 +399,7 @@ else
         _navigateService = TriggerNavigateService;
         _navigateService.OnTriggerAsync = HandleNavigationTrigger;
         _navigateService.OnTriggerTimerAsync = HandleTimerTrigger;
+        _navigateService.OnTriggerTimerPauseAsync = HandleTimerPauseTrigger;
         _navigateService.OnTriggerDeathAsync = HandleDeathTrigger;
     }
 
@@ -672,6 +673,12 @@ else
     private async Task HandleTimerTrigger()
     {
         await _performanceTracker.StartTimer();
+        await Task.CompletedTask;
+    }
+
+    private async Task HandleTimerPauseTrigger()
+    {
+        await _performanceTracker.StopTimer();
         await Task.CompletedTask;
     }
 

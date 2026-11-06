@@ -76,12 +76,13 @@
     private Task? _pollingTask;
 
     private bool _enableTpScrollAlarm = false;
-    private readonly int MAX_HIDEOUT_BEFORE_TP_SCROLL_ALARM = 35;
+    private readonly int MAX_HIDEOUT_BEFORE_TP_SCROLL_ALARM = 2;
     private List<string> _detectedHideoutLines = new List<string>();
     private List<string> _detectedDeathLines = new List<string>();
 
     private bool _enableTabNavigate = false;
     private bool _enableTimerStart = false;
+    private bool _enableTimerStop = false;
     private bool _enableAutoDeathCounter = false;
     private TriggerService _trigger; 
 
@@ -93,6 +94,7 @@
         _enableTpScrollAlarm = settingsRepo.EnableTeleportScrollNotification;
         _enableTabNavigate = settingsRepo.EnableAutoTabNavigation;
         _enableTimerStart = settingsRepo.EnableAutomaticTimerStart;
+        _enableTimerStop = settingsRepo.EnablePauseTimerOnEnterHideout;
         _enableAutoDeathCounter = settingsRepo.EnableAutoDeathCounter;
 
         _trigger = TriggerService;
@@ -203,8 +205,7 @@
                 () => ReadLastLines(_path, LineCount),
                 token);
 
-            if (_enableTpScrollAlarm)
-                await HandleTpScrollAlarm();
+            await HandleHideoutDetection();
 
             if (_enableTabNavigate)
             {
@@ -454,7 +455,7 @@
         return result;
     }
 
-    private async Task HandleTpScrollAlarm()
+    private async Task HandleHideoutDetection()
     {
         var hideoutLines = _lines.Where(x => x.Contains("Hideout")).ToList();
         foreach (var line in hideoutLines)
@@ -462,12 +463,16 @@
             if (!_detectedHideoutLines.Contains(line))
             {
                 _detectedHideoutLines.Add(line);
+                if (_enableTimerStop && _trigger.OnTriggerTimerPauseAsync != null)
+                    await _trigger.OnTriggerTimerPauseAsync();
+                    
             }
         }
 
         if (_detectedHideoutLines.Count > MAX_HIDEOUT_BEFORE_TP_SCROLL_ALARM)
         {
-            await JS.InvokeAsync<string?>("notificationUtilities.warning", "You might be running low on teleportation scrolls!");
+            if (_enableTpScrollAlarm)
+                await JS.InvokeAsync<string?>("notificationUtilities.warning", "You might be running low on teleportation scrolls!");
             _detectedHideoutLines.Clear();
         }
     }
@@ -481,7 +486,8 @@
             if (!_detectedDeathLines.Contains(line))
             {
                 _detectedDeathLines.Add(line);
-                await _trigger.OnTriggerDeathAsync();
+                if(_trigger.OnTriggerDeathAsync != null)
+                    await _trigger.OnTriggerDeathAsync();
             }
         }
 

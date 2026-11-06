@@ -15,5 +15,6 @@
         public bool EnableAutoTabNavigation { get; set; } = false;
         public bool EnableAutoDeathCounter { get; set; } = false;
         public bool EnableAutoMapParse { get; set; } = false;
+        public bool EnablePauseTimerOnEnterHideout { get; set; } = false;
     }
 }

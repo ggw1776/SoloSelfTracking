@@ -136,6 +136,9 @@ namespace SoloSelfTracking.Migrations
                     b.Property<bool>("EnablePasteOnFocusIn")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EnablePauseTimerOnEnterHideout")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EnableShopMusic")
                         .HasColumnType("INTEGER");
 
