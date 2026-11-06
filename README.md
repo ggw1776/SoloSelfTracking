@@ -76,7 +76,7 @@ A local LLM was leveraged for code formatting (e.g. EBaseType), some light linti
 
 # CREDITS
 
-All Path of Exile related content, including item descriptions Copyright (c) Grinding Gear Games
+All Path of Exile related content, including item descriptions and images Copyright (c) Grinding Gear Games
 
 https://github.com/PathOfBuildingCommunity/PathOfBuilding/ - Unique item definitions
 

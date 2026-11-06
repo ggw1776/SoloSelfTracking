@@ -21,6 +21,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\audio\" />
     <Folder Include="wwwroot\fonts\" />
+    <Folder Include="wwwroot\img\item\unique\" />
   </ItemGroup>
 
 </Project>

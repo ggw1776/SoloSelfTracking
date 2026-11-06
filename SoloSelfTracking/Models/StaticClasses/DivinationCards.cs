@@ -419,7 +419,7 @@
         public static DivinationCard TheValleyOfSteelBoxes = new("The Valley of Steel Boxes");
         public static DivinationCard TheVast = new("The Vast");
         public static DivinationCard TheVisionary = new("The Visionary");
-        public static DivinationCard TheVoid = new("The Void");
+        public static DivinationCard TheVoid = new("The Void") { IconUrl = "/img/item/div/The_Void_card_art.png" };
         public static DivinationCard TheWarden = new("The Warden");
         public static DivinationCard TheWarlord = new("The Warlord");
         public static DivinationCard TheWatcher = new("The Watcher");

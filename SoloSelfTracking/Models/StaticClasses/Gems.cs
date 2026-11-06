@@ -19,7 +19,7 @@
         public static readonly GemItem CongregationSupport = new("Congregation Support");
 
         public static readonly GemItem UnholyTrinitySupport = new("Unholy Trinity Support");
-        public static readonly GemItem CastOnWardBreakSupport = new("Cast On Ward Break Support");
+        public static readonly GemItem CastOnWardBreakSupport = new("Cast On Ward Break Support") { IconUrl = "/img/item/gem/cast_on_ward_break.png" };
         public static readonly GemItem OverloadedIntensitySupport = new("Overloaded Intensity Support");
         public static readonly GemItem ScornfulHeraldSupport = new("Scornful Herald Support");
         public static readonly GemItem PactOfLycia = new("Pact Of Lycia");

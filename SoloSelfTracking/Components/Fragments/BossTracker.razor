@@ -135,13 +135,40 @@ else if (ShowSoloTitle)
                             @onclick="() => ToggleDrop(drop)"
                             @oncontextmenu="() => DecrementDrop(drop)"
                             @oncontextmenu:preventDefault>
-                        @drop.Item.DisplayName
 
-                        @if (isSelected && !drop.IsMultiple)
+                        @if (!string.IsNullOrWhiteSpace(drop.Item.IconUrl))
+                        {
+                            <div class="drop-button-icon-layout">
+
+                                @if (drop.IsMultiple)
+                                {
+                                    <span class="drop-button-name">
+                                        @drop.Item.DisplayName  &nbsp; (@CurrentMultidropRecords.Where(x => string.Equals(x, drop.Key)).Count())</span>
+                                }
+                                else
+                                {
+                                    <span class="drop-button-name">
+                                        @drop.Item.DisplayName
+                                    </span>
+                                }
+
+                                
+
+                                <img src="@drop.Item.IconUrl"
+                                     class="drop-button-icon"
+                                     alt="@drop.Item.DisplayName" />
+                            </div>
+                        }
+                        else
+                        {
+                            @drop.Item.DisplayName
+                        }
+
+                        @if (isSelected && !drop.IsMultiple && string.IsNullOrWhiteSpace(drop.Item.IconUrl))
                         {
                             <span> ✓</span>
                         }
-                        else if (isSelected && drop.IsMultiple)
+                        else if (isSelected && drop.IsMultiple && string.IsNullOrWhiteSpace(drop.Item.IconUrl))
                         {
                             <span>
                                 &nbsp (@CurrentMultidropRecords.Where(x => string.Equals(x, drop.Key)).Count())

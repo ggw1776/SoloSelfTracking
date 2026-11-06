@@ -1586,3 +1586,27 @@ hr {
     min-height: 20px;
     text-align: right;
 }
+
+.drop-button-icon-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100px;
+    height: 100px;
+}
+
+.drop-button-name {
+    text-align: center;
+    white-space: normal;
+    line-height: 1.2;
+    font-size: 0.85rem;
+}
+
+.drop-button-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    image-rendering: auto;
+}

@@ -20,8 +20,8 @@
 
         public static readonly MiscItem AwakeningFragment = new("Awakening Fragment");
         public static readonly MiscItem RealityFragment = new("Reality Fragment");
-        public static readonly MiscItem CosmicFragment = new("Cosmic Fragment");
-        public static readonly MiscItem SynthesisingFragment = new("Synthesising Fragment");
+        public static readonly MiscItem CosmicFragment = new("Cosmic Fragment") { IconUrl = "/img/item/misc/cosmic_frag.png" };
+        public static readonly MiscItem SynthesisingFragment = new("Synthesising Fragment") { IconUrl = "/img/item/misc/synth_frag.png" };
         public static readonly MiscItem DecayingFragment = new("Decaying Fragment");
         public static readonly MiscItem ReverentFragment = new("Reverent Fragment");
         public static readonly MiscItem TraumaticFragment = new("Traumatic Fragment");
