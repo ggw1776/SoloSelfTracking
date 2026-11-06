@@ -408,6 +408,14 @@
         ProcessionalRelic,
         TomeRelic,
         CandlestickRelic,
-        PapyrusRelic
+        PapyrusRelic,
+        EzomyteBurgonet,
+        IronCirclet,
+        SolarisCirclet,
+        VineCirclet,
+        LunarisCirclet,
+        TribalCirclet,
+        SteelCirclet,
+        BoneCirclet
     }
 }
