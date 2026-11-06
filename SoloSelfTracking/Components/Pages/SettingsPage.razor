@@ -68,7 +68,7 @@
                 <div class="setting-info">
                     <label for="EnableLogReader">Enable Log Monitor</label>
                     <p>
-                        Shows a Client.txt monitor on most pages.
+                        Shows a Client.txt monitor on most pages. This is required for each of the following settings.
                     </p>
                 </div>
 
@@ -126,7 +126,7 @@
             <div class="setting-row">
                 <div class="setting-info">
                     <label for="EnableAutomaticTimerStart">
-                        Enable Auto Timer Start
+                        Enable Timer Auto Start
                     </label>
                     <p>
                         Starts your timer automatically when entering the appropriate zone. Requires Auto Navigation.
@@ -142,6 +142,25 @@
                            <span class="setting-slider"></span>
                        </label>
             </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnablePauseTimerOnEnterHideout">
+                        Enable Timer Auto Pause
+                    </label>
+                    <p>
+                        Pauses your timer automatically when returning to the hideout.
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="EnablePauseTimerOnEnterHideout"
+                           type="checkbox"
+                           checked="@StoredSettings.EnablePauseTimerOnEnterHideout"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnablePauseTimerOnEnterHideout), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
 
 
             <div class="setting-row">
@@ -150,7 +169,7 @@
                         Enable Auto Death Counter
                     </label>
                     <p>
-                        Increments the death counter automatically.
+                        Increments the death counter upon death.
                     </p>
                 </div>
 
@@ -294,6 +313,9 @@
                 break;
             case nameof(StoredSettings.EnableAutoMapParse):
                 StoredSettings.EnableAutoMapParse = value;
+                break;
+            case nameof(StoredSettings.EnablePauseTimerOnEnterHideout):
+                StoredSettings.EnablePauseTimerOnEnterHideout = value;
                 break;
             default:
                 return;

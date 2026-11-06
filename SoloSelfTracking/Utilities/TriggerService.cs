@@ -4,6 +4,7 @@
     {
         public Func<string, Task>? OnTriggerAsync { get; set; }
         public Func<Task>? OnTriggerTimerAsync { get; set; }
+        public Func<Task>? OnTriggerTimerPauseAsync { get; set; }
         public Func<Task>? OnTriggerDeathAsync { get; set; }
         public Func<Task>? OnTriggerMapParseAsync { get; set; }
 
@@ -19,6 +20,13 @@
             if (OnTriggerTimerAsync != null)
             {
                 await OnTriggerTimerAsync.Invoke();
+            }
+        }
+        public async Task TriggerTimerPauseAsync()
+        {
+            if (OnTriggerTimerPauseAsync != null)
+            {
+                await OnTriggerTimerPauseAsync.Invoke();
             }
         }
         public async Task TriggerDeathAsync()

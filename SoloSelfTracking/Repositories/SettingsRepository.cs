@@ -59,6 +59,7 @@ public class SettingsRepository
             existing.EnableAutoTabNavigation = settings.EnableAutoTabNavigation;
             existing.EnableAutoDeathCounter = settings.EnableAutoDeathCounter;
             existing.EnableAutoMapParse = settings.EnableAutoMapParse;
+            existing.EnablePauseTimerOnEnterHideout = settings.EnablePauseTimerOnEnterHideout;
         }
 
         await db.SaveChangesAsync();
