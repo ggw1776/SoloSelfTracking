@@ -631,8 +631,11 @@ else
     {
         if (_pasteModule is not null)
         {
-            await _pasteModule.InvokeVoidAsync("detachPasteHandler");
-            await _pasteModule.DisposeAsync();
+            try
+            {
+                await _pasteModule.InvokeVoidAsync("detachPasteHandler");
+                await _pasteModule.DisposeAsync();
+            } catch (Exception e){}
         }
 
         _dotNetReference?.Dispose();

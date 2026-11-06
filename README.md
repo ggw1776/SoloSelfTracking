@@ -85,3 +85,5 @@ https://favicon.io/favicon-generator/ - Favicon Designer
 https://game-icons.net/ - Icons
 
 Notification by IENBA -- https://freesound.org/s/545495/ -- License: Attribution 4.0
+
+Fonts: https://www.exljbris.com/fontin.html

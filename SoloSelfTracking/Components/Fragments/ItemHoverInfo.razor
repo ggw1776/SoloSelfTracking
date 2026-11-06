@@ -15,23 +15,32 @@
     {
         <div class="item-hover-tooltip"
              style="@($"left: {_tooltipX}px; top: {_tooltipY}px;")">
-
-            <strong>@Item.Name</strong>
-            <p>@GetTypeString(Item.BaseType)</p>
+             <div class="item-header">
+                <strong class="item-name">@Item.Name</strong>
+                <strong class="item-base-type">@GetTypeString(Item.BaseType)</strong>
+            </div>
 
             @if (Item.LevelRequirement > 0)
             {
-                <div>Requires Level @Item.LevelRequirement</div>
+                <div class="item-level-req">Requires Level @Item.LevelRequirement</div>
+            }
+
+            @if (Item.ImplicitModifiers.Count > 0)
+            {
+                <div class="item-implicit">
+                @foreach (var modifier in Item.ImplicitModifiers)
+                {
+                    <p>@modifier</p>
+                }
+                </div>
             }
 
             @if (Item.ExplicitModifiers.Count > 0)
             {
-                <ul>
-                    @foreach (var modifier in Item.ExplicitModifiers)
-                    {
-                        <li>@modifier</li>
-                    }
-                </ul>
+                @foreach (var modifier in Item.ExplicitModifiers)
+                {
+                    <p>@modifier</p>
+                }
             }
         </div>
     }
