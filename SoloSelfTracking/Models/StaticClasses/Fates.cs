@@ -16,5 +16,7 @@
         public static readonly Fate Sanguine = new("Sanguine");
         public static readonly Fate Conjurer = new("Conjurer");
         public static readonly Fate Crowkeeper = new("Crowkeeper");
+        public static readonly Fate Incandescent = new("Incandescent");
+        public static readonly Fate Wildfire = new("Wildfire");
     }
 }

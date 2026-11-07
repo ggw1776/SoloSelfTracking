@@ -12,6 +12,11 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Viscera GreaterGolemicStone = new("Greater Golemic Stone", EVisceraType.Torso, "You cannot be stunned if you've been stunned or blocked a stunning hit in the past 2 seconds");
         public static readonly Viscera GreaterEldersHead = new("Greater Elder's Head", EVisceraType.Head, "Enemies chilled by your hits can be shattered as though frozen");
         public static readonly Viscera SirusHead = new("Sirus' Head", EVisceraType.Head, "Transfiguration of Mind");
-        public static readonly Viscera MavensOrrery = new("Maven's Orrery", EVisceraType.Torso, "enemies wi thin 3 meters are scorched");
+        public static readonly Viscera GreaterSirusHead = new("Greater Sirus' Head", EVisceraType.Head, "Enemies you kill have a 9% chance to explode, dealing a tenth of their maximum life as damage of a random element");
+        public static readonly Viscera MavensOrrery = new("Maven's Orrery", EVisceraType.Torso, "enemies within 3 meters are scorched");
+        public static readonly Viscera AncestorsClub = new("Ancestor's Club", EVisceraType.UpperLimb, "Strike Skills which target additional Enemies can do so from 29% further away");
+        public static readonly Viscera VoltaicSkull = new("VoltaicSkull", EVisceraType.Head, "21% of physical damage converted to lightning damage");
+        public static readonly Viscera GreaterDistendedStomach = new("Greater Distended Stomach", EVisceraType.Torso, "Eat a soul when you consume the corpse of a rare monster");
+        public static readonly Viscera ScholarsLeg = new("Scholar's Leg", EVisceraType.LowerLimb, "9% increased bonuses gained from equipped gloves");
     }
 }

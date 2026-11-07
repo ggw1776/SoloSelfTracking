@@ -1,0 +1,30 @@
+﻿@page "/fates"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+
+<BossTracker Title="Fate Tracker"
+             Bosses="bosses"
+             DropProvider="GetBossDrops"
+             AnalysisHref="fate-analysis"
+             Maps="true"
+             NightmareMods="true"
+             Verb="Map"
+             VerbPlural="Maps" />
+
+@code {
+    private readonly string[] bosses =
+    {
+        "Fates"
+    };
+
+    private List<DropTableEntry> GetBossDrops(string boss)
+    {
+        return boss switch
+        {
+            "Fates" => DropTables.Fates,
+            _ => new List<DropTableEntry>()
+        };
+    }
+}
