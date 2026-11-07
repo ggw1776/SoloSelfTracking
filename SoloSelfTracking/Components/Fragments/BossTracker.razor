@@ -60,6 +60,13 @@ else if (ShowSoloTitle)
                 </div>
 
                 <div class="map-stat">
+                    <label for="mapAtlasDrops">Atlas Drops</label>
+                    <input id="mapAtlasDrops"
+                           type="number"
+                           @bind="_mapAtlasDrops" />
+                </div>
+
+                <div class="map-stat">
                     <label for="mapPackSize">Monster Pack Size</label>
                     <input id="mapPackSize"
                            type="number"
@@ -271,11 +278,11 @@ else
                         {
                             @if(NightmareMods.HasValue && NightmareMods == true)
                             {
-                                <td title="IIQ/IIR/Pack Size/Maps/Scarabs/Currency/Div Cards">@string.Format("{0}%/{1}%/{2}%/{3}%/{4}%/{5}%/{6}%", kill.MapQuantity, kill.MapRarity, kill.MapMonsterPackSize, kill.MapMaps, kill.MapScarabs, kill.MapCurrency, kill.MapDivCards)</td>
+                                <td title="IIQ/IIR/Pack Size/Maps/Scarabs/Currency/Div Cards">@string.Format("{0}%/{1}%/{2}%/{3}%/{4}%/{5}%/{6}%/{7}%", kill.MapQuantity, kill.MapRarity, kill.MapAtlasDrops, kill.MapMonsterPackSize, kill.MapMaps, kill.MapScarabs, kill.MapCurrency, kill.MapDivCards)</td>
                             }
                             else
                             {
-                                <td title="IIQ/IIR">@string.Format("{0}%/{1}%/{2}", kill.MapQuantity, kill.MapRarity, kill.MapMonsterPackSize)</td>
+                                <td title="IIQ/IIR">@string.Format("{0}%/{1}%/{2}%/{3}%", kill.MapQuantity, kill.MapRarity, kill.MapAtlasDrops, kill.MapMonsterPackSize)</td>
                             }
                         }
                         <td>
@@ -386,6 +393,7 @@ else
     private int _mapCurrency = 0;
     private int _mapDivCards = 0;
     private int _mapMaps = 0;
+    private int _mapAtlasDrops = 0;
 
     private Settings UserSettings;
     private TriggerService _navigateService;
@@ -510,6 +518,7 @@ else
             record.MapScarabs = _mapScarabs;
             record.MapCurrency = _mapCurrency;
             record.MapDivCards = _mapDivCards;
+            record.MapAtlasDrops = _mapAtlasDrops;
         }
 
         if (IsSubPage.HasValue && IsSubPage == true)
@@ -627,6 +636,8 @@ else
                     _mapDivCards = ParseMapData(currentLine, "More Divination Cards");
                 if (_mapMaps == 0)
                     _mapMaps = ParseMapData(currentLine, "More Maps");
+                if (_mapAtlasDrops == 0)
+                    _mapAtlasDrops = ParseMapData(currentLine, "Atlas Drops");
                 currentLineIndex++;
             }
 

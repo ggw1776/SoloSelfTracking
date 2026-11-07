@@ -22,6 +22,7 @@ namespace SoloSelfTracking.Utilities
             record.MapMaps = toApply.MapMaps;
             record.MapCurrency = toApply.MapCurrency;
             record.MapDivCards = toApply.MapDivCards;
+            record.MapAtlasDrops = toApply.MapAtlasDrops;
         }
     }
 }
