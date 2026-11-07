@@ -283,7 +283,7 @@
                 AreaLevel = int.Parse(AreaLevel),
                 Id = _nextKillId++
             };
-            record.ApplyKillRecord(killRecord);
+            KillRecordUtilities<IncursionRecord>.ApplyKillRecord(record, killRecord);
 
             await Repository.AddAsync(record);
 
