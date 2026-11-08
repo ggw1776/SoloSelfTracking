@@ -29,21 +29,30 @@
         <div class="fate-selection-grid">
             @foreach (var fate in FilteredFateOptions)
             {
-                bool isSelected = SelectedFates.Contains(fate.Value);
-                bool isDisabled = SelectedFates.Count >= 3 && !isSelected;
+                int count = SelectedFates.Count(x => x == fate.Value);
+                bool isDisabled = SelectedFates.Count >= 3;
 
-                <button type="button"
-                        class="fate-selection-card @(isSelected ? "selected" : "")"
-                        disabled="@isDisabled"
-                        @onclick="() => ToggleFate(fate.Value)">
-
+                <div class="fate-selection-card @(count > 0 ? "selected" : "")">
                     <span>@fate.Name</span>
 
-                    @if (isSelected)
-                    {
-                        <span class="fate-selected-indicator">✓</span>
-                    }
-                </button>
+                    <div class="fate-reward-controls">
+                        <button type="button"
+                                class="fate-reward-button"
+                                disabled="@(count == 0)"
+                                @onclick="() => RemoveFate(fate.Value)">
+                            −
+                        </button>
+
+                        <span class="fate-reward-count">@count</span>
+
+                        <button type="button"
+                                class="fate-reward-button"
+                                disabled="@isDisabled"
+                                @onclick="() => AddFate(fate.Value)">
+                            +
+                        </button>
+                    </div>
+                </div>
             }
         </div>
     </div>
@@ -359,5 +368,15 @@
     {
         FateRecords.RemoveAll(k => k.Id == id);
         await Repository.DeleteAsync(id);
+    }
+    private void AddFate(Fate fate)
+    {
+        if (SelectedFates.Count < 3)
+            SelectedFates.Add(fate);
+    }
+
+    private void RemoveFate(Fate fate)
+    {
+        SelectedFates.Remove(fate);
     }
 }
