@@ -139,6 +139,9 @@ namespace SoloSelfTracking.Migrations
                     b.Property<bool>("ClearClipboardOnValidPaste")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EnableAnomaly")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EnableAutoDeathCounter")
                         .HasColumnType("INTEGER");
 
@@ -151,13 +154,46 @@ namespace SoloSelfTracking.Migrations
                     b.Property<bool>("EnableAutomaticTimerStart")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EnableBosses")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableExpedition")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableFates")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableHeist")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EnableIframing")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableIncursion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableInviteBosses")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableKingsmarchMapping")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableKingsmarchShipping")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableLab")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EnableLogReader")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EnableMappingStrats")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EnableMoralSupport")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableNightmares")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EnablePasteOnFocusIn")
@@ -166,13 +202,37 @@ namespace SoloSelfTracking.Migrations
                     b.Property<bool>("EnablePauseTimerOnEnterHideout")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EnableRegexDictionary")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableSanctum")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EnableShopMusic")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableSimulacrum")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableStash")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableT0s")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EnableTeleportScrollNotification")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EnableTimeline")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EnableTradieDetector")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableUbers")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableWombgifts")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

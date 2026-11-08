@@ -39,28 +39,13 @@ public class SettingsRepository
         var existing = await db.Settings
             .FirstOrDefaultAsync(x => x.Id == 1);
 
-        if (existing == null)
+        if (existing != null)
         {
-            settings.Id = 1;
-            db.Settings.Add(settings);
+            db.Settings.Remove(existing);
         }
-        else
-        {
-            existing.EnablePasteOnFocusIn = settings.EnablePasteOnFocusIn;
-            existing.ClearClipboardOnValidPaste = settings.ClearClipboardOnValidPaste;
-            existing.EnableIframing = settings.EnableIframing;
-            existing.EnableLogReader = settings.EnableLogReader;
-            existing.ClearClipboardOnValidPaste = settings.ClearClipboardOnValidPaste;
-            existing.EnableTeleportScrollNotification = settings.EnableTeleportScrollNotification;
-            existing.EnableAutomaticTimerStart = settings.EnableAutomaticTimerStart;
-            existing.EnableShopMusic = settings.EnableShopMusic;
-            existing.EnableMoralSupport = settings.EnableMoralSupport;
-            existing.EnableTradieDetector = settings.EnableTradieDetector;
-            existing.EnableAutoTabNavigation = settings.EnableAutoTabNavigation;
-            existing.EnableAutoDeathCounter = settings.EnableAutoDeathCounter;
-            existing.EnableAutoMapParse = settings.EnableAutoMapParse;
-            existing.EnablePauseTimerOnEnterHideout = settings.EnablePauseTimerOnEnterHideout;
-        }
+
+        settings.Id = 1;
+        db.Settings.Add(settings);
 
         await db.SaveChangesAsync();
     }
