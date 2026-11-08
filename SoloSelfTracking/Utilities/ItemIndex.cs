@@ -24,6 +24,8 @@ namespace SoloSelfTracking.Utilities
             if (result != null) return result;
             result = ItemLookup<MiscItem>.Find(name, typeof(MiscItems));
             if (result != null) return result;
+            result = ItemLookup<Viscera>.Find(name, typeof(Visceras));
+            if (result != null) return result;
 
 
             /*

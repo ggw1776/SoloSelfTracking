@@ -73,6 +73,9 @@
 .bi-sanctum-fill-nav-menu {
     background-image: url('../../img/book-cover.svg');
 }
+.bi-fates-fill-nav-menu {
+    background-image: url('../../img/cauldron.svg');
+}
 
 .nav-item {
     font-size: 0.9rem;

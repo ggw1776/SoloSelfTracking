@@ -15,11 +15,12 @@
         public int MapMaps { get; set; }
         public int MapCurrency { get; set; }
         public int MapDivCards { get; set; }
+        public int MapAtlasDrops { get; set; }
 
 
         public bool IsMapStatsSet()
         {
-            return MapQuantity > 0 || MapRarity > 0 || MapMonsterPackSize > 0 || MapScarabs > 0 || MapMaps > 0 || MapCurrency > 0 || MapDivCards > 0;
+            return MapQuantity > 0 || MapRarity > 0 || MapMonsterPackSize > 0 || MapScarabs > 0 || MapMaps > 0 || MapCurrency > 0 || MapDivCards > 0 || MapAtlasDrops > 0;
         }
     }
 

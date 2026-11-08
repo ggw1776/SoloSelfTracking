@@ -22,7 +22,7 @@
         public static readonly GemItem CastOnWardBreakSupport = new("Cast On Ward Break Support") { IconUrl = "/img/item/gem/cast_on_ward_break.png" };
         public static readonly GemItem OverloadedIntensitySupport = new("Overloaded Intensity Support");
         public static readonly GemItem ScornfulHeraldSupport = new("Scornful Herald Support");
-        public static readonly GemItem PactOfLycia = new("Pact Of Lycia");
+        public static readonly GemItem PactOfLycia = new("Pact Of Lycia") { IconUrl = "/img/item/gem/Pact_of_Lycia_inventory_icon.png" };
         public static readonly GemItem CommunionSupport = new("Communion Support");
         public static readonly GemItem EldrichBlasphemySupport = new("Eldrich Blasphemy Support");
         public static readonly GemItem CrystalfallSupport = new("Crystalfall Support");

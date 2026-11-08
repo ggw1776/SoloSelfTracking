@@ -8,12 +8,14 @@ namespace SoloSelfTracking.Models
     {
         public List<string> UniqueAffixes = [];
 
-        public Unique(string name, EItemType baseType)
+        public Unique(string name, EItemType baseType, string iconUrl = "")
         {
             Name = name;
             BaseType = baseType;
             Rarity = EItemRarity.Unique;
-            
+
+            if (iconUrl != string.Empty)
+                IconUrl = "/img/item/unique/" + iconUrl;
         }
     }
 }

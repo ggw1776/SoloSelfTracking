@@ -128,11 +128,11 @@ else
                                 {
                                     @if (Nightmare.HasValue && Nightmare == true)
                                     {
-                                        <td title="IIQ/IIR/Pack Size/Maps/Scarabs/Currency/Div Cards">@string.Format("{0}%/{1}%/{2}%/{3}%/{4}%/{5}%/{6}%", boss.AverageMapQuantity.ToString("0.##"), boss.AverageMapRarity.ToString("0.##"), boss.AverageMapMonsterPackSize.ToString("0.##"), boss.AverageMapMaps.ToString("0.##"), boss.AverageMapScarabs.ToString("0.##"), boss.AverageMapCurrency.ToString("0.##"), boss.AverageMapDivCards.ToString("0.##"))</td>
+                                        <td title="IIQ/IIR/Pack Size/Maps/Scarabs/Currency/Div Cards">@string.Format("{0}%/{1}%/{2}%/{3}%/{4}%/{5}%/{6}%/{7}%", boss.AverageMapQuantity.ToString("0.##"), boss.AverageMapRarity.ToString("0.##"), boss.AverageAtlasDrops.ToString("0.##"), boss.AverageMapMonsterPackSize.ToString("0.##"), boss.AverageMapMaps.ToString("0.##"), boss.AverageMapScarabs.ToString("0.##"), boss.AverageMapCurrency.ToString("0.##"), boss.AverageMapDivCards.ToString("0.##"))</td>
                                     }
                                     else
                                     {
-                                        <td title="IIQ/IIR/Pack Size">@string.Format("{0}%/{1}%/{2}%", boss.AverageMapQuantity.ToString("0.##"), boss.AverageMapRarity.ToString("0.##"), boss.AverageMapMonsterPackSize.ToString("0.##"))</td>
+                                        <td title="IIQ/IIR/Pack Size">@string.Format("{0}%/{1}%/{2}%/{3}%", boss.AverageMapQuantity.ToString("0.##"), boss.AverageMapRarity.ToString("0.##"), boss.AverageAtlasDrops.ToString("0.##"), boss.AverageMapMonsterPackSize.ToString("0.##"))</td>
                                     }
                                 }
                                 <td class="text-end">@boss.Kills</td>
@@ -379,6 +379,10 @@ else
                         AverageMapDivCards = mapSetKills > 0
                             ? (double)group.Where(x => x.IsMapStatsSet()).Sum(
                                 x => x.MapDivCards) / mapSetKills
+                            : 0,
+                        AverageAtlasDrops = mapSetKills > 0
+                            ? (double)group.Where(x => x.IsMapStatsSet()).Sum(
+                                x => x.MapAtlasDrops) / mapSetKills
                             : 0
                     };
                 });
@@ -470,5 +474,6 @@ else
         public double AverageMapMaps { get; set; }
         public double AverageMapCurrency { get; set; }
         public double AverageMapDivCards { get; set; }
+        public double AverageAtlasDrops { get; set; }
     }
 }

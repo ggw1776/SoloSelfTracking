@@ -16,6 +16,7 @@ namespace SoloSelfTracking.Data
         public DbSet<SimulacrumRecord> SimulacrumRecords => Set<SimulacrumRecord>();
         public DbSet<IncursionRecord> IncursionRecords => Set<IncursionRecord>();
         public DbSet<Settings> Settings => Set<Settings>();
+        public DbSet<FateRecord> FateRecords => Set<FateRecord>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -89,6 +90,22 @@ namespace SoloSelfTracking.Data
 
                 entity.HasMany(x => x.OpenRooms).WithOne().OnDelete(DeleteBehavior.Cascade);
                 entity.HasMany(x => x.ObstructedRooms).WithOne().OnDelete(DeleteBehavior.Cascade);
+            });
+
+
+            modelBuilder.Entity<FateRecord>(entity =>
+            {
+                entity.Property(x => x.Date)
+                    .IsRequired();
+
+                entity.Property(x => x.Boss)
+                    .IsRequired();
+
+                entity.Property(x => x.Drops)
+                    .HasConversion(dropsConverter)
+                    .IsRequired();
+
+                entity.HasMany(x => x.Fates).WithOne().OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Settings>()
