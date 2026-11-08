@@ -1849,3 +1849,130 @@ hr {
         animation-duration: 1ms;
     }
 }
+
+.t0-page {
+    padding: 20px;
+    color: var(--poe-text);
+}
+
+    .t0-page h3 {
+        color: var(--poe-gold);
+        margin-bottom: 20px;
+    }
+
+.t0-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.t0-item-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 65px;
+    padding: 12px;
+    background: var(--poe-panel);
+    border: 1px solid var(--poe-border);
+    border-radius: var(--poe-radius);
+    color: var(--poe-text);
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+    .t0-item-button:hover {
+        background: var(--poe-panel-hover);
+        border-color: var(--poe-gold);
+        color: var(--poe-text-bright);
+    }
+
+.t0-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.t0-modal {
+    width: min(450px, 100%);
+    padding: 24px;
+    background: var(--poe-panel);
+    border: 1px solid var(--poe-border);
+    border-radius: var(--poe-radius);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+}
+
+    .t0-modal h4 {
+        margin-bottom: 16px;
+        color: var(--poe-gold);
+    }
+
+    .t0-modal p {
+        margin-bottom: 18px;
+        color: var(--poe-text);
+    }
+
+    .t0-modal strong {
+        color: var(--poe-text-bright);
+    }
+
+    .t0-modal label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--poe-text-muted);
+    }
+
+.t0-activity-input {
+    width: 100%;
+    padding: 9px 12px;
+    background: var(--poe-bg-secondary);
+    border: 1px solid var(--poe-border);
+    border-radius: var(--poe-radius);
+    color: var(--poe-text);
+    outline: none;
+}
+
+    .t0-activity-input:focus {
+        border-color: var(--poe-gold);
+    }
+
+.t0-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.t0-cancel-button,
+.t0-confirm-button {
+    padding: 7px 16px;
+    border: 1px solid var(--poe-border);
+    border-radius: var(--poe-radius);
+    cursor: pointer;
+}
+
+.t0-cancel-button {
+    background: var(--poe-bg-secondary);
+    color: var(--poe-text);
+}
+
+.t0-confirm-button {
+    background: var(--poe-gold);
+    border-color: var(--poe-gold);
+    color: var(--poe-bg);
+}
+
+    .t0-confirm-button:hover:not(:disabled) {
+        background: var(--poe-gold-hover);
+    }
+
+    .t0-confirm-button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+

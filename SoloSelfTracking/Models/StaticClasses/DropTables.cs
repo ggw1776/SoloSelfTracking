@@ -799,5 +799,27 @@
             new(Visceras.GreaterDistendedStomach, 0f),
             new(Visceras.ScholarsLeg, 0f),
         ];
+
+        public readonly static List<DropTableEntry> t0 =
+        [
+            new(Uniques.BinosKitchenKnife, 0f),
+            new(Uniques.Bloodseeker, 0f),
+            new(Uniques.DefianceOfDestiny, 0f),
+            new(Uniques.Divinarius, 0f),
+            new(Uniques.EphemeralEdge, 0f),
+            new(Uniques.EssentiaSanguis, 0f),
+            new(Uniques.Headhunter, 0f),
+            new(Uniques.JiquanisPotential, 0f),
+            new(Uniques.KalandrasTouch, 0f),
+            new(Uniques.LioneyesGlare, 0f),
+            new(Uniques.Mageblood, 0f),
+            new(Uniques.MarohiErqi, 0f),
+            new(Uniques.RakiatasDance, 0f),
+            new(Uniques.Reefbane, 0f),
+            new(Uniques.SoulTaker, 0f),
+            new(Uniques.TheSquire, 0f),
+            new(Uniques.Varunastra, 0f),
+            new(Uniques.VoltaxicRift, 0f),
+        ];
     }
 }

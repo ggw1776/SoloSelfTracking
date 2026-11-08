@@ -16,6 +16,7 @@
         public int MapCurrency { get; set; }
         public int MapDivCards { get; set; }
         public int MapAtlasDrops { get; set; }
+        public string Activity { get; set; } = string.Empty;
 
 
         public bool IsMapStatsSet()

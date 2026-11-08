@@ -1,0 +1,204 @@
+﻿@page "/t0"
+@rendermode InteractiveServer
+
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+@using SoloSelfTracking.Repositories
+@using SoloSelfTracking.Utilities
+
+@inject KillRecordRepository Repository
+
+<div class="card mb-4 p-3">
+    <h3>T0 Uniques</h3>
+
+    <div class="d-flex flex-wrap gap-2 mb-3">
+        @foreach (var row in DropTables.t0)
+        {
+            <ItemHoverInfo Item="row.Drop">
+                <button type="button"
+                        class="btn btn-outline-secondary"
+                        @key="row.Drop"
+                        @onclick="() => SelectItem(row.Drop.Name)">
+                    <div class="drop-button-icon-layout">
+                        <span class="drop-button-name">
+                            @row.Drop.DisplayName
+                        </span>
+                        <img src="@row.Drop.IconUrl"
+                             class="drop-button-icon"
+                             alt="@row.Drop.DisplayName" />
+                    </div>
+                </button>
+            </ItemHoverInfo>
+
+        }
+    </div>
+</div>
+
+@if (_showActivityPrompt)
+{
+    <div class="t0-modal-backdrop">
+        <div class="t0-modal">
+            <h4>Record T0 Drop</h4>
+
+            <p>
+                You found <strong>@_selectedItem</strong>!!
+            </p>
+
+            <label for="activity-input">
+                How did you find it?
+            </label>
+
+            <input id="activity-input"
+                   type="text"
+                   class="t0-activity-input"
+                   placeholder="Enter activity..."
+                   @bind="_activity"
+                   @bind:event="oninput"
+                   autofocus />
+
+            <div class="t0-modal-actions">
+                <button type="button"
+                        class="t0-cancel-button"
+                        @onclick="CancelRecord">
+                    Cancel
+                </button>
+
+                <button type="button"
+                        class="t0-confirm-button"
+                        disabled="@string.IsNullOrWhiteSpace(_activity)"
+                        @onclick="CompleteRecord">
+                    Record
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+    <h4>History</h4>
+
+    <div class="d-flex gap-2 align-items-center">
+        <div class="nav-item px-3">
+            <NavLink class="bi accordion" href="t0-analysis">
+                Analysis
+            </NavLink>
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Date and Time</th>
+                <th>Drop</th>
+                <th>Activity</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var drop in T0DropHistory)
+            {
+                Item item = ItemIndex.FindItem(drop.Drops.Single().Drop);
+                <tr @key="drop.Id">
+                    <td>@drop.Date.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td>
+                        <span class="badge bg-secondary me-1 mb-1">
+                            <ItemHoverInfo Item="item">
+                                @item.DisplayName
+                            </ItemHoverInfo>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge bg-secondary me-1 mb-1">
+                            @drop.Activity
+                        </span>
+                    </td>
+                    <td>
+                        <button type="button"
+                                class="btn btn-sm btn-outline-danger"
+                                @onclick="() => DeleteKill(drop.Id)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    private bool _showActivityPrompt = false;
+    private string _selectedItem = string.Empty;
+    private string _activity = string.Empty;
+    private readonly string T0NAME = "t0";
+
+    private List<KillRecord> T0DropHistory;
+    private int _nextKillId = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        T0DropHistory = (await Repository.GetAllAsync()).Where(x => string.Equals(x.Boss, T0NAME)).ToList();
+
+        _nextKillId = T0DropHistory.Count > 0
+            ? T0DropHistory.Max(x => x.Id) + 1
+            : 0;
+    }
+
+    private void SelectItem(string item)
+    {
+        _selectedItem = item;
+        _activity = string.Empty;
+        _showActivityPrompt = true;
+    }
+
+    private void CancelRecord()
+    {
+        _showActivityPrompt = false;
+        _selectedItem = string.Empty;
+        _activity = string.Empty;
+    }
+
+    private async Task CompleteRecord()
+    {
+        if (string.IsNullOrWhiteSpace(_activity) ||
+            string.IsNullOrWhiteSpace(_selectedItem))
+        {
+            return;
+        }
+
+        var record = new KillRecord
+        {
+            Id = _nextKillId,
+            Date = DateTime.Now,
+            Boss = T0NAME,
+            Activity = _activity.Trim(),
+            Drops = new List<KillRecordDrop>
+            {
+                new()
+                {
+                    Drop = _selectedItem,
+                    Count = 1
+                }
+            }
+        };
+
+        await Repository.AddAsync(record);
+        T0DropHistory = await Repository.GetAllAsync();
+        _nextKillId = T0DropHistory.Count > 0
+            ? T0DropHistory.Max(x => x.Id) + 1
+            : 0;
+
+        CancelRecord();
+    }
+
+    private async Task DeleteKill(int id)
+    {
+        T0DropHistory.RemoveAll(k => k.Id == id);
+        await Repository.DeleteAsync(id);
+    }
+    private static string FormatDuration(TimeSpan duration)
+    {
+        return $"{(int)duration.TotalHours:D2}:{duration.Minutes:D2}:{duration.Seconds:D2}";
+    }
+}
