@@ -1,4 +1,6 @@
-﻿namespace SoloSelfTracking.Models
+﻿using SoloSelfTracking.Enumerations;
+
+namespace SoloSelfTracking.Models
 {
     public class Fate
     {

@@ -208,6 +208,10 @@ namespace SoloSelfTracking.Migrations
                 {
                     b.HasBaseType("SoloSelfTracking.Models.KillRecord");
 
+                    b.PrimitiveCollection<string>("Reward")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasDiscriminator().HasValue("FateRecord");
                 });
 

@@ -1610,3 +1610,187 @@ hr {
     object-fit: contain;
     image-rendering: auto;
 }
+
+.fate-selection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+    color: var(--poe-text);
+}
+
+.fate-selection-section {
+    background: var(--poe-panel);
+    border: 1px solid var(--poe-border);
+    border-radius: var(--poe-radius);
+    padding: 14px;
+    min-width: 0;
+}
+
+.fate-selection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--poe-border-muted);
+}
+
+    .fate-selection-header h4 {
+        color: var(--poe-gold);
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    .fate-selection-header span {
+        color: var(--poe-text-muted);
+        font-size: 0.8rem;
+    }
+
+/* Fate cards */
+
+.fate-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+}
+
+.fate-selection-card {
+    position: relative;
+    min-height: 58px;
+    padding: 10px;
+    background: var(--poe-bg-secondary);
+    border: 1px solid var(--poe-border);
+    border-radius: var(--poe-radius);
+    color: var(--poe-text);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+    .fate-selection-card:hover:not(:disabled) {
+        background: var(--poe-panel-hover);
+        border-color: var(--poe-gold);
+    }
+
+    .fate-selection-card.selected {
+        background: #302719;
+        border-color: var(--poe-gold);
+        color: var(--poe-gold-hover);
+        box-shadow: inset 0 0 8px rgba(184, 154, 90, 0.12);
+    }
+
+    .fate-selection-card:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+
+.fate-selected-indicator {
+    position: absolute;
+    top: 3px;
+    right: 6px;
+    color: var(--poe-gold);
+}
+
+/* Rewards */
+
+.fate-reward-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.fate-reward-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 6px 8px;
+    background: var(--poe-bg-secondary);
+    border: 1px solid transparent;
+    border-radius: var(--poe-radius);
+}
+
+    .fate-reward-row.selected {
+        border-color: var(--poe-border);
+        background: var(--poe-panel-hover);
+    }
+
+.fate-reward-name {
+    color: var(--poe-text);
+    font-size: 0.85rem;
+}
+
+.fate-reward-row.selected .fate-reward-name {
+    color: var(--poe-gold-hover);
+}
+
+.fate-reward-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.fate-reward-button {
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    background: var(--poe-panel);
+    border: 1px solid var(--poe-border);
+    border-radius: var(--poe-radius);
+    color: var(--poe-text);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+    .fate-reward-button:hover:not(:disabled) {
+        color: var(--poe-gold-hover);
+        border-color: var(--poe-gold);
+    }
+
+    .fate-reward-button:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+.fate-reward-count {
+    min-width: 18px;
+    text-align: center;
+    color: var(--poe-gold);
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 768px) {
+    .fate-selection {
+        grid-template-columns: 1fr;
+    }
+}
+
+.fate-search {
+    margin-bottom: 12px;
+}
+
+    .fate-search input {
+        width: 100%;
+        padding: 7px 10px;
+        background: var(--poe-bg-secondary);
+        border: 1px solid var(--poe-border);
+        border-radius: var(--poe-radius);
+        color: var(--poe-text);
+        font-size: 0.85rem;
+        outline: none;
+    }
+
+        .fate-search input::placeholder {
+            color: #827968;
+        }
+
+        .fate-search input:focus {
+            border-color: var(--poe-gold);
+            box-shadow: 0 0 4px rgba(184, 154, 90, 0.2);
+        }
