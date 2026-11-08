@@ -43,7 +43,7 @@ Tracking modules for the following, roughly in this order
 * lab
 * wombgift tracking
 * ~~anomaly rushing tracking~~
-* T0 tracking
+* ~~T0 tracking~~
 * general mapping strategy tracking
 * blight
 * expedition
