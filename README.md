@@ -24,8 +24,9 @@ Existing tools are focused on trade and track things like div/hour. This tool wi
 
 # CURRENT FEATURES
 
-<img width="1900" height="913" alt="image" src="https://github.com/user-attachments/assets/34974b17-5f79-4abc-aece-be4f1ff00e94" />
-<img width="1913" height="907" alt="image" src="https://github.com/user-attachments/assets/2e3323fc-7e77-4c15-905f-47854d2573cc" />
+<img width="1904" height="912" alt="image" src="https://github.com/user-attachments/assets/a48dad75-7ea7-4ce0-8c2e-e2271dd7fb24" />
+<img width="1912" height="808" alt="image" src="https://github.com/user-attachments/assets/94a7303f-1b2b-4a1d-967c-dbde7f70038d" />
+
 
 nightmare map tracking and tracking for many bosses, incursions (tbd make this actually descriptive later), anomaly rush
 all pages support copy/paste for maps and drops. only simulacrum currently supports unid'd uniques.
