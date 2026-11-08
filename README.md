@@ -36,7 +36,7 @@ all pages support copy/paste for maps and drops. only simulacrum currently suppo
 Tracking modules for the following, roughly in this order
 
 * ~~Simulacrum~~
-* whatever new cool league mechanics pop up
+* ~~whatever new cool league mechanics pop up~~
 * ~~Incursion~~
 * ~~non-uber bosses~~
 * heists
