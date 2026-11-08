@@ -88,6 +88,9 @@ namespace SoloSelfTracking.Migrations
                     b.Property<TimeSpan>("ElapsedTime")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("MapAtlasDrops")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("MapCurrency")
                         .HasColumnType("INTEGER");
 
