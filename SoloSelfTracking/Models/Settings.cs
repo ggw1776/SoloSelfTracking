@@ -16,5 +16,28 @@
         public bool EnableAutoDeathCounter { get; set; } = false;
         public bool EnableAutoMapParse { get; set; } = false;
         public bool EnablePauseTimerOnEnterHideout { get; set; } = false;
+
+        //pages
+
+        public bool EnableFates { get; set; } = true;
+        public bool EnableAnomaly { get; set; } = true;
+        public bool EnableSimulacrum { get; set; } = true;
+        public bool EnableSanctum { get; set; } = true;
+        public bool EnableIncursion { get; set; } = true;
+        public bool EnableNightmares { get; set; } = true;
+        public bool EnableBosses { get; set; } = true;
+        public bool EnableInviteBosses { get; set; } = true;
+        public bool EnableUbers { get; set; } = true;
+        public bool EnableT0s { get; set; } = true;
+        public bool EnableTimeline { get; set; } = true;
+        public bool EnableStash { get; set; } = true;
+        public bool EnableRegexDictionary { get; set; } = true;
+        public bool EnableHeist { get; set; } = true;
+        public bool EnableLab { get; set; } = true;
+        public bool EnableWombgifts { get; set; } = true;
+        public bool EnableMappingStrats { get; set; } = true;
+        public bool EnableExpedition { get; set; } = true;
+        public bool EnableKingsmarchShipping { get; set; } = true;
+        public bool EnableKingsmarchMapping { get; set; } = true;
     }
 }

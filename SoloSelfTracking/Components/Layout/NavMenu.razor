@@ -18,51 +18,87 @@
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fates">
-                <span class="bi bi-fates-fill-nav-menu" aria-hidden="true"></span> Fates
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="anomaly">
-                <span class="bi bi-anomaly-fill-nav-menu" aria-hidden="true"></span> Anomaly
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="simulacrum">
-                <span class="bi bi-simu-fill-nav-menu" aria-hidden="true"></span> Simulacrum
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="sanctum">
-                <span class="bi bi-sanctum-fill-nav-menu" aria-hidden="true"></span> Sanctum
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="incursion-tracking">
-                <span class="bi bi-incursion-fill-nav-menu" aria-hidden="true"></span> Incursion
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="nightmares">
-                <span class="bi bi-nightmare-fill-nav-menu" aria-hidden="true"></span> Nightmares
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="bosses">
-                <span class="bi bi-normal-boss-fill-nav-menu" aria-hidden="true"></span> Bosses
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="invitation-bosses">
-                <span class="bi bi-invite-boss-fill-nav-menu" aria-hidden="true"></span> Invite Bosses
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="ubers">
-                <span class="bi bi-uber-boss-fill-nav-menu" aria-hidden="true"></span> Ubers
-            </NavLink>
-        </div>
+        @if (StoredSettings != null && StoredSettings.EnableFates)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="fates">
+                    <span class="bi bi-fates-fill-nav-menu" aria-hidden="true"></span> Fates
+                </NavLink>
+            </div>
+        }
+
+        @if (StoredSettings != null && StoredSettings.EnableAnomaly)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="anomaly">
+                    <span class="bi bi-anomaly-fill-nav-menu" aria-hidden="true"></span> Anomaly
+                </NavLink>
+            </div>
+        }
+
+        @if (StoredSettings != null && StoredSettings.EnableSimulacrum)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="simulacrum">
+                    <span class="bi bi-simu-fill-nav-menu" aria-hidden="true"></span> Simulacrum
+                </NavLink>
+            </div>
+        }
+
+        @if (StoredSettings != null && StoredSettings.EnableSanctum)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="sanctum">
+                    <span class="bi bi-sanctum-fill-nav-menu" aria-hidden="true"></span> Sanctum
+                </NavLink>
+            </div>
+        }
+
+        @if (StoredSettings != null && StoredSettings.EnableIncursion)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="incursion-tracking">
+                    <span class="bi bi-incursion-fill-nav-menu" aria-hidden="true"></span> Incursion
+                </NavLink>
+            </div>
+        }
+
+        @if (StoredSettings != null && StoredSettings.EnableNightmares)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="nightmares">
+                    <span class="bi bi-nightmare-fill-nav-menu" aria-hidden="true"></span> Nightmares
+                </NavLink>
+            </div>
+        }
+
+        @if (StoredSettings != null && StoredSettings.EnableBosses)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="bosses">
+                    <span class="bi bi-normal-boss-fill-nav-menu" aria-hidden="true"></span> Bosses
+                </NavLink>
+            </div>
+        }
+
+        @if (StoredSettings != null && StoredSettings.EnableInviteBosses)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="invitation-bosses">
+                    <span class="bi bi-invite-boss-fill-nav-menu" aria-hidden="true"></span> Invite Bosses
+                </NavLink>
+            </div>
+        }
+
+        @if (StoredSettings != null && StoredSettings.EnableUbers)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="ubers">
+                    <span class="bi bi-uber-boss-fill-nav-menu" aria-hidden="true"></span> Ubers
+                </NavLink>
+            </div>
+        }
+
         @if (StoredSettings != null && StoredSettings.EnableMoralSupport)
         {
             <div class="nav-item px-3">
@@ -71,11 +107,15 @@
                 </NavLink>
             </div>
         }
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="t0">
-                <span class="bi bi-t0-fill-nav-menu" aria-hidden="true"></span> T0 Uniques
-            </NavLink>
-        </div>
+
+        @if (StoredSettings != null && StoredSettings.EnableT0s)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="t0">
+                    <span class="bi bi-t0-fill-nav-menu" aria-hidden="true"></span> T0 Uniques
+                </NavLink>
+            </div>
+        }
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="settings">
                 <span class="bi bi-settings-fill-nav-menu" aria-hidden="true"></span> Settings

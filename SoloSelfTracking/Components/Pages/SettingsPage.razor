@@ -185,6 +185,270 @@
         </div>
 
         <div class="settings-section">
+            <h5>Page Visibility</h5>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableFates">Fate Tracker</label>
+                    <p>Show or hide the Fate Tracker page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableFates" type="checkbox"
+                           checked="@StoredSettings.EnableFates"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableFates), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableAnomaly">Anomaly Tracker</label>
+                    <p>Show or hide the Anomaly Tracker page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableAnomaly" type="checkbox"
+                           checked="@StoredSettings.EnableAnomaly"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableAnomaly), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableSimulacrum">Simulacrum</label>
+                    <p>Show or hide the Simulacrum Tracker page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableSimulacrum" type="checkbox"
+                           checked="@StoredSettings.EnableSimulacrum"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableSimulacrum), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableSanctum">Sanctum</label>
+                    <p>Show or hide the Sanctum page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableSanctum" type="checkbox"
+                           checked="@StoredSettings.EnableSanctum"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableSanctum), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableIncursion">Incursion</label>
+                    <p>Show or hide the Incursion Tracker page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableIncursion" type="checkbox"
+                           checked="@StoredSettings.EnableIncursion"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableIncursion), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableNightmares">Nightmares</label>
+                    <p>Show or hide the Nightmares page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableNightmares" type="checkbox"
+                           checked="@StoredSettings.EnableNightmares"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableNightmares), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableBosses">Bosses</label>
+                    <p>Show or hide the Boss Tracker page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableBosses" type="checkbox"
+                           checked="@StoredSettings.EnableBosses"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableBosses), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableInviteBosses">Invitation Bosses</label>
+                    <p>Show or hide the Invitation Bosses page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableInviteBosses" type="checkbox"
+                           checked="@StoredSettings.EnableInviteBosses"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableInviteBosses), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableUbers">Uber Bosses</label>
+                    <p>Show or hide the Uber Boss Tracker page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableUbers" type="checkbox"
+                           checked="@StoredSettings.EnableUbers"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableUbers), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableT0s">T0 Uniques</label>
+                    <p>Show or hide the T0 Unique Tracker page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableT0s" type="checkbox"
+                           checked="@StoredSettings.EnableT0s"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableT0s), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableTimeline">Timeline</label>
+                    <p>Show or hide the Timeline page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableTimeline" type="checkbox"
+                           checked="@StoredSettings.EnableTimeline"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableTimeline), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableStash">Stash</label>
+                    <p>Show or hide the Stash page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableStash" type="checkbox"
+                           checked="@StoredSettings.EnableStash"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableStash), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableRegexDictionary">Regex Dictionary</label>
+                    <p>Show or hide the Regex Dictionary page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableRegexDictionary" type="checkbox"
+                           checked="@StoredSettings.EnableRegexDictionary"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableRegexDictionary), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableHeist">Heist</label>
+                    <p>Show or hide the Heist page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableHeist" type="checkbox"
+                           checked="@StoredSettings.EnableHeist"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableHeist), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableLab">Labyrinth</label>
+                    <p>Show or hide the Labyrinth page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableLab" type="checkbox"
+                           checked="@StoredSettings.EnableLab"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableLab), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableWombgifts">Wombgifts</label>
+                    <p>Show or hide the Wombgifts page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableWombgifts" type="checkbox"
+                           checked="@StoredSettings.EnableWombgifts"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableWombgifts), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableMappingStrats">Mapping Strategies</label>
+                    <p>Show or hide the Mapping Strategies page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableMappingStrats" type="checkbox"
+                           checked="@StoredSettings.EnableMappingStrats"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableMappingStrats), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableExpedition">Expedition</label>
+                    <p>Show or hide the Expedition page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableExpedition" type="checkbox"
+                           checked="@StoredSettings.EnableExpedition"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableExpedition), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableKingsmarchShipping">Kingsmarch Shipping</label>
+                    <p>Show or hide the Kingsmarch Shipping page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableKingsmarchShipping" type="checkbox"
+                           checked="@StoredSettings.EnableKingsmarchShipping"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableKingsmarchShipping), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableKingsmarchMapping">Kingsmarch Mapping</label>
+                    <p>Show or hide the Kingsmarch Mapping page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableKingsmarchMapping" type="checkbox"
+                           checked="@StoredSettings.EnableKingsmarchMapping"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableKingsmarchMapping), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="settings-section">
             <h5>Fun Settings</h5>
 
             <div class="setting-row">
@@ -211,7 +475,7 @@
                         Enable Moral Support
                     </label>
                     <p>
-                        Shows the moral support page, for when you're feeling down.
+                        Shows the moral support page, for when you're feeling down. Will be shown in the navigation sidebar on refresh.
                     </p>
                 </div>
 
@@ -231,7 +495,7 @@
                         Enable Tr*die Detector
                     </label>
                     <p>
-                        Shows the tradie detector page, for when you notice people getting a slightly too lucky (currently non-functional).
+                        Shows the tradie detector page, for when you notice people getting a slightly too lucky (currently non-functional). Will be shown in the navigation sidebar on refresh.
                     </p>
                 </div>
 
@@ -316,6 +580,85 @@
                 break;
             case nameof(StoredSettings.EnablePauseTimerOnEnterHideout):
                 StoredSettings.EnablePauseTimerOnEnterHideout = value;
+                break;
+            case nameof(StoredSettings.EnableFates):
+                StoredSettings.EnableFates = value;
+                break;
+
+            case nameof(StoredSettings.EnableAnomaly):
+                StoredSettings.EnableAnomaly = value;
+                break;
+
+            case nameof(StoredSettings.EnableSimulacrum):
+                StoredSettings.EnableSimulacrum = value;
+                break;
+
+            case nameof(StoredSettings.EnableSanctum):
+                StoredSettings.EnableSanctum = value;
+                break;
+
+            case nameof(StoredSettings.EnableIncursion):
+                StoredSettings.EnableIncursion = value;
+                break;
+
+            case nameof(StoredSettings.EnableNightmares):
+                StoredSettings.EnableNightmares = value;
+                break;
+
+            case nameof(StoredSettings.EnableBosses):
+                StoredSettings.EnableBosses = value;
+                break;
+
+            case nameof(StoredSettings.EnableInviteBosses):
+                StoredSettings.EnableInviteBosses = value;
+                break;
+
+            case nameof(StoredSettings.EnableUbers):
+                StoredSettings.EnableUbers = value;
+                break;
+
+            case nameof(StoredSettings.EnableT0s):
+                StoredSettings.EnableT0s = value;
+                break;
+
+            case nameof(StoredSettings.EnableTimeline):
+                StoredSettings.EnableTimeline = value;
+                break;
+
+            case nameof(StoredSettings.EnableStash):
+                StoredSettings.EnableStash = value;
+                break;
+
+            case nameof(StoredSettings.EnableRegexDictionary):
+                StoredSettings.EnableRegexDictionary = value;
+                break;
+
+            case nameof(StoredSettings.EnableHeist):
+                StoredSettings.EnableHeist = value;
+                break;
+
+            case nameof(StoredSettings.EnableLab):
+                StoredSettings.EnableLab = value;
+                break;
+
+            case nameof(StoredSettings.EnableWombgifts):
+                StoredSettings.EnableWombgifts = value;
+                break;
+
+            case nameof(StoredSettings.EnableMappingStrats):
+                StoredSettings.EnableMappingStrats = value;
+                break;
+
+            case nameof(StoredSettings.EnableExpedition):
+                StoredSettings.EnableExpedition = value;
+                break;
+
+            case nameof(StoredSettings.EnableKingsmarchShipping):
+                StoredSettings.EnableKingsmarchShipping = value;
+                break;
+
+            case nameof(StoredSettings.EnableKingsmarchMapping):
+                StoredSettings.EnableKingsmarchMapping = value;
                 break;
             default:
                 return;
