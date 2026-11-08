@@ -1,0 +1,14 @@
+﻿@page "/t0-analysis"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+
+<BossAnalysis Title="T0 Drop Analysis" Bosses="bosses" />
+
+@code {
+    private readonly string[] bosses =
+    {
+        "t0"
+    };
+}

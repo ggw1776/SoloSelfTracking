@@ -80,6 +80,9 @@
 .bi-encouragement-fill-nav-menu {
     background-image: url('../../img/charm.svg');
 }
+.bi-t0-fill-nav-menu {
+    background-image: url('../../img/holy-grail.svg');
+}
 
 .nav-item {
     font-size: 0.9rem;

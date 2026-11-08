@@ -71,6 +71,10 @@ namespace SoloSelfTracking.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Activity")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Boss")
                         .IsRequired()
                         .HasColumnType("TEXT");
