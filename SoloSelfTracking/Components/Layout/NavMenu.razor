@@ -1,4 +1,8 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using SoloSelfTracking.Models
+@using SoloSelfTracking.Repositories
+@inject SettingsRepository Repository
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Solo Self Tracking</a>
     </div>
@@ -59,7 +63,14 @@
                 <span class="bi bi-uber-boss-fill-nav-menu" aria-hidden="true"></span> Ubers
             </NavLink>
         </div>
-
+        @if (StoredSettings != null && StoredSettings.EnableMoralSupport)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="encouragement">
+                    <span class="bi bi-encouragement-fill-nav-menu" aria-hidden="true"></span> Moral Support
+                </NavLink>
+            </div>
+        }
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="settings">
                 <span class="bi bi-settings-fill-nav-menu" aria-hidden="true"></span> Settings
@@ -68,3 +79,10 @@
     </nav>
 </div>
 
+@code{
+    private Settings? StoredSettings;
+    protected override async Task OnInitializedAsync()
+    {
+        StoredSettings = await Repository.GetAsync();
+    }
+}

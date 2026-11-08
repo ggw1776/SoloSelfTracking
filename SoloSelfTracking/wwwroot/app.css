@@ -1794,3 +1794,58 @@ hr {
             border-color: var(--poe-gold);
             box-shadow: 0 0 4px rgba(184, 154, 90, 0.2);
         }
+
+.encouragement-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 70vh;
+    padding-top: 30px;
+    overflow: hidden;
+    color: var(--poe-text);
+}
+
+    .encouragement-page h3 {
+        color: var(--poe-gold);
+        margin-bottom: 30px;
+    }
+
+.encouragement-stage {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.encouragement-message {
+    position: absolute;
+    white-space: nowrap;
+    padding: 18px 28px;
+    background: var(--poe-panel);
+    border: 1px solid var(--poe-border);
+    border-radius: var(--poe-radius);
+    color: var(--poe-text-bright);
+    font-size: 1.5rem;
+    text-align: center;
+    animation: encouragement-float 18s linear forwards;
+}
+
+@keyframes encouragement-float {
+    from {
+        transform: translateX(-100%);
+        left: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        left: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .encouragement-message {
+        animation-duration: 1ms;
+    }
+}

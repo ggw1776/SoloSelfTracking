@@ -1,7 +1,56 @@
-﻿<h3>Encouragement</h3>
+﻿@page "/encouragement"
 
-Don't give up yet!
+<div class="encouragement-page">
+    <h3>Encouragement</h3>
+    <div class="audio-player">
+        <audio controls loop>
+            <source src="/audio/511437__theojt__relaxing-short-music.mp3" type="audio/mpeg" />
+            Your browser does not support audio playback.
+        </audio>
+    </div>
+    <div class="encouragement-stage">
+        <div class="encouragement-message"
+             @key="_animationId"
+             @onanimationend="GeneratePhrase">
+            @CurrentPhrase
+        </div>
+    </div>
+</div>
 
 @code {
+    private readonly string[] Phrases =
+    {
+        "Don't give up yet!",
+        "Every attempt brings you closer.",
+        "You're doing better than you think.",
+        "Keep going. The next run could be the one.",
+        "Even the smallest progress is progress.",
+        "Persistence is its own kind of victory.",
+        "I believe in you.",
+        "Those who stand should never outnumber those who kneel.",
+        "There is a fine line between consideration and hesitation. The former is wisdom, the latter is fear.",
+        "Wisdom is the offspring of suffering and time"
+    };
 
+    private string CurrentPhrase = string.Empty;
+    private int _animationId = 0;
+
+    protected override void OnInitialized()
+    {
+        GeneratePhrase();
+    }
+
+    private void GeneratePhrase()
+    {
+        string nextPhrase;
+
+        do
+        {
+            nextPhrase = Phrases[Random.Shared.Next(Phrases.Length)];
+        }
+        while (Phrases.Length > 1 && nextPhrase == CurrentPhrase);
+
+        CurrentPhrase = nextPhrase;
+        _animationId++;
+    }
 }

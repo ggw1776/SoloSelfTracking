@@ -77,6 +77,10 @@
     background-image: url('../../img/cauldron.svg');
 }
 
+.bi-encouragement-fill-nav-menu {
+    background-image: url('../../img/charm.svg');
+}
+
 .nav-item {
     font-size: 0.9rem;
     padding-bottom: 0.5rem;
