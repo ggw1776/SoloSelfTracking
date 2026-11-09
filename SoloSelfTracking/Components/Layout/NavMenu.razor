@@ -17,6 +17,14 @@
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
             </NavLink>
         </div>
+        @if (StoredSettings != null && StoredSettings.EnableRegexDictionary)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="regex">
+                    <span class="bi bi-regex-fill-nav-menu" aria-hidden="true"></span> Regex
+                </NavLink>
+            </div>
+        }
 
         @if (StoredSettings != null && StoredSettings.EnableFates)
         {

@@ -1,0 +1,160 @@
+﻿@page "/regex"
+@rendermode InteractiveServer
+
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Repositories
+@inject IJSRuntime JS
+
+@inject RegexRecordRepository Repository
+
+<div class="regex-directory">
+
+    <div class="regex-directory-header">
+        <h5>Regex Repository</h5>
+        <button class="btn btn-primary" @onclick="() => ShowAddModal = true">
+            Add Regex
+        </button>
+    </div>
+
+    @if (RegexRecords.Count == 0)
+    {
+        <p class="empty-message">No rex has been added yet.</p>
+    }
+    else
+    {
+        <div class="regex-list">
+            @foreach (var record in RegexRecords)
+            {
+                <div class="regex-record" @key="record">
+                    <div class="regex-record-info">
+                        <div class="regex-record-description">
+                            @record.Description
+                        </div>
+
+                        <div class="regex-pattern-container">
+                            <button class="regex-icon-button regex-copy-button"
+                                    title="Copy regex"
+                                    @onclick="() => CopyRegex(record.Regex)">
+                                <img src="img/copy.png" alt="Copy" />
+                            </button>
+
+                            <code class="regex-record-pattern">
+                                @record.Regex
+                            </code>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-sm btn-outline-danger"
+                            title="Delete regex"
+                            @onclick="() => DeleteRegex(record)">
+                        Delete
+                    </button>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@if (ShowAddModal)
+{
+    <div class="regex-modal-backdrop" @onclick="CloseModal">
+        <div class="regex-modal" @onclick:stopPropagation="true">
+            <div class="regex-modal-header">
+                <h5>Add Regex</h5>
+                <button class="regex-modal-close" @onclick="CloseModal">
+                    ×
+                </button>
+            </div>
+
+            <div class="regex-input-group">
+                <label for="regexInput">Regex</label>
+                <input id="regexInput"
+                       type="text"
+                       class="form-control"
+                       @bind="NewRegex"
+                       placeholder="Enter regex pattern..." />
+            </div>
+
+            <div class="regex-input-group">
+                <label for="descriptionInput">Description</label>
+                <input id="descriptionInput"
+                       type="text"
+                       class="form-control"
+                       @bind="NewDescription"
+                       placeholder="Enter a description..." />
+            </div>
+
+            <div class="regex-modal-actions">
+                <button class="btn btn-secondary" @onclick="CloseModal">
+                    Cancel
+                </button>
+
+                <button class="btn btn-primary"
+                        @onclick="AddRegex">
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<RegexRecord> RegexRecords = new();
+
+    private string NewRegex = string.Empty;
+    private string NewDescription = string.Empty;
+    private int _nextId = 1;
+    private bool ShowAddModal;
+
+    protected override async Task OnInitializedAsync()
+    {
+        RegexRecords = await Repository.GetAllAsync();
+
+        _nextId = RegexRecords.Count > 0
+                    ? RegexRecords.Max(x => x.Id) + 1
+                    : 0;
+    }
+
+    private async Task AddRegex()
+    {
+        if (string.IsNullOrWhiteSpace(NewRegex) ||
+            string.IsNullOrWhiteSpace(NewDescription))
+            return;
+
+        var record = new RegexRecord
+        {
+            Id = _nextId,
+            Regex = NewRegex.Trim(),
+            Description = NewDescription.Trim()
+        };
+
+        await Repository.AddAsync(record);
+
+        RegexRecords.Add(record);
+
+        NewRegex = string.Empty;
+        NewDescription = string.Empty;
+
+        _nextId = RegexRecords.Count > 0
+                    ? RegexRecords.Max(x => x.Id) + 1
+                    : 0;
+    }
+
+    private async Task DeleteRegex(RegexRecord record)
+    {
+        await Repository.DeleteAsync(record.Id);
+        RegexRecords.Remove(record);
+    }
+
+    private async Task CopyRegex(string regex)
+    {
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", regex);
+    }
+
+    private void CloseModal()
+    {
+        ShowAddModal = false;
+        NewRegex = string.Empty;
+        NewDescription = string.Empty;
+    }
+}

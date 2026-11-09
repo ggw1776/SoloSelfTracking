@@ -17,6 +17,7 @@ namespace SoloSelfTracking.Data
         public DbSet<IncursionRecord> IncursionRecords => Set<IncursionRecord>();
         public DbSet<Settings> Settings => Set<Settings>();
         public DbSet<FateRecord> FateRecords => Set<FateRecord>();
+        public DbSet<RegexRecord> RegexRecords => Set<RegexRecord>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -109,6 +110,9 @@ namespace SoloSelfTracking.Data
             });
 
             modelBuilder.Entity<Settings>()
+                .HasKey(x => x.Id);
+
+            modelBuilder.Entity<RegexRecord>()
                 .HasKey(x => x.Id);
         }
     }

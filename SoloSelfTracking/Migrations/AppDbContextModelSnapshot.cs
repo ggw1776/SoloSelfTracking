@@ -130,6 +130,25 @@ namespace SoloSelfTracking.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("SoloSelfTracking.Models.RegexRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Regex")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RegexRecords");
+                });
+
             modelBuilder.Entity("SoloSelfTracking.Models.Settings", b =>
                 {
                     b.Property<int>("Id")

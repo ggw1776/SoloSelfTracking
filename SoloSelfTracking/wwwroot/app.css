@@ -1976,3 +1976,219 @@ hr {
         cursor: not-allowed;
     }
 
+
+.regex-directory {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.regex-add-panel,
+.regex-list {
+    background: var(--poe-panel);
+    border: 1px solid var(--poe-border);
+    border-radius: var(--poe-radius);
+    padding: 16px;
+}
+
+    .regex-add-panel h5,
+    .regex-list h5 {
+        color: var(--poe-gold);
+        margin-bottom: 16px;
+    }
+
+.regex-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+    .regex-input-group label {
+        color: var(--poe-text);
+    }
+
+    .regex-input-group input {
+        background: var(--poe-bg-secondary);
+        border: 1px solid var(--poe-border);
+        border-radius: var(--poe-radius);
+        color: var(--poe-text-bright);
+        padding: 8px 10px;
+    }
+
+        .regex-input-group input:focus {
+            border-color: var(--poe-gold);
+            outline: none;
+        }
+
+.regex-record {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px;
+    border-bottom: 1px solid var(--poe-border-muted);
+}
+
+    .regex-record:last-child {
+        border-bottom: none;
+    }
+
+.regex-record-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.regex-record-description {
+    color: var(--poe-text-bright);
+    font-weight: 600;
+}
+
+.regex-record-pattern {
+    color: var(--poe-gold);
+    background: var(--poe-bg-secondary);
+    padding: 6px 8px;
+    border-radius: var(--poe-radius);
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.regex-delete-button {
+    flex-shrink: 0;
+}
+
+.empty-message {
+    color: var(--poe-text-muted);
+    font-style: italic;
+}
+
+.regex-pattern-container {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    min-width: 0;
+}
+
+.regex-copy-button {
+    flex-shrink: 0;
+    width: 36px;
+    min-width: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--poe-bg-secondary);
+    border: 1px solid var(--poe-border);
+}
+
+    .regex-copy-button:hover {
+        background: var(--poe-panel-hover);
+        border-color: var(--poe-gold);
+    }
+
+    .regex-copy-button img {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+    }
+
+.regex-pattern-container .regex-record-pattern {
+    flex: 1;
+    min-width: 0;
+}
+
+.regex-directory-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+    .regex-directory-header h5 {
+        color: var(--poe-gold);
+        margin: 0;
+    }
+
+.regex-icon-button {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--poe-bg-secondary);
+    border: 1px solid var(--poe-border);
+    border-radius: var(--poe-radius);
+    cursor: pointer;
+}
+
+    .regex-icon-button img {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+    }
+
+.regex-copy-button:hover {
+    border-color: var(--poe-gold);
+    background: var(--poe-panel-hover);
+}
+
+.regex-delete-button:hover {
+    border-color: var(--poe-red);
+    background: var(--poe-panel-hover);
+}
+
+.regex-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.75);
+    padding: 16px;
+}
+
+.regex-modal {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    background: var(--poe-panel);
+    border: 1px solid var(--poe-border);
+    border-radius: var(--poe-radius);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.regex-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+    .regex-modal-header h5 {
+        color: var(--poe-gold);
+        margin: 0;
+    }
+
+.regex-modal-close {
+    background: none;
+    border: none;
+    color: var(--poe-text-muted);
+    font-size: 26px;
+    cursor: pointer;
+}
+
+    .regex-modal-close:hover {
+        color: var(--poe-text-bright);
+    }
+
+.regex-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 20px;
+}
