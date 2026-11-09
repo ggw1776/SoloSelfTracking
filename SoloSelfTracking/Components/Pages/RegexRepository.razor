@@ -10,8 +10,7 @@
 <div class="regex-directory">
 
     <div class="regex-directory-header">
-        <h5>Saved Regex</h5>
-
+        <h5>Regex Repository</h5>
         <button class="btn btn-primary" @onclick="() => ShowAddModal = true">
             Add Regex
         </button>
@@ -19,7 +18,7 @@
 
     @if (RegexRecords.Count == 0)
     {
-        <p class="empty-message">No regexes have been added yet.</p>
+        <p class="empty-message">No rex has been added yet.</p>
     }
     else
     {
