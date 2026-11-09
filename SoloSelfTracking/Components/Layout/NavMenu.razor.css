@@ -83,6 +83,9 @@
 .bi-t0-fill-nav-menu {
     background-image: url('../../img/holy-grail.svg');
 }
+.bi-regex-fill-nav-menu {
+    background-image: url('../../img/funnel.svg');
+}
 
 .nav-item {
     font-size: 0.9rem;

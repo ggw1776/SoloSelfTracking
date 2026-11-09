@@ -27,6 +27,7 @@ builder.Services.AddScoped<SimulacrumRecordRepository>();
 builder.Services.AddScoped<IncursionRecordRepository>();
 builder.Services.AddScoped<SettingsRepository>();
 builder.Services.AddScoped<FateRecordRepository>();
+builder.Services.AddScoped<RegexRecordRepository>();
 
 builder.Services.AddScoped<TriggerService>();
 
