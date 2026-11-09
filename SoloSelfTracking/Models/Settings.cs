@@ -17,6 +17,9 @@
         public bool EnableAutoMapParse { get; set; } = false;
         public bool EnablePauseTimerOnEnterHideout { get; set; } = false;
 
+        public bool EnableWikiSearch { get; set; } = false;
+        public bool EnablePoeDbSearch { get; set; } = false;
+
         //pages
 
         public bool EnableFates { get; set; } = true;

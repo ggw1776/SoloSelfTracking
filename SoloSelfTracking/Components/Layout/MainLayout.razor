@@ -21,15 +21,34 @@
     <span class="dismiss">🗙</span>
 </div>
 
-@if (EnableLogReader)
-{
-    <LogMonitor />
-}
+<div class="widget-container">
 
-@code{
+    @if (EnablePoeDbSearch)
+    {
+        <WikiWidget SearchUrl="https://poedb.tw/us/search?q=" DisplayUrl="poedb" />
+    }
+
+    @if (EnableWikiSearch)
+    {
+        <WikiWidget />
+    }
+
+    @if (EnableLogReader)
+    {
+        <LogMonitor />
+    }
+</div>
+
+
+@code {
     private bool EnableLogReader = false;
+    private bool EnableWikiSearch = false;
+    private bool EnablePoeDbSearch = false;
     protected override async Task OnInitializedAsync()
     {
-        EnableLogReader = (await Repository.GetAsync()).EnableLogReader;
+        var settings = await Repository.GetAsync();
+        EnableLogReader = settings.EnableLogReader;
+        EnableWikiSearch = settings.EnableWikiSearch;
+        EnablePoeDbSearch = settings.EnablePoeDbSearch;
     }
 }

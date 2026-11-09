@@ -985,13 +985,25 @@ hr {
 
 
 
-.terminal-widget {
+.widget-container {
     position: fixed;
     bottom: 16px;
     right: 16px;
     z-index: 10000;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.terminal-widget {
+    position: relative;
     font-family: "Courier New", monospace;
     color: var(--poe-text, #d4c8b0);
+}
+
+.wiki-search {
+min-width:250px;
 }
 
 /* Main terminal window */

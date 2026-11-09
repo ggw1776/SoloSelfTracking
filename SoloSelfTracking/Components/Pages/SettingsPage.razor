@@ -449,6 +449,47 @@
         </div>
 
         <div class="settings-section">
+            <h5>Misc Settings</h5>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableWikiSearch">Enable Wiki Search Widgit</label>
+                    <p>
+                        Adds a widgit to most pages to quickly search poewiki.net.
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="EnableWikiSearch"
+                           type="checkbox"
+                           checked="@StoredSettings.EnableWikiSearch"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnableWikiSearch), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
+
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnablePoeDbSearch">Enable PoEdb Search Widgit</label>
+                    <p>
+                        Adds a widgit to most pages to quickly search poedb.tw.
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="EnablePoeDbSearch"
+                           type="checkbox"
+                           checked="@StoredSettings.EnablePoeDbSearch"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnablePoeDbSearch), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
+        </div>
+
+        <div class="settings-section">
             <h5>Fun Settings</h5>
 
             <div class="setting-row">
@@ -656,9 +697,15 @@
             case nameof(StoredSettings.EnableKingsmarchShipping):
                 StoredSettings.EnableKingsmarchShipping = value;
                 break;
-
+                
             case nameof(StoredSettings.EnableKingsmarchMapping):
                 StoredSettings.EnableKingsmarchMapping = value;
+                break;
+            case nameof(StoredSettings.EnableWikiSearch):
+                StoredSettings.EnableWikiSearch = value;
+                break;
+            case nameof(StoredSettings.EnablePoeDbSearch):
+                StoredSettings.EnablePoeDbSearch = value;
                 break;
             default:
                 return;

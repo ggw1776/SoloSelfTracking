@@ -1,0 +1,47 @@
+﻿@rendermode InteractiveServer
+@inject IJSRuntime JS
+
+<div class="terminal-widget">
+    @if (_isOpen)
+    {
+        <div class="terminal-header">
+            <span>Search</span>
+            <button class="terminal-close" @onclick="() => _isOpen = false">_</button>
+        </div>
+
+        <div class="terminal-config wiki-search">
+            <input type="text"
+                   @bind:event="oninput"
+                   @bind="_path" @onkeydown="HandleSearchKeyDown" />
+
+            <button @onclick="SearchAsync">Search</button>
+        </div>
+    }
+
+    <button class="terminal-toggle"
+            @onclick="() => _isOpen = !_isOpen">
+        @DisplayUrl search
+    </button>
+</div>
+
+@code {
+    private string _path = string.Empty;
+    private bool _isOpen;
+
+    [Parameter]
+    public string SearchUrl { get; set; } = "https://www.poewiki.net/index.php?search=";
+    [Parameter]
+    public string DisplayUrl { get; set; } = "poewiki.net";
+
+    private async Task HandleSearchKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+            await SearchAsync();
+    }
+
+    private async Task SearchAsync()
+    {
+        var path = string.Format("{0}{1}", SearchUrl, _path);
+        await JS.InvokeVoidAsync("open", path, "_blank");
+    } 
+}
