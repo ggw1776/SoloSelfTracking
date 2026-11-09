@@ -221,6 +221,9 @@ namespace SoloSelfTracking.Migrations
                     b.Property<bool>("EnablePauseTimerOnEnterHideout")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EnablePoeDbSearch")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EnableRegexDictionary")
                         .HasColumnType("INTEGER");
 
@@ -249,6 +252,9 @@ namespace SoloSelfTracking.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EnableUbers")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableWikiSearch")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EnableWombgifts")
