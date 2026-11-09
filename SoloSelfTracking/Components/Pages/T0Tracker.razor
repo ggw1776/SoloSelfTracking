@@ -141,7 +141,7 @@
         var fullHistory = await Repository.GetAllAsync();
         T0DropHistory = fullHistory.Where(x => string.Equals(x.Boss, T0NAME)).ToList();
 
-        
+
         _nextKillId = fullHistory.Count > 0
             ? fullHistory.Max(x => x.Id) + 1
             : 0;
@@ -184,6 +184,8 @@
                 }
             }
         };
+
+        await Repository.AddAsync(record);
 
         var fullHistory = await Repository.GetAllAsync();
         T0DropHistory = fullHistory.Where(x => string.Equals(x.Boss, T0NAME)).ToList();
