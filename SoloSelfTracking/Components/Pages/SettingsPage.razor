@@ -372,7 +372,7 @@
             <div class="setting-row">
                 <div class="setting-info">
                     <label for="EnableLab">Labyrinth</label>
-                    <p>Show or hide the Labyrinth page.(future release).</p>
+                    <p>Show or hide the Labyrinth page.</p>
                 </div>
                 <label class="setting-switch">
                     <input id="EnableLab" type="checkbox"
@@ -491,24 +491,6 @@
 
         <div class="settings-section">
             <h5>Fun Settings</h5>
-
-            <div class="setting-row">
-                <div class="setting-info">
-                    <label for="EnableShopMusic">Enable Shop Music</label>
-                    <p>
-                        Plays shop music whenever engaging with a window shopping-type mechanic (currently non-functional).
-                    </p>
-                </div>
-
-                <label class="setting-switch">
-                    <input id="EnableShopMusic"
-                           type="checkbox"
-                           checked="@StoredSettings.EnableShopMusic"
-                           @onchange="e => UpdateSetting(
-                               nameof(StoredSettings.EnableShopMusic), e)" />
-                           <span class="setting-slider"></span>
-                       </label>
-            </div>
 
             <div class="setting-row">
                 <div class="setting-info">

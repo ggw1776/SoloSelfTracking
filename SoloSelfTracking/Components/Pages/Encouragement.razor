@@ -1,13 +1,9 @@
 ﻿@page "/encouragement"
+@rendermode InteractiveServer
+@inject IJSRuntime JS
 
 <div class="encouragement-page">
     <h3>Encouragement</h3>
-    <div class="audio-player">
-        <audio controls loop>
-            <source src="/audio/511437__theojt__relaxing-short-music.mp3" type="audio/mpeg" />
-            Your browser does not support audio playback.
-        </audio>
-    </div>
     <div class="encouragement-stage">
         <div class="encouragement-message"
              @key="_animationId"
@@ -16,6 +12,7 @@
         </div>
     </div>
 </div>
+<script src="js/notifications.js"></script>
 
 @code {
     private readonly string[] Phrases =
@@ -35,9 +32,16 @@
     private string CurrentPhrase = string.Empty;
     private int _animationId = 0;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         GeneratePhrase();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+        await JS.InvokeAsync<string?>("notificationUtilities.calm");
     }
 
     private void GeneratePhrase()
