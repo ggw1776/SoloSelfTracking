@@ -1,4 +1,6 @@
-﻿namespace SoloSelfTracking.Models.StaticClasses
+﻿using System.Net.NetworkInformation;
+
+namespace SoloSelfTracking.Models.StaticClasses
 {
     public static class DropTables
     {
@@ -821,5 +823,58 @@
             new(Uniques.Varunastra, 0f),
             new(Uniques.VoltaxicRift, 0f),
         ];
+
+        public readonly static List<DropTableEntry> Heist =
+        [
+            new(Currencies.OrbOfAnnulment, 0f, true),
+            new(Currencies.AncientOrb, 0f, true),
+            new(Currencies.ChaosOrb, 0f, true),
+            new(Currencies.DivineOrb, 0f, true),
+            new(Currencies.TemperingOrb, 0f, true),
+            new(Currencies.TailoringOrb, 0f, true),
+            new(new EquipmentItem( "Thief's Trinket", Enumerations.EItemType.ThiefsTrinket), 0f),
+            new(new EquipmentItem( "Psychotic Axe", Enumerations.EItemType.PsychoticAxe), 0f),
+            new(new EquipmentItem( "Apex Cleaver", Enumerations.EItemType.ApexCleaver), 0f),
+            new(new EquipmentItem( "Solarine Bow", Enumerations.EItemType.SolarineBow), 0f),
+            new(new EquipmentItem( "Void Fangs", Enumerations.EItemType.VoidFangs), 0f),
+            new(new EquipmentItem( "Pneumatic Dagger", Enumerations.EItemType.PneumaticDagger), 0f),
+            new(new EquipmentItem( "Infernal Blade", Enumerations.EItemType.InfernalBlade), 0f),
+            new(new EquipmentItem( "Boom Mace", Enumerations.EItemType.BoomMace), 0f),
+            new(new EquipmentItem( "Stabilising Sceptre", Enumerations.EItemType.StabilisingSceptre), 0f),
+            new(new EquipmentItem( "Impact Force Propagator", Enumerations.EItemType.ImpactForcePropagator), 0f),
+            new(new EquipmentItem( "Battery Staff", Enumerations.EItemType.BatteryStaff), 0f),
+            new(new EquipmentItem( "Eventuality Rod", Enumerations.EItemType.EventualityRod), 0f),
+            new(new EquipmentItem( "Anarchic Spiritblade", Enumerations.EItemType.AnarchicSpiritblade), 0f),
+            new(new EquipmentItem( "Banishing Blade", Enumerations.EItemType.BanishingBlade), 0f),
+            new(new EquipmentItem( "Accumulator Wand", Enumerations.EItemType.AccumulatorWand), 0f),
+            new(new EquipmentItem( "Heat-attuned Tower Shielde", Enumerations.EItemType.HeatattunedTowerShield), 0f),
+            new(new EquipmentItem( "Cold-attuned Buckler", Enumerations.EItemType.ColdattunedBuckler), 0f),
+            new(new EquipmentItem( "Transfer-attuned Spirit Shield", Enumerations.EItemType.TransferattunedSpiritShield), 0f),
+            new(new EquipmentItem( "Mechanical Belt", Enumerations.EItemType.MechanicalBelt), 0f),
+            new(new EquipmentItem( "Focused Amulet", Enumerations.EItemType.FocusedAmulet), 0f),
+            new(new EquipmentItem( "Simplex Amulet", Enumerations.EItemType.SimplexAmulet), 0f),
+            new(new EquipmentItem( "Cogwork Ring", Enumerations.EItemType.CogworkRing), 0f),
+            new(new EquipmentItem( "Composite Ring", Enumerations.EItemType.CompositeRing), 0f),
+            new(new EquipmentItem( "Geodesic Ring", Enumerations.EItemType.GeodesicRing), 0f),
+            new(new EquipmentItem( "Helical Ring", Enumerations.EItemType.HelicalRing), 0f),
+            new(new EquipmentItem( "Manifold Ring", Enumerations.EItemType.ManifoldRing), 0f),
+            new(new EquipmentItem( "Ratcheting Ring", Enumerations.EItemType.RatchetingRing), 0f),
+            new (Uniques.ApexMode, 0f),
+            new (Uniques.NadirMode, 0f),
+            new (Uniques.TheFledgling, 0f),
+            new (Uniques.TheAdmiral, 0f),
+            new (Uniques.LeadershipSPrice, 0f),
+            new (Uniques.ChainsofEmancipation, 0f),
+        ];
+
+        public readonly static List<DropTableEntry> Bunker = Heist;
+        public readonly static List<DropTableEntry> RecordsOffice = Heist;
+        public readonly static List<DropTableEntry> Mansion = Heist;
+        public readonly static List<DropTableEntry> SmugglersDen = Heist;
+        public readonly static List<DropTableEntry> Underbelly = Heist;
+        public readonly static List<DropTableEntry> Laboratory = Heist;
+        public readonly static List<DropTableEntry> ProhibitedLibrary = Heist;
+        public readonly static List<DropTableEntry> Repository = Heist;
+        public readonly static List<DropTableEntry> Tunnels = Heist;
     }
 }

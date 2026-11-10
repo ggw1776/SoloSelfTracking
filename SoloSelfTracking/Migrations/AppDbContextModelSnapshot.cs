@@ -121,6 +121,9 @@ namespace SoloSelfTracking.Migrations
                         .HasMaxLength(21)
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Wings")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.ToTable("KillRecords");

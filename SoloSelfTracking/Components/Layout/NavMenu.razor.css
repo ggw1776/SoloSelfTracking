@@ -87,6 +87,10 @@
     background-image: url('../../img/funnel.svg');
 }
 
+.bi-heist-fill-nav-menu {
+    background-image: url('../../img/cowled.svg');
+}
+
 .nav-item {
     font-size: 0.9rem;
     padding-bottom: 0.5rem;

@@ -64,5 +64,8 @@
         public static readonly CurrencyItem FracturingOrb = new("Fracturing Orb", "Fracture a random modifier on a rare item with at least 4 modifiers, locking it in place", "Fracturing_Orb_inventory_icon.png");
         public static readonly CurrencyItem OrbOfUnmaking = new("Orb Of Unmaking", "Grants an atlas passive skill refund point", "Orb_of_Unmaking_inventory_icon.png");
         public static readonly CurrencyItem VolatileVaalOrb = new("Volatile Vaal Orb", "Unpredictably either randomises the values of random modifiers on a unique equipment and corrupts it, or destroys it", "Volatile_Vaal_Orb_inventory_icon.png");
+
+        public static readonly CurrencyItem TemperingOrb = new("Tempering Orb", "Adds or replaces an enchantment on a weapon\r\nThis may reforge the weapon's sockets", "Tempering_Orb_inventory_icon.png");
+        public static readonly CurrencyItem TailoringOrb = new("Tailoring Orb", "Adds or replaces an enchantment on a body armour\r\nThis may reforge the body armour's sockets", "Tailoring_Orb_inventory_icon.png");
     }
 }

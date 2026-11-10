@@ -265,6 +265,14 @@
             case "Sanctuary":
             case "Ziggaurat":
             case "Cortex":
+            case "Bunker":
+            case "Smuggler's Den":
+            case "Mansion":
+            case "Underbelly":
+            case "Laboratory":
+            case "Prohibited Library":
+            case "Repository":
+            case "Tunnels":
                 result = location;
                 break;
             case "Absence of Patience and Wisdom":
@@ -401,7 +409,7 @@
             case "Cage":
             case "Courthouse":
             case "Gardens":
-            case "Laboratory":
+            //case "Laboratory": conflict with heist; heist more important
             case "Siege":
             case "Cold River":
             case "Excavation":
@@ -457,7 +465,7 @@
 
     private async Task HandleHideoutDetection()
     {
-        var hideoutLines = _lines.Where(x => x.Contains("Hideout")).ToList();
+        var hideoutLines = _lines.Where(x => x.Contains("Hideout") || x.Contains("The Rogue Harbour")).ToList();
         foreach (var line in hideoutLines)
         {
             if (!_detectedHideoutLines.Contains(line))

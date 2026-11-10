@@ -71,6 +71,15 @@
             </div>
         }
 
+        @if (StoredSettings != null && StoredSettings.EnableHeist)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="heist">
+                    <span class="bi bi-heist-fill-nav-menu" aria-hidden="true"></span> Heist
+                </NavLink>
+            </div>
+        }
+
         @if (StoredSettings != null && StoredSettings.EnableNightmares)
         {
             <div class="nav-item px-3">

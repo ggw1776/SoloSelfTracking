@@ -17,6 +17,7 @@
         public int MapDivCards { get; set; }
         public int MapAtlasDrops { get; set; }
         public string Activity { get; set; } = string.Empty;
+        public int Wings { get; set; }
 
 
         public bool IsMapStatsSet()

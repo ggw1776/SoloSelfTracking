@@ -1,0 +1,46 @@
+﻿@page "/heist"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+
+<BossTracker Title="Heist Tracker"
+             Bosses="bosses"
+             DropProvider="GetBossDrops"
+             AnalysisHref="heist-analysis"
+             Maps="true"
+             Verb="Blueprint"
+             VerbPlural="Blueprints"
+             HasWings="true"/>
+
+@code {
+    private readonly string[] bosses =
+    {
+        "Bunker",
+        "Records Office",
+        "Mansion",
+        "Smuggler's Den",
+        "Underbelly",
+        "Laboratory",
+        "Prohibited Library",
+        "Repository",
+        "Tunnels"
+    };
+
+    private List<DropTableEntry> GetBossDrops(string boss)
+    {
+        return boss switch
+        {
+            "Bunker" => DropTables.Bunker,
+            "Records Office" => DropTables.RecordsOffice,
+            "Mansion" => DropTables.Mansion,
+            "Smuggler's Den" => DropTables.SmugglersDen,
+            "Underbelly" => DropTables.Underbelly,
+            "Laboratory" => DropTables.Laboratory,
+            "Prohibited Library" => DropTables.ProhibitedLibrary,
+            "Repository" => DropTables.Repository,
+            "Tunnels" => DropTables.Tunnels,
+            _ => new List<DropTableEntry>()
+        };
+    }
+}

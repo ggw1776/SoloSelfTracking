@@ -59,19 +59,34 @@ else if (ShowSoloTitle)
                            @bind="_mapRarity" />
                 </div>
 
-                <div class="map-stat">
-                    <label for="mapAtlasDrops">Atlas Drops</label>
-                    <input id="mapAtlasDrops"
-                           type="number"
-                           @bind="_mapAtlasDrops" />
-                </div>
+                @if (!HasWings.HasValue || (HasWings.HasValue && HasWings == false))
+                {
+                    <div class="map-stat">
+                        <label for="mapAtlasDrops">Atlas Drops</label>
+                        <input id="mapAtlasDrops"
+                               type="number"
+                               @bind="_mapAtlasDrops" />
+                    </div>
 
-                <div class="map-stat">
-                    <label for="mapPackSize">Monster Pack Size</label>
-                    <input id="mapPackSize"
-                           type="number"
-                           @bind="_mapPackSize" />
-                </div>
+                    <div class="map-stat">
+                        <label for="mapPackSize">Monster Pack Size</label>
+                        <input id="mapPackSize"
+                               type="number"
+                               @bind="_mapPackSize" />
+                    </div>
+                }
+
+
+                @if (HasWings.HasValue && HasWings == true)
+                {
+
+                    <div class="map-stat">
+                        <label for="wings">Revealed Wings</label>
+                        <input id="wings"
+                               type="number"
+                               @bind="_wings" />
+                    </div>
+                }
 
                 @if (NightmareMods.HasValue && NightmareMods == true)
                 {
@@ -280,6 +295,10 @@ else
                             {
                                 <td title="IIQ/IIR/Pack Size/Maps/Scarabs/Currency/Div Cards">@string.Format("{0}%/{1}%/{2}%/{3}%/{4}%/{5}%/{6}%/{7}%", kill.MapQuantity, kill.MapRarity, kill.MapAtlasDrops, kill.MapMonsterPackSize, kill.MapMaps, kill.MapScarabs, kill.MapCurrency, kill.MapDivCards)</td>
                             }
+                            else if (HasWings.HasValue && HasWings == true)
+                            {
+                                <td title="IIQ/IIR">@string.Format("{0}%/{1}%/{2} Wings", kill.MapQuantity, kill.MapRarity, kill.Wings)</td>
+                            }
                             else
                             {
                                 <td title="IIQ/IIR">@string.Format("{0}%/{1}%/{2}%/{3}%", kill.MapQuantity, kill.MapRarity, kill.MapAtlasDrops, kill.MapMonsterPackSize)</td>
@@ -373,6 +392,10 @@ else
     public bool ShowSoloTitle { get; set; } = false;
 
 
+    [Parameter]
+    public bool? HasWings { get; set; }
+
+
     private string SelectedBoss = string.Empty;
     private string HistoryFilter = "All";
     private string DropSearch = string.Empty;
@@ -394,6 +417,7 @@ else
     private int _mapDivCards = 0;
     private int _mapMaps = 0;
     private int _mapAtlasDrops = 0;
+    private int _wings = 0;
 
     private Settings UserSettings;
     private TriggerService _navigateService;
@@ -519,6 +543,7 @@ else
             record.MapCurrency = _mapCurrency;
             record.MapDivCards = _mapDivCards;
             record.MapAtlasDrops = _mapAtlasDrops;
+            record.Wings = _wings;
         }
 
         if (IsSubPage.HasValue && IsSubPage == true)
@@ -614,7 +639,7 @@ else
 
         var itemType = lines[0].Trim();
 
-        if (string.Equals(itemType, "Item Class: Maps") || string.Equals(itemType, "Item Class: Misc Map Items"))
+        if (string.Equals(itemType, "Item Class: Maps") || string.Equals(itemType, "Item Class: Misc Map Items") || string.Equals(itemType, "Item Class: Blueprints"))
         {
             int currentLineIndex = 5;
             string currentLine = "";
@@ -638,6 +663,8 @@ else
                     _mapMaps = ParseMapData(currentLine, "More Maps");
                 if (_mapAtlasDrops == 0)
                     _mapAtlasDrops = ParseMapData(currentLine, "Atlas Drops");
+                if (_wings == 0)
+                    _wings = ParseWingsData(currentLine);
                 currentLineIndex++;
             }
 
@@ -684,6 +711,15 @@ else
     {
         if (line.Contains(title))
             return int.Parse(line.Split(string.Format("{0}: +", title))[1].Split('%')[0]);
+
+        return 0;
+    }
+
+    private int ParseWingsData(string line)
+    {
+        var title = "Wings Revealed: ";
+        if (line.Contains(title))
+            return int.Parse(line.Split(title)[1].Split('/')[0]);
 
         return 0;
     }
