@@ -1342,5 +1342,11 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Unique BalanceOfTerror = new ("Balance Of Terror", EItemType.CobaltJewel, "The_Balance_of_Terror_inventory_icon.png"); //todo variations
 
         public static readonly Unique DreadmaidensSacrament = new("Dreadmaidens' Sacrament", EItemType.BasaltFlask);
+
+        public static readonly Unique ReplicaCortex = new("Replica Cortex", EItemType.Map);
+
+        public static readonly Unique ReplicaPillarsofArun = new("Replica Pillars of Arun", EItemType.Map);
+
+        public static readonly Unique ReplicaPoorjoysAsylum = new("Replica Poorjoy's Asylum", EItemType.Map);
     }
 }

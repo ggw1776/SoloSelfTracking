@@ -315,15 +315,29 @@ else
                             {
                                 @foreach (var drop in kill.Drops)
                                 {
-                                    <span class="badge bg-secondary me-1 mb-1">
-                                        <ItemHoverInfo Item="ItemIndex.FindItem(drop.Drop)">
+                                    var it = ItemIndex.FindItem(drop.Drop);
+                                    @if(it != null)
+                                    {
+                                        <span class="badge bg-secondary me-1 mb-1">
+                                            <ItemHoverInfo Item="it">
+                                                @drop.Drop
+                                                @if (drop.Count > 1)
+                                                {
+                                                    <span>(@drop.Count)</span>
+                                                }
+                                            </ItemHoverInfo>
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary me-1 mb-1">
                                             @drop.Drop
-                                            @if(drop.Count > 1)
+                                            @if (drop.Count > 1)
                                             {
                                                 <span>(@drop.Count)</span>
                                             }
-                                        </ItemHoverInfo>
-                                    </span>
+                                        </span>
+                                    }
                                 }
                             }
                         </td>
@@ -668,6 +682,26 @@ else
                 currentLineIndex++;
             }
 
+            StateHasChanged();
+        }
+        else if (string.Equals(itemType, "Item Class: Stackable Currency"))
+        {
+            var matchingDrop = CurrentDrops.FirstOrDefault(drop =>
+            possibleNames.Any(name =>
+                string.Equals(drop.Item.Name, name,
+            StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(drop.Item.DisplayName, name,
+            StringComparison.OrdinalIgnoreCase)));
+
+            if (matchingDrop is null)
+                return false;
+
+            int count = int.Parse(lines[4].Split("Stack Size: ")[1].Split("/")[0]);
+            for (int x = 0; x < count; x++)
+            {
+                CurrentMultidropRecords.Add(matchingDrop.Key);
+                SelectedDrops.Add(matchingDrop.Key);
+            }
             StateHasChanged();
         }
         else

@@ -19,7 +19,7 @@ namespace SoloSelfTracking.Utilities
                 }
             }
 
-            throw new KeyNotFoundException();
+            return float.NegativeInfinity;
         }
     }
 }

@@ -475,6 +475,7 @@
         ManifoldRing,
         RatchetingRing,
         ColdattunedBuckler,
-        AnarchicSpiritblade
+        AnarchicSpiritblade,
+        Map
     }
 }

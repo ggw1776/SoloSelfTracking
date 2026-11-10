@@ -1,0 +1,20 @@
+﻿@page "/heist-analysis"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+
+<BossAnalysis Title="Anomaly Rush Analysis" Bosses="Bosses" Maps="true" HasWings="true" Verb="Blueprint" VerbPlural="Blueprints" Noun="Blueprint" NounPlural="Blueprints" />
+
+@code {
+    private static readonly List<string> Bosses = new()
+    {
+        "Bunker",
+        "Records Office",
+        "Mansion",
+        "Smuggler's Den",
+        "Underbelly",
+        "Laboratory",
+        "Prohibited Library",
+        "Repository",
+        "Tunnels"
+    };
+}

@@ -130,6 +130,10 @@ else
                                     {
                                         <td title="IIQ/IIR/Pack Size/Maps/Scarabs/Currency/Div Cards">@string.Format("{0}%/{1}%/{2}%/{3}%/{4}%/{5}%/{6}%/{7}%", boss.AverageMapQuantity.ToString("0.##"), boss.AverageMapRarity.ToString("0.##"), boss.AverageAtlasDrops.ToString("0.##"), boss.AverageMapMonsterPackSize.ToString("0.##"), boss.AverageMapMaps.ToString("0.##"), boss.AverageMapScarabs.ToString("0.##"), boss.AverageMapCurrency.ToString("0.##"), boss.AverageMapDivCards.ToString("0.##"))</td>
                                     }
+                                    else if (HasWings)
+                                    {
+                                        <td title="IIQ/IIR/Pack Size">@string.Format("{0}%/{1}%/{2} Wings", boss.AverageMapQuantity.ToString("0.##"), boss.AverageMapRarity.ToString("0.##"), boss.AverageWings.ToString("0.##"))</td>
+                                    }
                                     else
                                     {
                                         <td title="IIQ/IIR/Pack Size">@string.Format("{0}%/{1}%/{2}%/{3}%", boss.AverageMapQuantity.ToString("0.##"), boss.AverageMapRarity.ToString("0.##"), boss.AverageAtlasDrops.ToString("0.##"), boss.AverageMapMonsterPackSize.ToString("0.##"))</td>
@@ -197,17 +201,29 @@ else
                     <tbody>
                         @foreach (var row in DropRateRows)
                         {
+                            var it = ItemIndex.FindItem(row.Item);
                             <tr @key="(row.Boss, row.Item)">
                                 @if (Bosses.Count > 1)
                                 {
                                     <td>@row.Boss</td>
                                 }
                                 <td>
-                                    <span class="badge bg-secondary me-1 mb-1">
-                                        <ItemHoverInfo Item="ItemIndex.FindItem(row.Item)">
-                                            @row.Item
-                                        </ItemHoverInfo>
-                                    </span>
+                                    @if(it != null)
+                                    {
+                                        <span class="badge bg-secondary me-1 mb-1">
+                                            <ItemHoverInfo Item="it">
+                                                @row.Item
+                                            </ItemHoverInfo>
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary me-1 mb-1">
+                                            <ItemHoverInfo Item="new EquipmentItem(row.Item, Enumerations.EItemType.Unknown)">
+                                                @row.Item
+                                            </ItemHoverInfo>
+                                        </span>
+                                    }
                                 </td>
                                 <td class="text-end">@row.DropCount</td>
                                 <td class="text-end">@row.Rate.ToString("P2")</td>
@@ -243,6 +259,9 @@ else
 
     [Parameter]
     public string VerbPlural { get; set; } = "Kills";
+
+    [Parameter]
+    public bool HasWings { get; set; } = false;
 
     private List<KillRecord> History = new();
     private bool isLoading = true;
@@ -383,6 +402,10 @@ else
                         AverageAtlasDrops = mapSetKills > 0
                             ? (double)group.Where(x => x.IsMapStatsSet()).Sum(
                                 x => x.MapAtlasDrops) / mapSetKills
+                            : 0,
+                        AverageWings = mapSetKills > 0
+                            ? (double)group.Where(x => x.IsMapStatsSet()).Sum(
+                                x => x.Wings) / mapSetKills
                             : 0
                     };
                 });
@@ -475,5 +498,6 @@ else
         public double AverageMapCurrency { get; set; }
         public double AverageMapDivCards { get; set; }
         public double AverageAtlasDrops { get; set; }
+        public double AverageWings { get; set; }
     }
 }
