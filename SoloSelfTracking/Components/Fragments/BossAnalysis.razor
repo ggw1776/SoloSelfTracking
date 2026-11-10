@@ -98,7 +98,10 @@ else
                                 </button>
                             </th>
                             <th class="text-end">Average Time</th>
-                            <th class="text-end">Average Deaths</th>
+                            @if (!OnePortal)
+                            {
+                                <th class="text-end">Average Deaths</th>
+                            }
                             <th class="text-end">
                                 <button class="btn btn-link p-0 text-reset"
                                         @onclick="() => SortBosses(nameof(BossStat.Drops))">
@@ -143,9 +146,12 @@ else
                                 <td class="text-end">
                                     @($"{(int)time.TotalMinutes:D2}:{time.Seconds:D2}")
                                 </td>
-                                <td class="text-end">
-                                    @boss.AverageDeaths.ToString("0.##")
-                                </td>
+                                @if (!OnePortal)
+                                {
+                                    <td class="text-end">
+                                        @boss.AverageDeaths.ToString("0.##")
+                                    </td>
+                                }
                                 <td class="text-end">@boss.Drops</td>
                                 <td class="text-end">
                                     @boss.DropsPerKill.ToString("0.##")
@@ -262,6 +268,9 @@ else
 
     [Parameter]
     public bool HasWings { get; set; } = false;
+
+    [Parameter]
+    public bool OnePortal { get; set; } = false;
 
     private List<KillRecord> History = new();
     private bool isLoading = true;

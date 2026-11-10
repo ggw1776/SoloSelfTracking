@@ -40,8 +40,8 @@ Tracking modules for the following, roughly in this order
 * ~~whatever new cool league mechanics pop up~~
 * ~~Incursion~~
 * ~~non-uber bosses~~
-* heists
-* lab
+* ~~heists~~
+* ~~lab~~
 * wombgift tracking
 * ~~anomaly rushing tracking~~
 * ~~T0 tracking~~
