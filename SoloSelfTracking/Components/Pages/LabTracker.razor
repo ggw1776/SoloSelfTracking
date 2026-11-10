@@ -1,0 +1,39 @@
+﻿@page "/lab"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+
+<p>Check out today's lab at <a target="_blank" rel="noopener noreferrer" href="https://www.poelab.com/">PoE Lab</a></p>
+
+<BossTracker Title="Lab Tracker"
+             Bosses="bosses"
+             DropProvider="GetBossDrops"
+             AnalysisHref="lab-analysis"
+             Verb="Run"
+             VerbPlural="Runs"
+             OnePortal=true />
+
+@code {
+    private readonly string[] bosses =
+    {
+        "Merciless Lab",
+        "Eternal Lab",
+        "Dedication Lab",
+        "Tribute Lab",
+        "Gift Lab"
+    };
+
+    private List<DropTableEntry> GetBossDrops(string boss)
+    {
+        return boss switch
+        {
+            "Merciless Lab" => DropTables.MercilessLab,
+            "Eternal Lab" => DropTables.EternalLab,
+            "Dedication Lab" => DropTables.DedicationLab,
+            "Tribute Lab" => DropTables.TributeLab,
+            "Gift Lab" => DropTables.GiftLab,
+            _ => new List<DropTableEntry>()
+        };
+    }
+}
