@@ -1348,5 +1348,15 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Unique ReplicaPillarsofArun = new("Replica Pillars of Arun", EItemType.Map);
 
         public static readonly Unique ReplicaPoorjoysAsylum = new("Replica Poorjoy's Asylum", EItemType.Map);
+
+        public static readonly Unique GrandSpectrumCrit = new("Grand Spectrum (Crit)", EItemType.CobaltJewel);
+        public static readonly Unique GrandSpectrumMinion = new("Grand Spectrum (Minion)", EItemType.CobaltJewel);
+        public static readonly Unique GrandSpectrumPowercharge = new("Grand Spectrum (Power Charge)", EItemType.CobaltJewel);
+        public static readonly Unique GrandSpectrumEnduranceCharge = new("Grand Spectrum (Endurance Charge)", EItemType.CrimsonJewel);
+        public static readonly Unique GrandSpectrumLife = new("Grand Spectrum (Life)", EItemType.CrimsonJewel);
+        public static readonly Unique GrandSpectrumResistance = new("Grand Spectrum (Resistance)", EItemType.CrimsonJewel);
+        public static readonly Unique GrandSpectrumAvoidAilment = new("Grand Spectrum (Avoid Ailments)", EItemType.ViridianJewel);
+        public static readonly Unique GrandSpectrumElementalDamage = new("Grand Spectrum (Elemental Damage)", EItemType.ViridianJewel);
+        public static readonly Unique GrandSpectrumFrenzyCharge = new("Grand Spectrum (Frenzy Charge)", EItemType.ViridianJewel);
     }
 }

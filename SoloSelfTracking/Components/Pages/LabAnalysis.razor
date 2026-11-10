@@ -1,0 +1,16 @@
+﻿@page "/lab-analysis"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+
+<BossAnalysis Title="Lab Analysis" Bosses="Bosses" Verb="Run" VerbPlural="Runs" Noun="Lab" NounPlural="Labs" OnePortal="true" />
+
+@code {
+    private static readonly List<string> Bosses = new()
+    {
+        "Merciless Lab",
+        "Eternal Lab",
+        "Dedication Lab",
+        "Tribute Lab",
+        "Gift Lab"
+    };
+}

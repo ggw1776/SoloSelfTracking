@@ -90,6 +90,9 @@
 .bi-heist-fill-nav-menu {
     background-image: url('../../img/cowled.svg');
 }
+.bi-lab-fill-nav-menu {
+    background-image: url('../../img/angel-outfit.svg');
+}
 
 .nav-item {
     font-size: 0.9rem;

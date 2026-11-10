@@ -969,5 +969,35 @@ namespace SoloSelfTracking.Models.StaticClasses
         public readonly static List<DropTableEntry> ProhibitedLibrary = Heist;
         public readonly static List<DropTableEntry> Repository = Heist;
         public readonly static List<DropTableEntry> Tunnels = Heist;
+
+
+        public readonly static List<DropTableEntry> Lab =
+        [
+            new(Uniques.DeathsDoor, 0f),
+            new(Uniques.TheScalesofJustice, 0f),
+            new(Uniques.Steelworm, 0f),
+            new(Uniques.UnyieldingFlame, 0f),
+            new(Uniques.WindsofChange, 0f),
+            new(Uniques.XirgilsCrank, 0f),
+            new(Uniques.GrandSpectrumCrit, 0f, true),
+            new(Uniques.GrandSpectrumMinion, 0f, true),
+            new(Uniques.GrandSpectrumPowercharge, 0f, true),
+            new(Uniques.GrandSpectrumEnduranceCharge, 0f, true),
+            new(Uniques.GrandSpectrumLife, 0f, true),
+            new(Uniques.GrandSpectrumResistance, 0f, true),
+            new(Uniques.GrandSpectrumAvoidAilment, 0f, true),
+            new(Uniques.GrandSpectrumElementalDamage, 0f, true),
+            new(Uniques.GrandSpectrumFrenzyCharge, 0f, true),
+            new(Uniques.EmperorsCunning, 0f, true),
+            new(Uniques.EmperorsWit, 0f, true),
+            new(Uniques.EmperorsMight, 0f, true),
+            new(Uniques.EmperorsMastery, 0f, true),
+        ];
+
+        public readonly static List<DropTableEntry> MercilessLab = Lab;
+        public readonly static List<DropTableEntry> EternalLab = Lab;
+        public readonly static List<DropTableEntry> DedicationLab = Lab;
+        public readonly static List<DropTableEntry> TributeLab = Lab;
+        public readonly static List<DropTableEntry> GiftLab = Lab;
     }
 }
