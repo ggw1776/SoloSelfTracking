@@ -93,6 +93,9 @@
 .bi-lab-fill-nav-menu {
     background-image: url('../../img/angel-outfit.svg');
 }
+.bi-blight-fill-nav-menu {
+    background-image: url('../../img/mushroom.svg');
+}
 
 .nav-item {
     font-size: 0.9rem;

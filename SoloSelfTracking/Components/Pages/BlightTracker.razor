@@ -1,0 +1,25 @@
+﻿@page "/blight"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+
+<BossTracker Title="Blight Tracker"
+             Bosses="bosses"
+             DropProvider="GetBossDrops"
+             AnalysisHref="blight-analysis"
+             Maps="true" 
+             Verb="Map"
+             VerbPlural="Maps"/>
+
+@code {
+    private readonly string[] bosses =
+    {
+        "Blight"
+    };
+
+    private List<DropTableEntry> GetBossDrops(string boss)
+    {
+        return DropTables.Blight;
+    }
+}

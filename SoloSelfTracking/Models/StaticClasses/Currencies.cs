@@ -67,5 +67,22 @@
 
         public static readonly CurrencyItem TemperingOrb = new("Tempering Orb", "Adds or replaces an enchantment on a weapon\r\nThis may reforge the weapon's sockets", "Tempering_Orb_inventory_icon.png");
         public static readonly CurrencyItem TailoringOrb = new("Tailoring Orb", "Adds or replaces an enchantment on a body armour\r\nThis may reforge the body armour's sockets", "Tailoring_Orb_inventory_icon.png");
+
+        public static readonly CurrencyItem ClearOil = new("Clear Oil", "", "Clear_Oil_inventory_icon.png");
+        public static readonly CurrencyItem SepiaOil = new("Sepia Oil", "", "Sepia_Oil_inventory_icon.png");
+        public static readonly CurrencyItem AmberOil = new("Amber Oil", "", "Amber_Oil_inventory_icon.png");
+        public static readonly CurrencyItem VerdantOil = new("Verdant Oil", "", "Verdant_Oil_inventory_icon.png");
+        public static readonly CurrencyItem TealOil = new("Teal Oil", "", "Teal_Oil_inventory_icon.png");
+        public static readonly CurrencyItem AzureOil = new("Azure Oil", "", "Azure_Oil_inventory_icon.png");
+        public static readonly CurrencyItem IndigoOil = new("Indigo Oil", "", "Indigo_Oil_inventory_icon.png");
+        public static readonly CurrencyItem VioletOil = new("Violet Oil", "", "Violet_Oil_inventory_icon.png");
+        public static readonly CurrencyItem CrimsonOil = new("Crimson Oil", "", "Crimson_Oil_inventory_icon.png");
+        public static readonly CurrencyItem BlackOil = new("Black Oil", "", "Black_Oil_inventory_icon.png");
+        public static readonly CurrencyItem OpalescentOil = new("Opalescent Oil", "", "Opalescent_Oil_inventory_icon.png");
+        public static readonly CurrencyItem SilverOil = new("Silver Oil", "", "Silver_Oil_inventory_icon.png");
+        public static readonly CurrencyItem GoldenOil = new("Golden Oil", "", "Golden_Oil_inventory_icon.png");
+        public static readonly CurrencyItem TaintedOil = new("Tainted Oil", "", "Tainted_Oil_inventory_icon.png");
+        public static readonly CurrencyItem ReflectiveOil = new("Reflective Oil", "", "78px-Reflective_Oil_inventory_icon.png");
+        public static readonly CurrencyItem PrismaticOil = new("Prismatic Oil", "", "Prismatic_Oil_inventory_icon.png");
     }
 }
