@@ -46,7 +46,7 @@ Tracking modules for the following, roughly in this order
 * ~~anomaly rushing tracking~~
 * ~~T0 tracking~~
 * general mapping strategy tracking
-* blight
+* ~~blight~~
 * expedition
 * shipping/mappers
 * ~~sanctum (if I must)~~
