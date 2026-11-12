@@ -176,6 +176,9 @@ namespace SoloSelfTracking.Migrations
                     b.Property<bool>("EnableAutomaticTimerStart")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EnableBlight")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EnableBosses")
                         .HasColumnType("INTEGER");
 

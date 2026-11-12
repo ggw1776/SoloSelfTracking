@@ -238,7 +238,7 @@
                     <span class="setting-slider"></span>
                 </label>
             </div>
-
+            
             <div class="setting-row">
                 <div class="setting-info">
                     <label for="EnableIncursion">Incursion</label>
@@ -248,6 +248,19 @@
                     <input id="EnableIncursion" type="checkbox"
                            checked="@StoredSettings.EnableIncursion"
                            @onchange="e => UpdateSetting(nameof(StoredSettings.EnableIncursion), e)" />
+                    <span class="setting-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableBlight">Blight</label>
+                    <p>Show or hide the Blight Tracker page.</p>
+                </div>
+                <label class="setting-switch">
+                    <input id="EnableBlight" type="checkbox"
+                           checked="@StoredSettings.EnableBlight"
+                           @onchange="e => UpdateSetting(nameof(StoredSettings.EnableBlight), e)" />
                     <span class="setting-slider"></span>
                 </label>
             </div>
@@ -688,6 +701,9 @@
                 break;
             case nameof(StoredSettings.EnablePoeDbSearch):
                 StoredSettings.EnablePoeDbSearch = value;
+                break;
+            case nameof(StoredSettings.EnableBlight):
+                StoredSettings.EnableBlight = value;
                 break;
             default:
                 return;

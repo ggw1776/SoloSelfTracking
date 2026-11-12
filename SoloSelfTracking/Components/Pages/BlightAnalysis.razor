@@ -1,0 +1,12 @@
+﻿@page "/blight-analysis"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+
+<BossAnalysis Title="Blight Analysis" Bosses="Bosses" Maps="true" Verb="Map" VerbPlural="Maps" Noun="Map" NounPlural="Maps" />
+
+@code {
+    private static readonly List<string> Bosses = new()
+    {
+        "Blight"
+    };
+}

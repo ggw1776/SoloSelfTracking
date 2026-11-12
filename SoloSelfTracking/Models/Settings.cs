@@ -42,5 +42,6 @@
         public bool EnableExpedition { get; set; } = true;
         public bool EnableKingsmarchShipping { get; set; } = true;
         public bool EnableKingsmarchMapping { get; set; } = true;
+        public bool EnableBlight { get; set; } = true;
     }
 }
