@@ -191,6 +191,9 @@ namespace SoloSelfTracking.Migrations
                     b.Property<bool>("EnableHeist")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EnableHideOnSearch")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EnableIframing")
                         .HasColumnType("INTEGER");
 
@@ -240,6 +243,9 @@ namespace SoloSelfTracking.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EnableSimulacrum")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("EnableSmartDisplay")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EnableStash")

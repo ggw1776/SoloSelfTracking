@@ -1623,6 +1623,10 @@ min-width:250px;
     image-rendering: auto;
 }
 
+.drop-hidden {
+    display: none !important;
+}
+
 .fate-selection {
     display: grid;
     grid-template-columns: 1fr 1fr;

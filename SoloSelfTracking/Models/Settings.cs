@@ -19,6 +19,8 @@
 
         public bool EnableWikiSearch { get; set; } = false;
         public bool EnablePoeDbSearch { get; set; } = false;
+        public bool EnableHideOnSearch { get; set; } = false;
+        public bool EnableSmartDisplay{ get; set; } = false;
 
         //pages
 

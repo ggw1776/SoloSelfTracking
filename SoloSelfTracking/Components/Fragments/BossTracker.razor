@@ -119,22 +119,29 @@ else if (ShowSoloTitle)
             </div>
         }
 
-        <div class="drop-search">
-            <input type="text"
-                   class="drop-search-input"
-                   placeholder="Search drops..."
-                   @bind="DropSearch"
-                   @bind:event="oninput" />
+        @if (!UserSettings.EnableSmartDisplay)
+        {
+            <div class="drop-search">
+                <input type="text"
+                       class="drop-search-input"
+                       placeholder="Search drops..."
+                       @bind="DropSearch"
+                       @bind:event="oninput" />
 
-            @if (!string.IsNullOrWhiteSpace(DropSearch))
-            {
-                <button class="drop-search-clear"
-                        type="button"
-                        @onclick="() => DropSearch = string.Empty">
-                    ×
-                </button>
-            }
-        </div>
+                @if (!string.IsNullOrWhiteSpace(DropSearch))
+                {
+                    <button class="drop-search-clear"
+                            type="button"
+                            @onclick="() => DropSearch = string.Empty">
+                        ×
+                    </button>
+                }
+            </div>
+        }
+        else if (!SelectedDrops.Any())
+        {
+            <p><weak>Smart Display is enabled. Paste items into this window to begin tracking.</weak></p>
+        }
 
         <div class="d-flex flex-wrap gap-2 mb-3">
             @foreach (var drop in CurrentDrops)
@@ -147,57 +154,62 @@ else if (ShowSoloTitle)
                     drop.Item.BaseType.ToString().Contains(
                         DropSearch.Replace(" ", ""),
                         StringComparison.OrdinalIgnoreCase));
-                <ItemHoverInfo Item="drop.Item">
-                    <button type="button"
-                            class="btn @(isSelected
-                                ? "btn-success"
-                                : "btn-outline-secondary")
-                        @(isMatch ? "drop-search-match" : "")
-                        @(!string.IsNullOrWhiteSpace(DropSearch) && !isMatch ? "drop-search-dimmed" : "")"
-                            @onclick="() => ToggleDrop(drop)"
-                            @oncontextmenu="() => DecrementDrop(drop)"
-                            @oncontextmenu:preventDefault>
+                <div class="
+                    @(!string.IsNullOrWhiteSpace(DropSearch) && !isMatch && UserSettings.EnableHideOnSearch ? "drop-hidden" : "")
+                    @(UserSettings.EnableSmartDisplay && !isSelected ? "drop-hidden" : "")">
+                    <ItemHoverInfo Item="drop.Item">
+                        <button type="button"
+                                class="btn @(isSelected
+                                    ? "btn-success"
+                                    : "btn-outline-secondary")
+                            @(isMatch ? "drop-search-match" : "")
+                            @(!string.IsNullOrWhiteSpace(DropSearch) && !isMatch ? "drop-search-dimmed" : "")"
+                                @onclick="() => ToggleDrop(drop)"
+                                @oncontextmenu="() => DecrementDrop(drop)"
+                                @oncontextmenu:preventDefault>
 
-                        @if (!string.IsNullOrWhiteSpace(drop.Item.IconUrl))
-                        {
-                            <div class="drop-button-icon-layout">
+                            @if (!string.IsNullOrWhiteSpace(drop.Item.IconUrl))
+                            {
+                                <div class="drop-button-icon-layout">
 
-                                @if (drop.IsMultiple)
-                                {
-                                    <span class="drop-button-name">
-                                        @drop.Item.DisplayName  &nbsp; (@CurrentMultidropRecords.Where(x => string.Equals(x, drop.Key)).Count())</span>
-                                }
-                                else
-                                {
-                                    <span class="drop-button-name">
-                                        @drop.Item.DisplayName
-                                    </span>
-                                }
+                                    @if (drop.IsMultiple)
+                                    {
+                                        <span class="drop-button-name">
+                                            @drop.Item.DisplayName  &nbsp; (@CurrentMultidropRecords.Where(x => string.Equals(x, drop.Key)).Count())
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="drop-button-name">
+                                            @drop.Item.DisplayName
+                                        </span>
+                                    }
 
                                 
 
-                                <img src="@drop.Item.IconUrl"
-                                     class="drop-button-icon"
-                                     alt="@drop.Item.DisplayName" />
-                            </div>
-                        }
-                        else
-                        {
-                            @drop.Item.DisplayName
-                        }
+                                    <img src="@drop.Item.IconUrl"
+                                         class="drop-button-icon"
+                                         alt="@drop.Item.DisplayName" />
+                                </div>
+                            }
+                            else
+                            {
+                                @drop.Item.DisplayName
+                            }
 
-                        @if (isSelected && !drop.IsMultiple && string.IsNullOrWhiteSpace(drop.Item.IconUrl))
-                        {
-                            <span> ✓</span>
-                        }
-                        else if (isSelected && drop.IsMultiple && string.IsNullOrWhiteSpace(drop.Item.IconUrl))
-                        {
-                            <span>
-                                &nbsp (@CurrentMultidropRecords.Where(x => string.Equals(x, drop.Key)).Count())
-                            </span>
-                        }
-                    </button>
-                </ItemHoverInfo>
+                            @if (isSelected && !drop.IsMultiple && string.IsNullOrWhiteSpace(drop.Item.IconUrl))
+                            {
+                                <span> ✓</span>
+                            }
+                            else if (isSelected && drop.IsMultiple && string.IsNullOrWhiteSpace(drop.Item.IconUrl))
+                            {
+                                <span>
+                                    &nbsp (@CurrentMultidropRecords.Where(x => string.Equals(x, drop.Key)).Count())
+                                </span>
+                            }
+                        </button>
+                    </ItemHoverInfo>
+                </div>
             }
         </div>
         
