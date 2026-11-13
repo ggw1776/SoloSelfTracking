@@ -1217,7 +1217,6 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Visceras.WraithClawsHigh, 0f),
             new(Visceras.WraithClawsLow, 0f),
             new(Visceras.WraithClawsMed, 0f),
-
         ];
 
         public readonly static List<DropTableEntry> Maps = Fates; //we can just use the fate tracker for 3.30, will change this later
