@@ -71,7 +71,7 @@ idk make a PR and I'll look at it
 
 # AI USAGE DISCLOSURE
 
-A local LLM was leveraged for code formatting (e.g. EBaseType), some light linting, and CSS class creation. All mission-critical code was architected and written by a flesh-and-blood human. Contributors to this repository are encouraged to use LLM-generated code minimally and disclose LLM usage in pull requests.
+A local LLM was leveraged for code formatting (e.g. EBaseType), some light linting, the thread radial component, and CSS class creation. All mission-critical code was architected and written by a flesh-and-blood human. Contributors to this repository are encouraged to use LLM-generated code minimally and disclose LLM usage in pull requests.
 
 
 
