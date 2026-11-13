@@ -109,14 +109,13 @@ else
 
         var fateNames = History
             .SelectMany(r => r.Fates)
-            .Select(r => r.Name)
             .Distinct(StringComparer.OrdinalIgnoreCase);
 
         foreach (var fate in fateNames)
         {
             int fateCount = History.Count(r =>
                 r.Fates.Any(x =>
-                    string.Equals(x.Name, fate,
+                    string.Equals(x, fate,
                         StringComparison.OrdinalIgnoreCase)));
 
 

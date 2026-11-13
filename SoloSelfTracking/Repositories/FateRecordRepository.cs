@@ -19,7 +19,7 @@ namespace SoloSelfTracking.Repositories
             await using var db = await _dbFactory.CreateDbContextAsync();
 
             return await db.FateRecords
-                .OrderByDescending(x => x.Date).Include(x => x.Fates)
+                .OrderByDescending(x => x.Date)
                 .ToListAsync();
         }
 

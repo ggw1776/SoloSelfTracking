@@ -105,8 +105,6 @@ namespace SoloSelfTracking.Data
                 entity.Property(x => x.Drops)
                     .HasConversion(dropsConverter)
                     .IsRequired();
-
-                entity.HasMany(x => x.Fates).WithOne().OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Settings>()
