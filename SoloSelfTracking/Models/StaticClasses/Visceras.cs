@@ -134,8 +134,10 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Viscera DistendedStomachLow = new("Distended Stomach (Low)", EVisceraType.Torso, "(10-15)% increased Damage if you have Consumed a corpse Recently");
         public static readonly Viscera DistendedStomachMed = new("Distended Stomach (Med)", EVisceraType.Torso, "(20-30)% increased Damage if you have Consumed a corpse Recently");
         public static readonly Viscera DroxsHead = new("Drox's Head", EVisceraType.Head, "Curse Enemies with Flammability on Hit if 5 Warlord Items are Equipped");
-        public static readonly Viscera EaterOfWorldsHead = new("Eater of Worlds' Head", EVisceraType.Head, "(10-15)% chance to gain a Frenzy Charge for each Enemy you hit with a Critical Strike Uber: +(5-10)% to Quality of all Skill Gems");
-        public static readonly Viscera EldersHead = new("Elder's Head", EVisceraType.Head, "Gain Maddening Presence for 10 seconds when you Kill a Rare or Unique Enemy Uber: Enemies Chilled by your Hits can be Shattered as though Frozen");
+        public static readonly Viscera EaterOfWorldsHead = new("Eater of Worlds' Head", EVisceraType.Head, "(10-15)% chance to gain a Frenzy Charge for each Enemy you hit with a Critical Strike");
+        public static readonly Viscera EaterOfWorldsHeadUber = new("Uber Eater of Worlds' Head", EVisceraType.Head, "+(5-10)% to Quality of all Skill Gems");
+        public static readonly Viscera EldersHead = new("Elder's Head", EVisceraType.Head, "Gain Maddening Presence for 10 seconds when you Kill a Rare or Unique Enemy");
+        public static readonly Viscera EldersHeadUber = new("Uber Elder's Head", EVisceraType.Head, "Uber: Enemies Chilled by your Hits can be Shattered as though Frozen");
         public static readonly Viscera ElementalEssenceHigh = new("Elemental Essence (High)", EVisceraType.Torso, "+(2-3)% to maximum Cold Resistance");
         public static readonly Viscera ElementalEssenceLow = new("Elemental Essence (Low)", EVisceraType.Torso, "+(14-18)% to Cold Resistance");
         public static readonly Viscera ElementalEssenceMed = new("Elemental Essence (Med)", EVisceraType.Torso, "+(22-28)% to Cold Resistance");
@@ -205,9 +207,12 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Viscera HollowedSkullLow = new("Hollowed Skull (Low)", EVisceraType.Head, "-(15-10) Physical Damage taken from Attack Hits");
         public static readonly Viscera HollowedSkullMed = new("Hollowed Skull (Med)", EVisceraType.Head, "-(30-20) Physical Damage taken from Attack Hits");
         public static readonly Viscera HydrasHead = new("Hydra's Head", EVisceraType.Head, "Arrows Pierce all Targets after Forking");
-        public static readonly Viscera IncarnationOfDreadsHead = new("Incarnation of Dread's Head", EVisceraType.Head, "Minions gain added Resistances equal to (20-30)% of your Resistances Uber: Gain a random Shrine Buff for (1-4) seconds when you Kill a Rare or Unique Enemy");
-        public static readonly Viscera IncarnationOfFearsHead = new("Incarnation of Fear's Head", EVisceraType.Head, "Trigger Level 20 Summon Void Spawn every 4 seconds Uber: Your Chaos Damage can Freeze");
-        public static readonly Viscera IncarnationOfNeglectsCube = new("Incarnation of Neglect's Cube", EVisceraType.UpperLimb, "(10-20)% chance to inflict an additional Poison on the same Target when you inflict Poison Uber: Damaging Retaliation Skills become Usable every 4 seconds");
+        public static readonly Viscera IncarnationOfDreadsHead = new("Incarnation of Dread's Head", EVisceraType.Head, "Minions gain added Resistances equal to (20-30)% of your Resistances");
+        public static readonly Viscera IncarnationOfDreadsHeadUber = new("Uber Incarnation of Dread's Head", EVisceraType.Head, "Gain a random Shrine Buff for (1-4) seconds when you Kill a Rare or Unique Enemy");
+        public static readonly Viscera IncarnationOfFearsHead = new("Incarnation of Fear's Head", EVisceraType.Head, "Trigger Level 20 Summon Void Spawn every 4 seconds");
+        public static readonly Viscera IncarnationOfFearsHeadUber = new("Uber Incarnation of Fear's Head", EVisceraType.Head, "Your Chaos Damage can Freeze");
+        public static readonly Viscera IncarnationOfNeglectsCube = new("Incarnation of Neglect's Cube", EVisceraType.UpperLimb, "(10-20)% chance to inflict an additional Poison on the same Target when you inflict Poison");
+        public static readonly Viscera IncarnationOfNeglectsCubeUber = new("Incarnation of Neglect's Cube", EVisceraType.UpperLimb, "Damaging Retaliation Skills become Usable every 4 seconds");
         public static readonly Viscera InfectedLegHigh = new("Infected Leg (High)", EVisceraType.LowerLimb, "Damaging Ailments inflicted by Minions deal damage (15-20)% Faster");
         public static readonly Viscera InfectedLegLow = new("Infected Leg (Low)", EVisceraType.LowerLimb, "Minions have +(6-8)% to Damage over Time Multiplier");
         public static readonly Viscera InfectedLegMed = new("Infected Leg (Med)", EVisceraType.LowerLimb, "Minions have +(10-14)% to Damage over Time Multiplier");
@@ -234,7 +239,8 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Viscera MarinersTricorneHigh = new("Mariner's Tricorne (High)", EVisceraType.Head, "(4-6)% chance to gain Phasing on Hit");
         public static readonly Viscera MarinersTricorneLow = new("Mariner's Tricorne (Low)", EVisceraType.Head, "(8-12)% chance to gain Phasing for 4 seconds on Kill");
         public static readonly Viscera MarinersTricorneMed = new("Mariner's Tricorne (Med)", EVisceraType.Head, "(15-20)% chance to gain Phasing for 4 seconds on Kill");
-        public static readonly Viscera MavensOrrery = new("Maven's Orrery", EVisceraType.Torso, "Enemies within 3 metres are Scorched Uber: +1 to maximum number of Sacred Wisps +1 to number of Sacred Wisps Summoned");
+        public static readonly Viscera MavensOrrery = new("Maven's Orrery", EVisceraType.Torso, "Enemies within 3 metres are Scorched");
+        public static readonly Viscera MavensOrreryUber = new("Uber Maven's Orrery", EVisceraType.Torso, "+1 to maximum number of Sacred Wisps +1 to number of Sacred Wisps Summoned");
         public static readonly Viscera MinotaursHead = new("Minotaur's Head", EVisceraType.Head, "+1% to all maximum Elemental Resistances");
         public static readonly Viscera MoltenCoreHigh = new("Molten Core (High)", EVisceraType.Torso, "+(2-3)% to maximum Fire Resistance");
         public static readonly Viscera MoltenCoreLow = new("Molten Core (Low)", EVisceraType.Torso, "+(14-18)% to Fire Resistance");
@@ -307,7 +313,8 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Viscera SeaWitchsTentacleHigh = new("Sea Witch's Tentacle (High)", EVisceraType.LowerLimb, "Minions have (8-12)% chance to deal Double Damage");
         public static readonly Viscera SeaWitchsTentacleLow = new("Sea Witch's Tentacle (Low)", EVisceraType.LowerLimb, "Minions deal (10-15)% increased Damage");
         public static readonly Viscera SeaWitchsTentacleMed = new("Sea Witch's Tentacle (Med)", EVisceraType.LowerLimb, "Minions deal (20-30)% increased Damage");
-        public static readonly Viscera SearingExarchsDescry = new("Searing Exarch's Descry", EVisceraType.Torso, "(4-6)% of Physical Damage taken as Fire Damage (4-6)% of Cold Damage taken as Fire Damage (4-6)% of Lightning Damage taken as Fire Damage Uber: +(3-5) to maximum Fortification");
+        public static readonly Viscera SearingExarchsDescry = new("Searing Exarch's Descry", EVisceraType.Torso, "(4-6)% of Physical Damage taken as Fire Damage (4-6)% of Cold Damage taken as Fire Damage (4-6)% of Lightning Damage taken as Fire Damage");
+        public static readonly Viscera SearingExarchsDescryUber = new("Uber Searing Exarch's Descry", EVisceraType.Torso, "+(3-5) to maximum Fortification");
         public static readonly Viscera SeveredRhoaHeadHigh = new("Severed Rhoa Head (High)", EVisceraType.Head, "Every second, inflict Withered on Enemies within 6 metres for 5 seconds");
         public static readonly Viscera SeveredRhoaHeadLow = new("Severed Rhoa Head (Low)", EVisceraType.Head, "(10-15)% increased Chaos Damage");
         public static readonly Viscera SeveredRhoaHeadMed = new("Severed Rhoa Head (Med)", EVisceraType.Head, "(20-30)% increased Chaos Damage");
@@ -317,11 +324,14 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Viscera SeveredStingerHigh = new("Severed Stinger (High)", EVisceraType.Torso, "Hits have (10-15)% chance to treat Enemy Monster Lightning Resistance values as inverted");
         public static readonly Viscera SeveredStingerLow = new("Severed Stinger (Low)", EVisceraType.Torso, "Damage Penetrates (3-4)% Lightning Resistance");
         public static readonly Viscera SeveredStingerMed = new("Severed Stinger (Med)", EVisceraType.Torso, "Damage Penetrates (6-8)% Lightning Resistance");
-        public static readonly Viscera ShapersHead = new("Shaper's Head", EVisceraType.Head, "Gain Shaper's Presence for 10 seconds when you kill a Rare or Unique Enemy Uber: Minimum roll: Utility Flasks gain 1 Charge every 3 seconds Maximum roll: Utility Flasks gain 2 Charges every 3 seconds");
+        public static readonly Viscera ShapersHead = new("Shaper's Head", EVisceraType.Head, "Gain Shaper's Presence for 10 seconds when you kill a Rare or Unique Enemy");
+        public static readonly Viscera ShapersHeadUber = new("Uber Shaper's Head", EVisceraType.Head, "Minimum roll: Utility Flasks gain 1 Charge every 3 seconds Maximum roll: Utility Flasks gain 2 Charges every 3 seconds");
         public static readonly Viscera SirensTentacleHigh = new("Siren's Tentacle (High)", EVisceraType.LowerLimb, "+5% to Maximum Effect of Chill");
         public static readonly Viscera SirensTentacleLow = new("Siren's Tentacle (Low)", EVisceraType.LowerLimb, "(10-15)% increased Effect of Cold Ailments");
         public static readonly Viscera SirensTentacleMed = new("Siren's Tentacle (Med)", EVisceraType.LowerLimb, "(20-30)% increased Effect of Cold Ailments");
-        public static readonly Viscera SirusHead = new("Sirus' Head", EVisceraType.Head, "1: Transfiguration of Body 2: Transfiguration of Mind 3: Transfiguration of Soul Uber: Enemies you Kill have a (5-10)% chance to Explode, dealing a tenth of their maximum Life as Damage of a Random Element");
+        public static readonly Viscera SirusHeadBody = new("Sirus' Head (Transfiguration of Body)", EVisceraType.Head, "Transfiguration of Body");
+        public static readonly Viscera SirusHeadMind = new("Sirus' Head (Transfiguration of Mind)", EVisceraType.Head, "Transfiguration of Mind");
+        public static readonly Viscera SirusHeadSoul = new("Sirus' Head (Transfiguration of Soul)", EVisceraType.Head, "Transfiguration of Soul");
         public static readonly Viscera SkeletalArchersArmHigh = new("Skeletal Archer's Arm (High)", EVisceraType.UpperLimb, "Projectiles Pierce (2-3) additional Targets");
         public static readonly Viscera SkeletalArchersArmLow = new("Skeletal Archer's Arm (Low)", EVisceraType.UpperLimb, "Projectiles deal (8-12)% increased Damage with Hits and Ailments for each Enemy Pierced");
         public static readonly Viscera SkeletalArchersArmMed = new("Skeletal Archer's Arm (Med)", EVisceraType.UpperLimb, "Projectiles deal (15-20)% increased Damage with Hits and Ailments for each Enemy Pierced");
@@ -392,7 +402,8 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Viscera VaalAppendageHigh = new("Vaal Appendage (High)", EVisceraType.UpperLimb, "(30-50)% increased Damage with Vaal Skills");
         public static readonly Viscera VaalAppendageLow = new("Vaal Appendage (Low)", EVisceraType.UpperLimb, "+(0.2-0.3) metres to Melee Strike Range");
         public static readonly Viscera VaalAppendageMed = new("Vaal Appendage (Med)", EVisceraType.UpperLimb, "+(0.4-0.5) metres to Melee Strike Range");
-        public static readonly Viscera VenariusScripture = new("Venarius' Scripture", EVisceraType.UpperLimb, "Consecrated Ground you create applies (8-10)% increased Damage taken to Enemies Uber: Effects of Consecrated Ground you create Linger for 4 seconds");
+        public static readonly Viscera VenariusScripture = new("Venarius' Scripture", EVisceraType.UpperLimb, "Consecrated Ground you create applies (8-10)% increased Damage taken to Enemies");
+        public static readonly Viscera VenariusScriptureUber = new("Venarius' Scripture", EVisceraType.UpperLimb, "Effects of Consecrated Ground you create Linger for 4 seconds");
         public static readonly Viscera VendigoClawsHigh = new("Vendigo Claws (High)", EVisceraType.UpperLimb, "(25-40)% increased Damage with Hits against Chilled Enemies");
         public static readonly Viscera VendigoClawsLow = new("Vendigo Claws (Low)", EVisceraType.UpperLimb, "Adds (10-15) to (25-35) Cold Damage to Unarmed Attacks");
         public static readonly Viscera VendigoClawsMed = new("Vendigo Claws (Med)", EVisceraType.UpperLimb, "Adds (25-35) to (50-75) Cold Damage to Unarmed Attacks");
@@ -417,5 +428,6 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Viscera WraithClawsLow = new("Wraith Claws (Low)", EVisceraType.UpperLimb, "(5-7)% chance to Impale on Spell Hit");
         public static readonly Viscera WraithClawsMed = new("Wraith Claws (Med)", EVisceraType.UpperLimb, "(8-12)% chance to Impale on Spell Hit");
 
+        public static readonly Viscera GreaterSirusHead = new ("Sirus' Head", EVisceraType.Head, "Enemies you Kill have a (5-10)% chance to Explode, dealing a tenth of their maximum Life as Damage of a Random Element");
     }
 }

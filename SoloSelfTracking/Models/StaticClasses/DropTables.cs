@@ -15,7 +15,11 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Gems.AnnihilationSupport, 7f),
             new(Currencies.OrbOfDominance, 5f),
             new(Currencies.AwakenersOrb, 20f),
-            new(DivinationCards.AFateWorseThanDeath, 4f)
+            new(DivinationCards.AFateWorseThanDeath, 4f),
+            new(Visceras.SirusHeadMind, 0f),
+            new(Visceras.SirusHeadBody, 0f),
+            new(Visceras.SirusHeadSoul, 0f),
+            new(Visceras.GreaterSirusHead, 0f)
         ];
 
         public readonly static List<DropTableEntry> UberShaper =
@@ -32,6 +36,8 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.OrbOfDominance, 3f),
             new(MiscItems.FragmentofKnowledge, 50f),
             new(MiscItems.FragmentofShape, 50f),
+            new(Visceras.ShapersHead, 0f),
+            new(Visceras.ShapersHeadUber, 0f)
         ];
 
         public readonly static List<DropTableEntry> UberUberElder =
@@ -51,7 +57,9 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.EldersExaltedOrb, 13f),
             new(Currencies.OrbOfDominance, 6f),
             new(DivinationCards.VoidOfTheElements, 0.05f),
-            new(DivinationCards.AuspiciousAmbitions, 0.5f)
+            new(DivinationCards.AuspiciousAmbitions, 0.5f),
+            new(Visceras.EldersHead, 0f),
+            new(Visceras.EldersHeadUber, 0f)
         ];
 
         public readonly static List<DropTableEntry> UberMaven = [
@@ -67,7 +75,9 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(MiscItems.CurioOfPotential, 5f),
             new(Gems.InvertTheRulesSupport, 10f),
             new(Currencies.OrbOfConflict, 32f),
-            new(DivinationCards.AuspiciousAmbitions, 0.05f)
+            new(DivinationCards.AuspiciousAmbitions, 0.05f),
+            new(Visceras.MavensOrrery, 0f),
+            new(Visceras.MavensOrreryUber, 0f)
         ];
 
         public readonly static List<DropTableEntry> UberCortex = [
@@ -79,7 +89,9 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(MiscItems.ForgottenReliquaryKey, 1.5f),
             new(Gems.GreaterKineticInstabilitySupport, 10f),
             new(DivinationCards.TheHook, 5f),
-            new(DivinationCards.ImperfectMemories, 0.5f)
+            new(DivinationCards.ImperfectMemories, 0.5f),
+            new(Visceras.VenariusScripture, 0f),
+            new(Visceras.VenariusScriptureUber, 0f)
         ];
 
         public readonly static List<DropTableEntry> UberExarch = [
@@ -95,7 +107,9 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.EldrichOrbOfAnnulment, 5f),
             new(Currencies.EldrichChaosOrb, 5f),
             new(Currencies.EldrichExaltedOrb, 5f),
-            new(DivinationCards.AuspiciousAmbitions, 1f)
+            new(DivinationCards.AuspiciousAmbitions, 1f),
+            new(Visceras.SearingExarchsDescry, 0f),
+            new(Visceras.SearingExarchsDescryUber, 0f)
         ];
 
         public readonly static List<DropTableEntry> UberEater = [
@@ -111,7 +125,9 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.EldrichOrbOfAnnulment, 5f),
             new(Currencies.EldrichChaosOrb, 5f),
             new(Currencies.EldrichExaltedOrb, 5f),
-            new(DivinationCards.AuspiciousAmbitions, 1f)
+            new(DivinationCards.AuspiciousAmbitions, 1f),
+            new(Visceras.EaterOfWorldsHead, 0f),
+            new(Visceras.EaterOfWorldsHeadUber, 0f)
         ];
 
         public readonly static List<DropTableEntry> UberAtziri = [
@@ -148,7 +164,9 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.NamelessAstrolabe, 7.5f),
             new(Currencies.RunicAstrolabe, 7.5f),
             new(Currencies.TimelessAstrolabe, 7.5f),
-            new(DivinationCards.Monochrome, 3f)
+            new(DivinationCards.Monochrome, 3f),
+            new(Visceras.IncarnationOfFearsHead, 0f),
+            new(Visceras.IncarnationOfFearsHeadUber, 0f)
         ];
         public readonly static List<DropTableEntry> UberIncarnationOfNeglect = [
             new(Uniques.RefugeinIsolation, 55f),
@@ -168,7 +186,9 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.NamelessAstrolabe, 7.5f),
             new(Currencies.RunicAstrolabe, 7.5f),
             new(Currencies.TimelessAstrolabe, 7.5f),
-            new(DivinationCards.Monochrome, 3f)
+            new(DivinationCards.Monochrome, 3f),
+            new(Visceras.IncarnationOfNeglectsCube, 0f),
+            new(Visceras.IncarnationOfNeglectsCubeUber, 0f)
         ];
         public readonly static List<DropTableEntry> UberIncarnationOfDread = [
             new(Uniques.TheHallowedMonarch, 54f),
@@ -188,7 +208,9 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.NamelessAstrolabe, 7.5f),
             new(Currencies.RunicAstrolabe, 7.5f),
             new(Currencies.TimelessAstrolabe, 7.5f),
-            new(DivinationCards.Monochrome, 3f)
+            new(DivinationCards.Monochrome, 3f),
+            new(Visceras.IncarnationOfDreadsHead, 0f),
+            new(Visceras.IncarnationOfDreadsHeadUber, 0f)
         ];
 
         // NMs
@@ -252,6 +274,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.OrbOfDominance, 3f),
             new(MiscItems.FragmentofKnowledge, 50f),
             new(MiscItems.FragmentofShape, 50f),
+            new(Visceras.ShapersHead, 0f)
         ];
 
         public readonly static List<DropTableEntry> Elder =
@@ -273,6 +296,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(DivinationCards.VoidOfTheElements, 0.5f),
             new(MiscItems.FragmentofTerror, 50f),
             new(MiscItems.FragmentofEmptiness, 50f),
+            new(Visceras.EldersHead, 0f)
         ];
         public readonly static List<DropTableEntry> Cortex =
         [
@@ -282,7 +306,8 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Uniques.BottledFaith, 5f),
             new(Gems.GreaterKineticInstabilitySupport, 10f),
             new(DivinationCards.TheHook, 5f),
-            new(DivinationCards.ImperfectMemories, 0.5f)
+            new(DivinationCards.ImperfectMemories, 0.5f),
+            new(Visceras.VenariusScripture, 0f)
         ];
         public readonly static List<DropTableEntry> Sirus =
         [
@@ -293,7 +318,10 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Gems.AnnihilationSupport, 7f),
             new(Currencies.OrbOfDominance, 5f),
             new(Currencies.AwakenersOrb, 20f),
-            new(DivinationCards.AFateWorseThanDeath, 4f)
+            new(DivinationCards.AFateWorseThanDeath, 4f),
+            new(Visceras.SirusHeadBody, 0f),
+            new(Visceras.SirusHeadMind, 0f),
+            new(Visceras.SirusHeadSoul, 0f)
         ];
 
         public readonly static List<DropTableEntry> Maven = 
@@ -305,7 +333,8 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Uniques.Echoforge, 1f),
             new(Gems.InvertTheRulesSupport, 10f),
             new(Currencies.OrbOfConflict, 32f),
-            new(DivinationCards.AuspiciousAmbitions, 0.05f)
+            new(DivinationCards.AuspiciousAmbitions, 0.05f),
+            new(Visceras.MavensOrrery, 0f)
         ];
 
         public readonly static List<DropTableEntry> Exarch = 
@@ -319,7 +348,8 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.EldrichOrbOfAnnulment, 5f),
             new(Currencies.EldrichChaosOrb, 5f),
             new(Currencies.EldrichExaltedOrb, 5f),
-            new(DivinationCards.AuspiciousAmbitions, 1f)
+            new(DivinationCards.AuspiciousAmbitions, 1f),
+            new(Visceras.SearingExarchsDescry, 0f)
         ];
 
         public readonly static List<DropTableEntry> Eater = 
@@ -333,7 +363,8 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.EldrichOrbOfAnnulment, 5f),
             new(Currencies.EldrichChaosOrb, 5f),
             new(Currencies.EldrichExaltedOrb, 5f),
-            new(DivinationCards.AuspiciousAmbitions, 1f)
+            new(DivinationCards.AuspiciousAmbitions, 1f),
+            new(Visceras.EaterOfWorldsHead, 0f)
         ];
 
         public readonly static List<DropTableEntry> Atziri = 
@@ -366,7 +397,8 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.NamelessAstrolabe, 7.5f),
             new(Currencies.RunicAstrolabe, 7.5f),
             new(Currencies.TimelessAstrolabe, 7.5f),
-            new(DivinationCards.Monochrome, 3f)
+            new(DivinationCards.Monochrome, 3f),
+            new(Visceras.IncarnationOfFearsHead, 0f)
         ];
         public readonly static List<DropTableEntry> IncarnationOfNeglect = [
             new(Uniques.BetrayalsSting, 50f),
@@ -385,7 +417,8 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.NamelessAstrolabe, 7.5f),
             new(Currencies.RunicAstrolabe, 7.5f),
             new(Currencies.TimelessAstrolabe, 7.5f),
-            new(DivinationCards.Monochrome, 3f)
+            new(DivinationCards.Monochrome, 3f),
+            new(Visceras.IncarnationOfNeglectsCube, 0f)
         ];
         public readonly static List<DropTableEntry> IncarnationOfDread = [
             new(Uniques.Bonemeld, 55f),
@@ -404,7 +437,8 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.NamelessAstrolabe, 7.5f),
             new(Currencies.RunicAstrolabe, 7.5f),
             new(Currencies.TimelessAstrolabe, 7.5f),
-            new(DivinationCards.Monochrome, 3f)
+            new(DivinationCards.Monochrome, 3f),
+            new(Visceras.IncarnationOfDreadsHead, 0f)
         ];
 
         public readonly static List<DropTableEntry> Zorath =
@@ -1122,7 +1156,6 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Visceras.SirensTentacleHigh, 0f),
             new(Visceras.SirensTentacleLow, 0f),
             new(Visceras.SirensTentacleMed, 0f),
-            new(Visceras.SirusHead, 0f),
             new(Visceras.SkeletalArchersArmHigh, 0f),
             new(Visceras.SkeletalArchersArmLow, 0f),
             new(Visceras.SkeletalArchersArmMed, 0f),
