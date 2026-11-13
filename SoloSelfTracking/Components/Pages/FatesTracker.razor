@@ -12,6 +12,8 @@
 
 @inject FateRecordRepository Repository
 
+<h1>THE FUNCTIONALITY OF THIS PAGE IS INCOMPLETE</h1>
+
 <div class="fate-selection">
 
     <div class="fate-selection-section">
@@ -29,17 +31,17 @@
         <div class="fate-selection-grid">
             @foreach (var fate in FilteredFateOptions)
             {
-                int count = SelectedFates.Count(x => x == fate.Value);
+                int count = SelectedFates.Count(x => x == fate);
                 bool isDisabled = SelectedFates.Count >= 3;
 
                 <div class="fate-selection-card @(count > 0 ? "selected" : "")">
-                    <span>@fate.Name</span>
+                    <span>@fate</span>
 
                     <div class="fate-reward-controls">
                         <button type="button"
                                 class="fate-reward-button"
                                 disabled="@(count == 0)"
-                                @onclick="() => RemoveFate(fate.Value)">
+                                @onclick="() => RemoveFate(fate)">
                             −
                         </button>
 
@@ -48,7 +50,7 @@
                         <button type="button"
                                 class="fate-reward-button"
                                 disabled="@isDisabled"
-                                @onclick="() => AddFate(fate.Value)">
+                                @onclick="() => AddFate(fate)">
                             +
                         </button>
                     </div>
@@ -109,8 +111,10 @@
              OnRecordKill="HandleRecordKill"
              Maps="true"
              NightmareMods="true"
+             HasThreads="true"
              Verb="Map"
              VerbPlural="Maps"
+             ForceSmartDisplay="true"
              @ref="_bossTracker" />
 
 
@@ -188,7 +192,7 @@
                                 @foreach (var fate in kill.Fates)
                                 {
                                     <span class="badge bg-secondary me-1 mb-1">
-                                        @fate.Name
+                                        @fate
                                     </span>
                                 }
                             }
@@ -240,13 +244,13 @@
 
     private List<FateRecord> FateRecords = new();
 
-    private List<Fate> SelectedFates = new();
+    private List<string> SelectedFates = new();
     private List<EFateReward> SelectedRewards = new();
 
     private int _nextKillId = 1;
     private BossTracker _bossTracker;
 
-    private record FateOption(string Name, Fate Value);
+    private record FateOption(string Name, string Value);
 
     protected override async Task OnInitializedAsync()
     {
@@ -257,25 +261,10 @@
             : 0;
     }
 
-    private List<FateOption> FateOptions =>
-        typeof(Fates)
-            .GetFields(BindingFlags.Public | BindingFlags.Static)
-            .Where(x => typeof(Fate).IsAssignableFrom(x.FieldType))
-            .Select(x => new FateOption(
-                FormatFateName(x.Name),
-                (Fate)x.GetValue(null)!))
-            .Concat(
-                typeof(Fates)
-                    .GetProperties(BindingFlags.Public | BindingFlags.Static)
-                    .Where(x => x.CanRead && typeof(Fate).IsAssignableFrom(x.PropertyType))
-                    .Select(x => new FateOption(
-                        FormatFateName(x.Name),
-                        (Fate)x.GetValue(null)!)))
-            .Where(x => x.Value != null)
-            .GroupBy(x => x.Name)
-            .Select(x => x.First())
-            .OrderBy(x => x.Name)
-            .ToList();
+    private List<string> FateOptions =
+    [
+        "Crowkeeper", "Sanguine", "Incandescent", "Rot", "Dryad", "Deathbringer", "Torchbearer", "Bloodthirsty", "Wildfire", "Murderous", "Gravewalker", "Houndmaster", "Black Frost", "Conjurer", "Golemancer", "Doomsayer", "Avalanche", "Butcher", "Alchemist", "Stormcaller", "Tempest", "Blood Moon", "Savage", "Pestilent", "Sadist"
+    ];
 
     private List<EFateReward> RewardOptions =>
         Enum.GetValues<EFateReward>().ToList();
@@ -283,10 +272,10 @@
     private string FateSearch = string.Empty;
     private string RewardSearch = string.Empty;
 
-    private List<FateOption> FilteredFateOptions =>
+    private List<string> FilteredFateOptions =>
         FateOptions
             .Where(x => string.IsNullOrWhiteSpace(FateSearch) ||
-                x.Name.Contains(FateSearch, StringComparison.OrdinalIgnoreCase))
+                x.Contains(FateSearch, StringComparison.OrdinalIgnoreCase))
             .ToList();
 
     private List<EFateReward> FilteredRewardOptions =>
@@ -295,7 +284,7 @@
                 FormatRewardName(x).Contains(RewardSearch, StringComparison.OrdinalIgnoreCase))
             .ToList();
 
-    private void ToggleFate(Fate fate)
+    private void ToggleFate(string fate)
     {
         if (SelectedFates.Contains(fate))
         {
@@ -369,13 +358,13 @@
         FateRecords.RemoveAll(k => k.Id == id);
         await Repository.DeleteAsync(id);
     }
-    private void AddFate(Fate fate)
+    private void AddFate(string fate)
     {
         if (SelectedFates.Count < 3)
             SelectedFates.Add(fate);
     }
 
-    private void RemoveFate(Fate fate)
+    private void RemoveFate(string fate)
     {
         SelectedFates.Remove(fate);
     }

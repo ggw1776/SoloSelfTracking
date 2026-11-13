@@ -1,0 +1,30 @@
+﻿@page "/mapping"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+@using SoloSelfTracking.Models
+@using SoloSelfTracking.Models.StaticClasses
+
+<h1>THE FUNCTIONALITY OF THIS PAGE IS INCOMPLETE</h1>
+
+<BossTracker Title="Map Tracker"
+             Bosses="bosses"
+             DropProvider="GetBossDrops"
+             AnalysisHref="map-analysis"
+             Verb="Run"
+             VerbPlural="Runs"
+             Maps="true"
+             NightmareMods="true"
+             ForceSmartDisplay="true"
+             HasThreads="true"/>
+
+@code {
+    private readonly string[] bosses =
+    {
+        "Maps"
+    };
+
+    private List<DropTableEntry> GetBossDrops(string boss)
+    {
+        return DropTables.Maps; 
+    }
+}

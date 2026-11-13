@@ -2208,3 +2208,34 @@ min-width:250px;
     gap: 8px;
     margin-top: 20px;
 }
+
+.segmented-gauge {
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+    .segmented-gauge svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+    }
+
+    .segmented-gauge path {
+        transition: fill 0.12s ease;
+    }
+
+    .segmented-gauge:active {
+        transform: scale(0.97);
+    }
+.gauge-center-icon {
+    width: 100%;
+    height: 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+}

@@ -26,6 +26,16 @@
             </div>
         }
 
+        
+        @if (StoredSettings != null && StoredSettings.EnableMappingStrats)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="mapping">
+                    <span class="bi bi-mapping-fill-nav-menu" aria-hidden="true"></span> Mapping
+                </NavLink>
+            </div>
+        }
+
         @if (StoredSettings != null && StoredSettings.EnableFates)
         {
             <div class="nav-item px-3">

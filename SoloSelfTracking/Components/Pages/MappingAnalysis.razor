@@ -1,0 +1,12 @@
+﻿@page "/map-analysis"
+@rendermode InteractiveServer
+@using SoloSelfTracking.Components.Fragments
+
+<BossAnalysis Title="Map Analysis" Bosses="Bosses" Maps="true" HasWings="true" Nightmare="true" Verb="Run" VerbPlural="Runs" Noun="Map" NounPlural="Maps" />
+
+@code {
+    private static readonly List<string> Bosses = new()
+    {
+        "Maps"
+    };
+}

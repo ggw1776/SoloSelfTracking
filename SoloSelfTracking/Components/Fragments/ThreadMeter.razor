@@ -1,0 +1,107 @@
+﻿
+@using Microsoft.AspNetCore.Components.Web
+<!--LLM DISCLOSURE: THIS IS SLOP!!!!!!!!-->
+<div class="segmented-gauge"
+     style="width: @(Size)px; height: @(Size)px;"
+     title="@HoverValue">
+
+    <svg viewBox="0 0 100 100"
+         @onclick="Increment"
+         @oncontextmenu="Decrement"
+         @oncontextmenu:preventDefault="true">
+
+        <defs>
+            <clipPath id="@_clipId">
+                <circle cx="50" cy="50" r="29" />
+            </clipPath>
+        </defs>
+
+        @for (int i = 0; i < 8; i++)
+        {
+            <path d="@GetSegmentPath(i)"
+                  fill="@(i < Value ? SegmentColor : EmptySegmentColor)"
+                  stroke="#17130f"
+                  stroke-width="1.5" />
+        }
+
+        <circle cx="50" cy="50" r="46"
+                fill="none"
+                stroke="#a68b55"
+                stroke-width="1.5" />
+
+        <circle cx="50" cy="50" r="29"
+                fill="#211815" />
+
+        @if (!string.IsNullOrWhiteSpace(CenterImage))
+        {
+            <foreignObject x="21" y="21" width="58" height="58">
+                <div xmlns="http://www.w3.org/1999/xhtml"
+                     class="gauge-center-icon"
+                     style="
+                    background-color: @SegmentColor;
+                    mask-image: url('@CenterImage');
+                    -webkit-mask-image: url('@CenterImage');
+                    ">
+                </div>
+            </foreignObject>
+        }
+    </svg>
+</div>
+
+@code {
+    [Parameter] public int Value { get; set; }
+    [Parameter] public EventCallback<int> ValueChanged { get; set; }
+
+    [Parameter] public string SegmentColor { get; set; } = "#d4a548";
+    [Parameter] public string EmptySegmentColor { get; set; } = "#29221b";
+    [Parameter] public string CenterImage { get; set; } = string.Empty;
+
+    [Parameter] public int Size { get; set; } = 100;
+    [Parameter] public bool ShowValue { get; set; } = true;
+    [Parameter] public string HoverValue { get; set; }
+
+    private readonly string _clipId = $"gauge-{Guid.NewGuid():N}";
+
+    private async Task Increment()
+    {
+        if (Value >= 8)
+            return;
+
+        await ValueChanged.InvokeAsync(Value + 1);
+    }
+
+    private async Task Decrement()
+    {
+        if (Value <= 0)
+            return;
+
+        await ValueChanged.InvokeAsync(Value - 1);
+    }
+
+    private string GetSegmentPath(int index)
+    {
+        const double outerRadius = 46;
+        const double innerRadius = 35;
+        const double gap = 3;
+
+        double startAngle = -90 + (index * 45) + gap / 2;
+        double endAngle = -90 + ((index + 1) * 45) - gap / 2;
+
+        double outerStartX = 50 + outerRadius * Math.Cos(startAngle * Math.PI / 180);
+        double outerStartY = 50 + outerRadius * Math.Sin(startAngle * Math.PI / 180);
+
+        double outerEndX = 50 + outerRadius * Math.Cos(endAngle * Math.PI / 180);
+        double outerEndY = 50 + outerRadius * Math.Sin(endAngle * Math.PI / 180);
+
+        double innerEndX = 50 + innerRadius * Math.Cos(endAngle * Math.PI / 180);
+        double innerEndY = 50 + innerRadius * Math.Sin(endAngle * Math.PI / 180);
+
+        double innerStartX = 50 + innerRadius * Math.Cos(startAngle * Math.PI / 180);
+        double innerStartY = 50 + innerRadius * Math.Sin(startAngle * Math.PI / 180);
+
+        return $"M {outerStartX:F3} {outerStartY:F3} " +
+               $"A {outerRadius} {outerRadius} 0 0 1 {outerEndX:F3} {outerEndY:F3} " +
+               $"L {innerEndX:F3} {innerEndY:F3} " +
+               $"A {innerRadius} {innerRadius} 0 0 0 {innerStartX:F3} {innerStartY:F3} Z";
+    }
+}

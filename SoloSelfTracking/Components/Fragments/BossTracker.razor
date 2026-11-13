@@ -119,7 +119,88 @@ else if (ShowSoloTitle)
             </div>
         }
 
-        @if (!UserSettings.EnableSmartDisplay)
+        @if (HasThreads)
+        {
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <ThreadMeter @bind-Value="_abyssThreads"
+                               CenterImage="img/perspective-dice-six-faces-random.svg"
+                               SegmentColor="#3acf5a"
+                               EmptySegmentColor="#29221b"
+                               HoverValue="Abyss Threads"
+                               Size="90" />
+                <ThreadMeter @bind-Value="_betrayalThreads"
+                               CenterImage="img/cowled.svg"
+                               SegmentColor="#d6a549"
+                               EmptySegmentColor="#29221b"
+                               HoverValue="Betrayal Threads"
+                               Size="90" />
+                <ThreadMeter @bind-Value="_breachThreads"
+                               CenterImage="img/perspective-dice-six-faces-random.svg"
+                               SegmentColor="#f04aed"
+                               EmptySegmentColor="#29221b"
+                               HoverValue="Breach Threads"
+                               Size="90" />
+                <ThreadMeter @bind-Value="_expeditionThreads"
+                               CenterImage="img/perspective-dice-six-faces-random.svg"
+                               SegmentColor="#6bb2c9"
+                               EmptySegmentColor="#29221b"
+                               HoverValue="Expedition Threads"
+                               Size="90" />
+                <ThreadMeter @bind-Value="_bestiaryThreads"
+                               CenterImage="img/perspective-dice-six-faces-random.svg"
+                               SegmentColor="#e04146"
+                               EmptySegmentColor="#29221b"
+                               HoverValue="Bestiary Threads"
+                               Size="90" />
+                <ThreadMeter @bind-Value="_incursionThreads"
+                               CenterImage="img/mayan-pyramid.svg"
+                               SegmentColor="#f0a34a"
+                               EmptySegmentColor="#29221b"
+                               HoverValue="Incursion Threads"
+                               Size="90" />
+                <ThreadMeter @bind-Value="_ritualThreads"
+                               CenterImage="img/cauldron.svg"
+                               SegmentColor="#d649cf"
+                               EmptySegmentColor="#29221b"
+                               HoverValue="Ritual Threads"
+                               Size="90" />
+                <ThreadMeter @bind-Value="_legionThreads"
+                               CenterImage="img/perspective-dice-six-faces-random.svg"
+                               SegmentColor="#a04af0"
+                               EmptySegmentColor="#29221b"
+                               HoverValue="Legion Threads"
+                               Size="90" />
+                <ThreadMeter @bind-Value="_blightThreads"
+                               CenterImage="img/mushroom.svg"
+                               SegmentColor="#d1c10d"
+                               EmptySegmentColor="#29221b"
+                               HoverValue="Blight Threads"
+                               Size="90" />
+                <ThreadMeter @bind-Value="_ultimatumThreads"
+                               CenterImage="img/perspective-dice-six-faces-random.svg"
+                               SegmentColor="#f0714a"
+                               EmptySegmentColor="#29221b"
+                               HoverValue="Ultimatum Threads"
+                               Size="90" />
+            </div>
+            <div class="drop-search">
+                <input data-allow-native-paste type="text"
+                       class="drop-search-input"
+                       placeholder="Search URL to strategy/atlas..."
+                       @bind="_strategy" />
+
+                @if (!string.IsNullOrWhiteSpace(_strategy))
+                {
+                    <button class="drop-search-clear"
+                            type="button"
+                            @onclick="() => _strategy = string.Empty">
+                        ×
+                    </button>
+                }
+            </div>
+        }
+
+        @if (!IsSmartDisplay)
         {
             <div class="drop-search">
                 <input type="text"
@@ -137,6 +218,10 @@ else if (ShowSoloTitle)
                     </button>
                 }
             </div>
+        }
+        else if (ForceSmartDisplay && !SelectedDrops.Any())
+        {
+            <p><weak>Smart Display is enabled by default on this page. Paste items into this window to begin tracking.</weak></p>
         }
         else if (!SelectedDrops.Any())
         {
@@ -156,7 +241,7 @@ else if (ShowSoloTitle)
                         StringComparison.OrdinalIgnoreCase));
                 <div class="
                     @(!string.IsNullOrWhiteSpace(DropSearch) && !isMatch && UserSettings.EnableHideOnSearch ? "drop-hidden" : "")
-                    @(UserSettings.EnableSmartDisplay && !isSelected ? "drop-hidden" : "")">
+                    @(IsSmartDisplay && !isSelected ? "drop-hidden" : "")">
                     <ItemHoverInfo Item="drop.Item">
                         <button type="button"
                                 class="btn @(isSelected
@@ -278,6 +363,11 @@ else
                     {
                         <th>Map Stats</th>
                     }
+                    @if (HasThreads)
+                    {
+                        <th>Threads</th>
+                        <th>Strat</th>
+                    }
                     <th>Drops</th>
                     <th>Time</th>
                     @if (!OnePortal)
@@ -314,6 +404,19 @@ else
                             else
                             {
                                 <td title="IIQ/IIR">@string.Format("{0}%/{1}%/{2}%/{3}%", kill.MapQuantity, kill.MapRarity, kill.MapAtlasDrops, kill.MapMonsterPackSize)</td>
+                            }
+                        }
+
+                        @if (HasThreads)
+                        {
+                            <td>@GetThreadsInfo(kill)</td>
+                            @if (!string.IsNullOrEmpty(@kill.StrategyUri))
+                            {
+                                <td><a href="@kill.StrategyUri">Link</a></td>
+                            }
+                            else
+                            {
+                                <td>N/A</td>
                             }
                         }
                         <td>
@@ -422,6 +525,14 @@ else
     public bool? HasWings { get; set; }
 
 
+    [Parameter]
+    public bool HasThreads { get; set; } = false;
+
+    [Parameter]
+    public bool ForceSmartDisplay { get; set; } = false;
+
+    private bool IsSmartDisplay;
+
     private string SelectedBoss = string.Empty;
     private string HistoryFilter = "All";
     private string DropSearch = string.Empty;
@@ -444,6 +555,17 @@ else
     private int _mapMaps = 0;
     private int _mapAtlasDrops = 0;
     private int _wings = 0;
+    private int _abyssThreads = 0;
+    private int _betrayalThreads = 0;
+    private int _breachThreads = 0;
+    private int _expeditionThreads = 0;
+    private int _bestiaryThreads = 0;
+    private int _incursionThreads = 0;
+    private int _ritualThreads = 0;
+    private int _legionThreads = 0;
+    private int _blightThreads = 0;
+    private int _ultimatumThreads = 0;
+    private string _strategy = string.Empty;
 
     private Settings UserSettings;
     private TriggerService _navigateService;
@@ -486,6 +608,8 @@ else
         _navigateService.OnTriggerTimerAsync = HandleTimerTrigger;
         _navigateService.OnTriggerTimerPauseAsync = HandleTimerPauseTrigger;
         _navigateService.OnTriggerDeathAsync = HandleDeathTrigger;
+
+        IsSmartDisplay = UserSettings.EnableSmartDisplay || ForceSmartDisplay;
     }
 
     private void SelectBoss(string boss)
@@ -570,6 +694,18 @@ else
             record.MapDivCards = _mapDivCards;
             record.MapAtlasDrops = _mapAtlasDrops;
             record.Wings = _wings;
+            record.AbyssThreads = _abyssThreads;
+            record.BetrayalThreads = _betrayalThreads;
+            record.BestiaryThreads = _bestiaryThreads;
+            record.BreachThreads = _breachThreads;
+            record.ExpeditionThreads = _expeditionThreads;
+            record.IncursionThreads = _incursionThreads;
+            record.RitualThreads = _ritualThreads;
+            record.LegionThreads = _legionThreads;
+            record.BlightThreads = _blightThreads;
+            record.UltimatumThreads = _ultimatumThreads;
+            record.RitualThreads = _ritualThreads;
+            record.StrategyUri = _strategy;
         }
 
         if (IsSubPage.HasValue && IsSubPage == true)
@@ -583,6 +719,41 @@ else
             await Repository.AddAsync(record);
             ResetTracker();
         }
+    }
+
+    private string GetThreadsInfo(KillRecord record)
+    {
+        string threads = string.Empty;
+        List<string> HasThreads = new();
+
+        if (record.AbyssThreads > 0)
+            HasThreads.Add(string.Format("{0} Abyss", record.AbyssThreads));
+        if (record.BetrayalThreads > 0)
+            HasThreads.Add(string.Format("{0} Betrayal", record.BetrayalThreads));
+        if (record.BreachThreads > 0)
+            HasThreads.Add(string.Format("{0} Breach", record.BreachThreads));
+        if (record.ExpeditionThreads > 0)
+            HasThreads.Add(string.Format("{0} Expedition", record.ExpeditionThreads));
+        if (record.BestiaryThreads > 0)
+            HasThreads.Add(string.Format("{0} Bestiary", record.BestiaryThreads));
+        if (record.IncursionThreads > 0)
+            HasThreads.Add(string.Format("{0} Incursion", record.IncursionThreads));
+        if (record.RitualThreads > 0)
+            HasThreads.Add(string.Format("{0} Ritual", record.RitualThreads));
+        if (record.LegionThreads > 0)
+            HasThreads.Add(string.Format("{0} Legion", record.LegionThreads));
+        if (record.BlightThreads > 0)
+            HasThreads.Add(string.Format("{0} Blight", record.BlightThreads));
+        if (record.UltimatumThreads > 0)
+            HasThreads.Add(string.Format("{0} Ultimatum", record.UltimatumThreads));
+
+        threads = string.Join(',', HasThreads);
+
+        if (string.IsNullOrEmpty(threads))
+        {
+            threads = "No Threads";
+        }
+        return threads;
     }
 
     public void ResetTracker()

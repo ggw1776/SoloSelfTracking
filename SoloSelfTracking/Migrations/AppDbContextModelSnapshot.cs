@@ -17,26 +17,6 @@ namespace SoloSelfTracking.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.13");
 
-            modelBuilder.Entity("SoloSelfTracking.Models.Fate", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("FateRecordId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FateRecordId");
-
-                    b.ToTable("Fate");
-                });
-
             modelBuilder.Entity("SoloSelfTracking.Models.IncursionRecord+TempleRoom", b =>
                 {
                     b.Property<int>("Id")
@@ -71,13 +51,28 @@ namespace SoloSelfTracking.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("AbyssThreads")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Activity")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("BestiaryThreads")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BetrayalThreads")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BlightThreads")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Boss")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("BreachThreads")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
@@ -91,6 +86,15 @@ namespace SoloSelfTracking.Migrations
 
                     b.Property<TimeSpan>("ElapsedTime")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("ExpeditionThreads")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IncursionThreads")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("LegionThreads")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("MapAtlasDrops")
                         .HasColumnType("INTEGER");
@@ -120,6 +124,16 @@ namespace SoloSelfTracking.Migrations
                         .IsRequired()
                         .HasMaxLength(21)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("RitualThreads")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("StrategyUri")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UltimatumThreads")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Wings")
                         .HasColumnType("INTEGER");
@@ -309,6 +323,10 @@ namespace SoloSelfTracking.Migrations
                 {
                     b.HasBaseType("SoloSelfTracking.Models.KillRecord");
 
+                    b.PrimitiveCollection<string>("Fates")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.PrimitiveCollection<string>("Reward")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -326,14 +344,6 @@ namespace SoloSelfTracking.Migrations
                     b.HasDiscriminator().HasValue("IncursionRecord");
                 });
 
-            modelBuilder.Entity("SoloSelfTracking.Models.Fate", b =>
-                {
-                    b.HasOne("SoloSelfTracking.Models.FateRecord", null)
-                        .WithMany("Fates")
-                        .HasForeignKey("FateRecordId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("SoloSelfTracking.Models.IncursionRecord+TempleRoom", b =>
                 {
                     b.HasOne("SoloSelfTracking.Models.IncursionRecord", null)
@@ -345,11 +355,6 @@ namespace SoloSelfTracking.Migrations
                         .WithMany("OpenRooms")
                         .HasForeignKey("IncursionRecordId1")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SoloSelfTracking.Models.FateRecord", b =>
-                {
-                    b.Navigation("Fates");
                 });
 
             modelBuilder.Entity("SoloSelfTracking.Models.IncursionRecord", b =>

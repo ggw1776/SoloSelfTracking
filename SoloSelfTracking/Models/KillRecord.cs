@@ -18,6 +18,17 @@
         public int MapAtlasDrops { get; set; }
         public string Activity { get; set; } = string.Empty;
         public int Wings { get; set; }
+        public int AbyssThreads { get; set; }
+        public int BetrayalThreads { get; set; }
+        public int BreachThreads { get; set; }
+        public int ExpeditionThreads { get; set; }
+        public int BestiaryThreads { get; set; }
+        public int IncursionThreads { get; set; }
+        public int RitualThreads { get; set; }
+        public int LegionThreads { get; set; }
+        public int BlightThreads { get; set; }
+        public int UltimatumThreads { get; set; }
+        public string StrategyUri { get; set; } = string.Empty;
 
 
         public bool IsMapStatsSet()
