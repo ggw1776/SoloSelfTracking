@@ -71,13 +71,28 @@ namespace SoloSelfTracking.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("AbyssThreads")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Activity")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("BestiaryThreads")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BetrayalThreads")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BlightThreads")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Boss")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("BreachThreads")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
@@ -91,6 +106,15 @@ namespace SoloSelfTracking.Migrations
 
                     b.Property<TimeSpan>("ElapsedTime")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("ExpeditionThreads")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IncursionThreads")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("LegionThreads")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("MapAtlasDrops")
                         .HasColumnType("INTEGER");
@@ -120,6 +144,16 @@ namespace SoloSelfTracking.Migrations
                         .IsRequired()
                         .HasMaxLength(21)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("RitualThreads")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("StrategyUri")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UltimatumThreads")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Wings")
                         .HasColumnType("INTEGER");

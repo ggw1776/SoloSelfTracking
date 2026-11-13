@@ -96,6 +96,9 @@
 .bi-blight-fill-nav-menu {
     background-image: url('../../img/mushroom.svg');
 }
+.bi-mapping-fill-nav-menu {
+    background-image: url('../../img/treasure-map.svg');
+}
 
 .nav-item {
     font-size: 0.9rem;

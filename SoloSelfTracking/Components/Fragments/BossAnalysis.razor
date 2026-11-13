@@ -233,7 +233,14 @@ else
                                 </td>
                                 <td class="text-end">@row.DropCount</td>
                                 <td class="text-end">@row.Rate.ToString("P2")</td>
-                                <td class="text-end">@row.ReportedRate%</td>
+                                @if(row.ReportedRate == 0)
+                                {
+                                    <td class="text-end">Unknown</td>
+                                }
+                                else
+                                {
+                                    <td class="text-end">@row.ReportedRate%</td>
+                                }
                             </tr>
                         }
                     </tbody>
