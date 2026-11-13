@@ -3,6 +3,12 @@ let focusHandler = null;
 
 export function attachPasteHandler(dotNetReference) {
     pasteHandler = async (event) => {
+
+        if (event.target.closest?.("[data-allow-native-paste]")) {
+            return;
+        }
+
+
         event.preventDefault();
 
         const pastedText = event.clipboardData?.getData("text/plain");
@@ -17,6 +23,11 @@ export function attachPasteHandler(dotNetReference) {
 export function attachFocusHandler(dotNetReference) {
 
     focusHandler = async () => {
+
+        if (event.target.closest?.("[data-allow-native-paste]")) {
+            return;
+        }
+
         try {
             const text = await navigator.clipboard.readText();
 

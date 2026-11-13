@@ -1358,5 +1358,7 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Unique GrandSpectrumAvoidAilment = new("Grand Spectrum (Avoid Ailments)", EItemType.ViridianJewel);
         public static readonly Unique GrandSpectrumElementalDamage = new("Grand Spectrum (Elemental Damage)", EItemType.ViridianJewel);
         public static readonly Unique GrandSpectrumFrenzyCharge = new("Grand Spectrum (Frenzy Charge)", EItemType.ViridianJewel);
+
+        public static readonly Unique PutridSeed = new("Putrid Seed", EItemType.MyceliumCore);
     }
 }
