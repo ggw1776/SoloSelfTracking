@@ -62,6 +62,48 @@
         </div>
 
         <div class="settings-section">
+            <h5>Display Settings</h5>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableHideOnSearch">Enable Hide On Search</label>
+                    <p>
+                        Hides drops that don't match your search instead of dimming them.
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="EnableHideOnSearch"
+                           type="checkbox"
+                           checked="@StoredSettings.EnableHideOnSearch"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnableHideOnSearch), e)" />
+<span class="setting-slider"></span>
+</label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableSmartDisplay">
+                        Enable Smart Display
+                    </label>
+                    <p>
+                        Hides all drops by default, and will only show them when pasted in. This setting is not recommende.d
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="EnableSmartDisplay"
+                           type="checkbox"
+                           checked="@StoredSettings.EnableSmartDisplay"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnableSmartDisplay), e)" />
+<span class="setting-slider"></span>
+</label>
+            </div>
+        </div>
+
+        <div class="settings-section">
             <h5>Client.txt Monitor</h5>
 
             <div class="setting-row">
@@ -704,6 +746,12 @@
                 break;
             case nameof(StoredSettings.EnableBlight):
                 StoredSettings.EnableBlight = value;
+                break;
+            case nameof(StoredSettings.EnableHideOnSearch):
+                StoredSettings.EnableHideOnSearch = value;
+                break;
+            case nameof(StoredSettings.EnableSmartDisplay):
+                StoredSettings.EnableSmartDisplay = value;
                 break;
             default:
                 return;
