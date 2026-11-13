@@ -2,6 +2,6 @@
 {
     public enum EFateReward
     {
-        Unsupported, UniqueWeapon, UniqueJewellery, UniqueHelmet, UniqueGloves, UniqueBodyArmour, UniqueBoots, AdditionalCurrency, AdditionalGold, ExtremeRarity, ExceptionalSupport, UnsupportedSpecificUnique, DreadmaidensSacriment, RareAmulet, RareSword, RareBodyArmor, RareGloves, RareHelmet, RareRing, RareBelt, RareBoots
+        Unsupported, UniqueWeapon, UniqueJewellery, UniqueHelmet, UniqueGloves, UniqueBodyArmour, UniqueBoots, AdditionalCurrency, AdditionalGold, ExtremeRarity, ExceptionalSupport, UnsupportedSpecificUnique, DreadmaidensSacriment, FatedItemBlock, FatedItemGuarantee
     }
 }
