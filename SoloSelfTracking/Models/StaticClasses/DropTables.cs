@@ -1054,6 +1054,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Uniques.Sporeguard, 0f),
             new(Uniques.TheStampede, 0f),
             new(Uniques.Stranglegasp, 0f),
+            new(Uniques.PutridSeed, 0f)
         ];
     }
 }

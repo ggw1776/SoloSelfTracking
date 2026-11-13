@@ -476,6 +476,7 @@
         RatchetingRing,
         ColdattunedBuckler,
         AnarchicSpiritblade,
-        Map
+        Map,
+        MyceliumCore
     }
 }
