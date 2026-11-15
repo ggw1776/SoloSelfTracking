@@ -468,7 +468,7 @@
         var hideoutLines = _lines.Where(x => x.Contains("Hideout") || x.Contains("The Rogue Harbour")).ToList();
         foreach (var line in hideoutLines)
         {
-            if (!_detectedHideoutLines.Contains(line))
+            if (!_detectedHideoutLines.Contains(line) && line.Contains("You have entered"))
             {
                 _detectedHideoutLines.Add(line);
                 if (_enableTimerStop && _trigger.OnTriggerTimerPauseAsync != null)
