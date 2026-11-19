@@ -1360,5 +1360,9 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Unique GrandSpectrumFrenzyCharge = new("Grand Spectrum (Frenzy Charge)", EItemType.ViridianJewel);
 
         public static readonly Unique PutridSeed = new("Putrid Seed", EItemType.MyceliumCore);
+
+        public static readonly Unique BaneoftheApostate = new("Bane of the Apostate", EItemType.JudgementStaff);
+        public static readonly Unique VeilofFlesh = new("Veil of Flesh", EItemType.CallousMask);
+        public static readonly Unique TheCovetousDark = new("The Covetous Dark", EItemType.EyeGouger);
     }
 }

@@ -145,6 +145,22 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(new EquipmentItem( "Sacrificial Garb", Enumerations.EItemType.SacrificialGarb, Enumerations.EItemRarity.Normal), 15f)
         ];
 
+        public readonly static List<DropTableEntry> UberElder = [
+            new(Uniques.MarkoftheShaper, 35f),
+            new(Uniques.MarkoftheElder, 35f),
+            new(Uniques.Voidfletcher, 20f),
+            new(Uniques.Indigon, 8f),
+            new(Uniques.Disintegrator, 2f),
+            new(Gems.VoidShockwaveSupport, 10f),
+            new(Currencies.ShapersExaltedOrb, 13f),
+            new(Currencies.EldersExaltedOrb, 13f),
+            new(Currencies.OrbOfDominance, 6f),
+            new(DivinationCards.VoidOfTheElements, 0.05f),
+            new(DivinationCards.AuspiciousAmbitions, 0.5f),
+            new(Visceras.EldersHead, 0f),
+            new(Visceras.EldersHeadUber, 0f)
+        ];
+
         public readonly static List<DropTableEntry> UberIncarnationOfFear = [
             new(Uniques.TheCagedMammoth, 60f),
             new(Uniques.CoilingWhisper, 36f),
@@ -211,6 +227,13 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(DivinationCards.Monochrome, 3f),
             new(Visceras.IncarnationOfDreadsHead, 0f),
             new(Visceras.IncarnationOfDreadsHeadUber, 0f)
+        ];
+
+        public readonly static List<DropTableEntry> TheCovenQueen =
+        [
+            new(Uniques.BaneoftheApostate, 0f),
+            new(Uniques.VeilofFlesh, 0f),
+            new(Uniques.TheCovetousDark, 0f)
         ];
 
         // NMs
