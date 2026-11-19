@@ -238,9 +238,6 @@ namespace SoloSelfTracking.Migrations
                     b.Property<bool>("EnableNightmares")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("EnablePasteOnFocusIn")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("EnablePauseTimerOnEnterHideout")
                         .HasColumnType("INTEGER");
 

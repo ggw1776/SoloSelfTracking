@@ -322,9 +322,6 @@
 
         await _pasteModule.InvokeVoidAsync(
             "attachPasteHandler", _dotNetReference);
-
-        await _pasteModule.InvokeVoidAsync(
-            "attachFocusHandler", _dotNetReference);
     }
 
     [JSInvokable]
@@ -334,20 +331,6 @@
 
         if (result)
             await InvokeAsync(StateHasChanged);
-
-        return result;
-    }
-
-    [JSInvokable]
-    public async Task<bool> HandleFocusedItem(string pastedText)
-    {
-        var result = false;
-        if (UserSettings.EnablePasteOnFocusIn)
-        {
-            result = await HandlePaste(pastedText);
-            if (result)
-                await InvokeAsync(StateHasChanged);
-        }
 
         return result;
     }

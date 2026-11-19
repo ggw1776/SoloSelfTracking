@@ -1,5 +1,4 @@
 ﻿let pasteHandler = null;
-let focusHandler = null;
 
 export function attachPasteHandler(dotNetReference) {
     pasteHandler = async (event) => {
@@ -20,28 +19,6 @@ export function attachPasteHandler(dotNetReference) {
     document.addEventListener("paste", pasteHandler);
 }
 
-export function attachFocusHandler(dotNetReference) {
-
-    focusHandler = async () => {
-
-        if (event.target.closest?.("[data-allow-native-paste]")) {
-            return;
-        }
-
-        try {
-            const text = await navigator.clipboard.readText();
-
-            if (text)
-                await processFocusText(dotNetReference, text);
-        }
-        catch (error) {
-            // Clipboard permissions may prevent reading on focus.
-        }
-    };
-
-    window.addEventListener("focus", focusHandler);
-}
-
 async function processPastedText(dotNetReference, text) {
     const found = await dotNetReference.invokeMethodAsync(
         "HandlePastedItem",
@@ -52,19 +29,11 @@ async function processPastedText(dotNetReference, text) {
         toastr.error("item not found");
 }
 
-async function processFocusText(dotNetReference, text) {
-    const found = await dotNetReference.invokeMethodAsync(
-        "HandleFocusedItem",
-        text
-    );
-}
 
 export function detachPasteHandler() {
     document.removeEventListener("paste", pasteHandler);
-    window.removeEventListener("focus", focusHandler);
 
     pasteHandler = null;
-    focusHandler = null;
 }
 
 window.clipboardUtilities = {

@@ -458,8 +458,6 @@ else
 
             await _pasteModule.InvokeVoidAsync(
                 "attachPasteHandler", _dotNetReference);
-            await _pasteModule.InvokeVoidAsync(
-                "attachFocusHandler", _dotNetReference);
         }
 
 
@@ -484,15 +482,6 @@ else
     public async Task<bool> HandlePastedItem(string pastedText)
     {
         return await HandlePaste(pastedText);
-    }
-
-    // the same as paste right now but maybe we handle this differently later
-    [JSInvokable]
-    public async Task<bool> HandleFocusedItem(string pastedText)
-    {
-        if (UserSettings.EnablePasteOnFocusIn)
-            return await HandlePaste(pastedText);
-        return false;
     }
 
     public async ValueTask DisposeAsync()
