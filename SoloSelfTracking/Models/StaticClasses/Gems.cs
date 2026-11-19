@@ -35,5 +35,6 @@
         public static readonly GemItem HexpassSupport = new("Hexpass Support");
         public static readonly GemItem FoulgraspSupport = new("Foulgrasp Support");
         public static readonly GemItem HivebornSupport = new("Hiveborn Support");
+        public static readonly GemItem TransfusionSupport = new("Transfusion Support");
     }
 }

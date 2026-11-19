@@ -235,6 +235,13 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Uniques.VeilofFlesh, 0f),
             new(Uniques.TheCovetousDark, 0f)
         ];
+        public readonly static List<DropTableEntry> Saresh =
+        [
+            new(Uniques.TheSandsofTime, 6f),
+            new(Uniques.TheBrokenElegy, 40f),
+            new(Uniques.ScreamsoftheDesiccated, 54f),
+            new(Gems.TransfusionSupport, 10f)
+        ];
 
         // NMs
 
@@ -352,6 +359,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Uniques.LegacyofFury, 41f),
             new(Uniques.GravensSecret, 17f),
             new(Uniques.ArnsAnguish, 17f),
+            new(Uniques.OlesyasDelight, 17f),
             new(Uniques.DoppelgängerGuise, 7f),
             new(Uniques.Echoforge, 1f),
             new(Gems.InvertTheRulesSupport, 10f),
