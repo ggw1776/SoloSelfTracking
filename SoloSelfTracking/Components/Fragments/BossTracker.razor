@@ -891,11 +891,6 @@ else
             if (SelectedDrops.Add(matchingDrop.Key))
                 StateHasChanged();
         }
-
-        if (UserSettings.ClearClipboardOnValidPaste)
-        {
-            await JS.InvokeAsync<bool>("clipboardUtilities.clear");
-        }
         return true;
     }
 

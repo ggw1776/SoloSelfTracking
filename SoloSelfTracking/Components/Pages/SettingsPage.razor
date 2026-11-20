@@ -19,31 +19,6 @@
     else
     {
         <div class="settings-section">
-            <h5>Clipboard</h5>
-
-            <div class="setting-row">
-                <div class="setting-info">
-                    <label for="clearClipboard">
-                        Clear Clipboard After Valid Paste
-                    </label>
-                    <p>
-                        Clear clipboard contents after successfully processing
-                        a valid paste.
-                    </p>
-                </div>
-
-                <label class="setting-switch">
-                    <input id="clearClipboard"
-                           type="checkbox"
-                           checked="@StoredSettings.ClearClipboardOnValidPaste"
-                           @onchange="e => UpdateSetting(
-                               nameof(StoredSettings.ClearClipboardOnValidPaste), e)" />
-                           <span class="setting-slider"></span>
-                       </label>
-            </div>
-        </div>
-
-        <div class="settings-section">
             <h5>Display Settings</h5>
 
             <div class="setting-row">
@@ -548,26 +523,6 @@
                            <span class="setting-slider"></span>
                        </label>
             </div>
-
-            <div class="setting-row">
-                <div class="setting-info">
-                    <label for="EnableTradieDetector">
-                        Enable Tr*die Detector
-                    </label>
-                    <p>
-                        Shows the tradie detector page, for when you notice people getting a slightly too lucky (currently non-functional). Will be shown in the navigation sidebar on refresh.
-                    </p>
-                </div>
-
-                <label class="setting-switch">
-                    <input id="EnableTradieDetector"
-                           type="checkbox"
-                           checked="@StoredSettings.EnableTradieDetector"
-                           @onchange="e => UpdateSetting(
-                               nameof(StoredSettings.EnableTradieDetector), e)" />
-                           <span class="setting-slider"></span>
-                       </label>
-            </div>
         </div>
 
         <div class="settings-save-status">
@@ -602,12 +557,6 @@
 
         switch (settingName)
         {
-            case nameof(StoredSettings.ClearClipboardOnValidPaste):
-                StoredSettings.ClearClipboardOnValidPaste = value;
-                break;
-            case nameof(StoredSettings.EnableIframing):
-                StoredSettings.EnableIframing = value;
-                break;
             case nameof(StoredSettings.EnableLogReader):
                 StoredSettings.EnableLogReader = value;
                 break;
@@ -622,9 +571,6 @@
                 break;
             case nameof(StoredSettings.EnableMoralSupport):
                 StoredSettings.EnableMoralSupport = value;
-                break;
-            case nameof(StoredSettings.EnableTradieDetector):
-                StoredSettings.EnableTradieDetector = value;
                 break;
             case nameof(StoredSettings.EnableAutoTabNavigation):
                 StoredSettings.EnableAutoTabNavigation = value;

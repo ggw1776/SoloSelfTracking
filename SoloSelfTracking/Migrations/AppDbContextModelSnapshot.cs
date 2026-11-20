@@ -172,9 +172,6 @@ namespace SoloSelfTracking.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("ClearClipboardOnValidPaste")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("EnableAnomaly")
                         .HasColumnType("INTEGER");
 
@@ -206,9 +203,6 @@ namespace SoloSelfTracking.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EnableHideOnSearch")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("EnableIframing")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EnableIncursion")
@@ -269,9 +263,6 @@ namespace SoloSelfTracking.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EnableTimeline")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("EnableTradieDetector")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("EnableUbers")
