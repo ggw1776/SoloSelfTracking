@@ -406,11 +406,6 @@
         OpenRooms = newOpenRooms;
         ObstructedRooms = newObstructedRooms;
 
-        if (UserSettings.ClearClipboardOnValidPaste)
-        {
-            await JS.InvokeAsync<bool>("clipboardUtilities.clear");
-        }
-
         return true;
     }
 

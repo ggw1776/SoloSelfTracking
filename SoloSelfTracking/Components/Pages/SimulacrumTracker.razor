@@ -588,10 +588,6 @@ else
             CreateUniqueDrop(new List<string>() { "Unidentified" });
         }
 
-        if (UserSettings.ClearClipboardOnValidPaste)
-        {
-            await JS.InvokeAsync<bool>("clipboardUtilities.clear");
-        }
         return true;
     }
 
