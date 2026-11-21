@@ -90,3 +90,7 @@ Notification by IENBA -- https://freesound.org/s/545495/ -- License: Attribution
 Fonts: https://www.exljbris.com/fontin.html
 
 Relaxing Short Music by TheoJT -- https://freesound.org/s/511437/ -- License: Attribution 4.0
+
+"Alert" Video Game Sound by EVRetro -- https://freesound.org/s/495004/ -- License: Creative Commons 0
+
+8-bit mini win sound effect by EVRetro -- https://freesound.org/s/535840/ -- License: Creative Commons 0

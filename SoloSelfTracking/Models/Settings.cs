@@ -17,6 +17,7 @@
         public bool EnablePoeDbSearch { get; set; } = false;
         public bool EnableHideOnSearch { get; set; } = false;
         public bool EnableSmartDisplay{ get; set; } = false;
+        public bool EnableTimerSounds { get; set; } = false;
 
         //pages
 
