@@ -158,7 +158,9 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(DivinationCards.VoidOfTheElements, 0.05f),
             new(DivinationCards.AuspiciousAmbitions, 0.5f),
             new(Visceras.EldersHead, 0f),
-            new(Visceras.EldersHeadUber, 0f)
+            new(Visceras.EldersHeadUber, 0f),
+            new(Visceras.ShapersHead, 0f),
+            new(Visceras.ShapersHeadUber, 0f),
         ];
 
         public readonly static List<DropTableEntry> UberIncarnationOfFear = [
