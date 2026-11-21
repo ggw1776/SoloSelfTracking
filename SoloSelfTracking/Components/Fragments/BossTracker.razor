@@ -947,13 +947,20 @@ else
 
     private async Task HandleTimerTrigger()
     {
-        await _performanceTracker.StartTimer();
+        if (UserSettings.EnableTimerSounds && !_performanceTracker.IsRunning)
+        {
+            await JS.InvokeAsync<string?>("notificationUtilities.startTimer", "Timer Started");
+            await _performanceTracker.StartTimer();
+        }
         await Task.CompletedTask;
     }
 
     private async Task HandleTimerPauseTrigger()
     {
         await _performanceTracker.StopTimer();
+        if (UserSettings.EnableTimerSounds && _performanceTracker.IsRunning)
+            await JS.InvokeAsync<string?>("notificationUtilities.stopTimer", "Timer Paused");
+
         await Task.CompletedTask;
     }
 

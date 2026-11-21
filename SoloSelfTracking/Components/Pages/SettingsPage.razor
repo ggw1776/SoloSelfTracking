@@ -181,6 +181,27 @@
                            <span class="setting-slider"></span>
                        </label>
             </div>
+
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label for="EnableTimerSounds">
+                        Enable Auto Timer Audio
+                    </label>
+                    <p>
+                        Plays audio when the timer start and stops automatically.
+                    </p>
+                </div>
+
+                <label class="setting-switch">
+                    <input id="EnableTimerSounds"
+                           type="checkbox"
+                           checked="@StoredSettings.EnableTimerSounds"
+                           @onchange="e => UpdateSetting(
+                               nameof(StoredSettings.EnableTimerSounds), e)" />
+                           <span class="setting-slider"></span>
+                       </label>
+            </div>
         </div>
 
         <div class="settings-section">
@@ -677,6 +698,9 @@
                 break;
             case nameof(StoredSettings.EnableSmartDisplay):
                 StoredSettings.EnableSmartDisplay = value;
+                break;
+            case nameof(StoredSettings.EnableTimerSounds):
+                StoredSettings.EnableTimerSounds = value;
                 break;
             default:
                 return;

@@ -265,6 +265,9 @@ namespace SoloSelfTracking.Migrations
                     b.Property<bool>("EnableTimeline")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("EnableTimerSounds")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("EnableUbers")
                         .HasColumnType("INTEGER");
 
