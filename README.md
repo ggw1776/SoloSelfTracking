@@ -63,7 +63,7 @@ NO FUCK OFF
 # GGG TERMS OF SERVICE CONCERNS
 
 At time of writing, the app does not interact with the PoE Executable at all.
-There is an optional feature to read the Client.txt file, but it is opt-in only and has no additional functionality. GGG does not comment on what is allowed from a third-party tool perspective, but the app does not (and likely will not in the future) perform any actions that would violate ToS.
+There is an optional feature to read the Client.txt file, but it is opt-in only and has no functionality that interacts with the game. GGG does not comment specifically on what is allowed from a third-party tool perspective other than misc comments in the ToS, but the app does not (and likely will not in the future) perform any actions that would violate ToS.
 
 # HOW TO CONTRIBUTE
 
