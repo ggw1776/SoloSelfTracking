@@ -951,9 +951,11 @@ else
 
     private async Task HandleTimerPauseTrigger()
     {
-        await _performanceTracker.StopTimer();
         if (UserSettings.EnableTimerSounds && _performanceTracker.IsRunning)
+        {
             await JS.InvokeAsync<string?>("notificationUtilities.stopTimer", "Timer Paused");
+            await _performanceTracker.StopTimer();
+        }
 
         await Task.CompletedTask;
     }
