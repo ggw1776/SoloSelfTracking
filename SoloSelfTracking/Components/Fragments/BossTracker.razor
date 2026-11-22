@@ -899,12 +899,6 @@ else
             } catch (Exception e){}
         }
 
-        
-        _navigateService.OnTriggerAsync = null;
-        _navigateService.OnTriggerTimerAsync = null;
-        _navigateService.OnTriggerTimerPauseAsync = null;
-        _navigateService.OnTriggerDeathAsync = null;
-
         _dotNetReference?.Dispose();
     }
 
@@ -939,14 +933,24 @@ else
 
     private async Task HandleNavigationTrigger(string location)
     {
+        if (!Bosses.Contains(location))
+        {
+            return;
+        }
+
         if (!string.IsNullOrEmpty(NavigationPrefix))
             location = string.Format("{0} {1}", NavigationPrefix, location);
         SelectBoss(location);
         await Task.CompletedTask;
     }
 
-    private async Task HandleTimerTrigger()
+    private async Task HandleTimerTrigger(string location)
     {
+        if (!Bosses.Contains(location))
+        {
+            return;
+        }
+
         if (UserSettings.EnableTimerSounds && !_performanceTracker.IsRunning)
         {
             await JS.InvokeAsync<string?>("notificationUtilities.startTimer", "Timer Started");

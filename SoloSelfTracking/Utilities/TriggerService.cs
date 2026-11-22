@@ -3,7 +3,7 @@
     public class TriggerService
     {
         public Func<string, Task>? OnTriggerAsync { get; set; }
-        public Func<Task>? OnTriggerTimerAsync { get; set; }
+        public Func<string, Task>? OnTriggerTimerAsync { get; set; }
         public Func<Task>? OnTriggerTimerPauseAsync { get; set; }
         public Func<Task>? OnTriggerDeathAsync { get; set; }
         public Func<Task>? OnTriggerMapParseAsync { get; set; }
@@ -15,11 +15,11 @@
                 await OnTriggerAsync.Invoke(location);
             }
         }
-        public async Task TriggerTimerAsync()
+        public async Task TriggerTimerAsync(string location)
         {
             if (OnTriggerTimerAsync != null)
             {
-                await OnTriggerTimerAsync.Invoke();
+                await OnTriggerTimerAsync.Invoke(location);
             }
         }
         public async Task TriggerTimerPauseAsync()

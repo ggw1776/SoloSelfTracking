@@ -465,7 +465,7 @@ else
         _triggerService?.OnTriggerDeathAsync = HandleDeathTrigger;
     }
 
-    private async Task HandleTimerTrigger()
+    private async Task HandleTimerTrigger(string _)
     {
         await _performanceTracker.StartTimer();
         await Task.CompletedTask;

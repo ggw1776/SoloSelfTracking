@@ -214,7 +214,7 @@
                 {
                     await _trigger.TriggerNavigateAsync(navigateLocation);
                     if (_enableTimerStart)
-                        await _trigger.TriggerTimerAsync();
+                        await _trigger.TriggerTimerAsync(navigateLocation);
                 }
             }
 
