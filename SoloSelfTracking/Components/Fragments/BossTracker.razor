@@ -899,6 +899,12 @@ else
             } catch (Exception e){}
         }
 
+        
+        _navigateService.OnTriggerAsync = null;
+        _navigateService.OnTriggerTimerAsync = null;
+        _navigateService.OnTriggerTimerPauseAsync = null;
+        _navigateService.OnTriggerDeathAsync = null;
+
         _dotNetReference?.Dispose();
     }
 
