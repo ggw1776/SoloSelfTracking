@@ -18,21 +18,21 @@
         public static readonly MiscItem LonleyReliquaryKey = new("Lonley Reliquary Key");
         public static readonly MiscItem ReverentReliquaryKey = new("Reverent Reliquary Key");
 
-        public static readonly MiscItem AwakeningFragment = new("Awakening Fragment");
-        public static readonly MiscItem RealityFragment = new("Reality Fragment");
-        public static readonly MiscItem CosmicFragment = new("Cosmic Fragment") { IconUrl = "/img/item/misc/cosmic_frag.png" };
-        public static readonly MiscItem SynthesisingFragment = new("Synthesising Fragment") { IconUrl = "/img/item/misc/synth_frag.png" };
-        public static readonly MiscItem DecayingFragment = new("Decaying Fragment");
-        public static readonly MiscItem ReverentFragment = new("Reverent Fragment");
-        public static readonly MiscItem TraumaticFragment = new("Traumatic Fragment");
-        public static readonly MiscItem LonelyFragment = new("Lonely Fragment");
-        public static readonly MiscItem BlazingFragment = new("Blazing Fragment");
-        public static readonly MiscItem DevouringFragment = new("Devouring Fragment");
+        public static readonly MiscItem AwakeningFragment = new("Awakening Fragment", "78px-Awakening_Fragment_inventory_icon.png");
+        public static readonly MiscItem RealityFragment = new("Reality Fragment", "78px-Reality_Fragment_inventory_icon.png");
+        public static readonly MiscItem CosmicFragment = new("Cosmic Fragment", "cosmic_frag.png");
+        public static readonly MiscItem SynthesisingFragment = new("Synthesising Fragment", "synth_frag.png");
+        public static readonly MiscItem DecayingFragment = new("Decaying Fragment", "78px-Decaying_Fragment_inventory_icon.png");
+        public static readonly MiscItem ReverentFragment = new("Reverent Fragment", "78px-Reverent_Fragment_inventory_icon.png");
+        public static readonly MiscItem TraumaticFragment = new("Traumatic Fragment", "78px-Traumatic_Fragment_inventory_icon.png");
+        public static readonly MiscItem LonelyFragment = new("Lonely Fragment", "78px-Lonely_Fragment_inventory_icon.png");
+        public static readonly MiscItem BlazingFragment = new("Blazing Fragment", "78px-Blazing_Fragment_inventory_icon.png");
+        public static readonly MiscItem DevouringFragment = new("Devouring Fragment", "78px-Devouring_Fragment_inventory_icon.png");
 
         public static readonly MiscItem DoryanisMachinarium = new("Doryanis Machinarium");
         public static readonly MiscItem Curiosity = new("Curiosity");
-        public static readonly MiscItem ZorathsEyeoftheInevitable = new("Zoraths Eye of the Inevitable");
-        public static readonly MiscItem ZorathsEyeoftheEndless = new("Zoraths Eye of the Endless");
+        public static readonly MiscItem ZorathsEyeoftheInevitable = new("Zorath's Eye of the Inevitable");
+        public static readonly MiscItem ZorathsEyeoftheEndless = new("Zorath's Eye of the Endless");
         public static readonly MiscItem FleshofXesht = new("Flesh of Xesht");
 
         public static readonly MiscItem VialofDominance = new("Vial of Dominance");

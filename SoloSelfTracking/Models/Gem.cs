@@ -8,12 +8,14 @@ namespace SoloSelfTracking.Models
         public int Quality { get; set; }
         public bool IsSupportGem { get; set; }
 
-        public GemItem(string name)
+        public GemItem(string name, string iconUrl = "")
         {
             Name = name;
             Rarity = EItemRarity.Gem;
             IsSupportGem = true;
-            
+
+            if (iconUrl != string.Empty)
+                IconUrl = "/img/item/gem/" + iconUrl;
         }
     }
 }
