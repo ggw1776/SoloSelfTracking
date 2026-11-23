@@ -1307,6 +1307,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Uniques.TheSquire, 0f),
             new(Uniques.Varunastra, 0f),
             new(Uniques.VoltaxicRift, 0f),
+            new(Uniques.TheSwordofAges, 0f)
         ];
 
         public readonly static List<DropTableEntry> Heist =

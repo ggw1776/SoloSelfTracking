@@ -1364,5 +1364,7 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Unique BaneoftheApostate = new("Bane of the Apostate", EItemType.JudgementStaff);
         public static readonly Unique VeilofFlesh = new("Veil of Flesh", EItemType.CallousMask);
         public static readonly Unique TheCovetousDark = new("The Covetous Dark", EItemType.EyeGouger);
+
+        public static readonly Unique TheSwordofAges = new("The Sword of Ages", EItemType.ExquisiteBlade, "The_Sword_of_Ages_inventory_icon.png");
     }
 }
