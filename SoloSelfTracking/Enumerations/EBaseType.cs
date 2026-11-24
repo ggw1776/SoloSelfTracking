@@ -477,6 +477,7 @@
         ColdattunedBuckler,
         AnarchicSpiritblade,
         Map,
-        MyceliumCore
+        MyceliumCore,
+        TwilightRegalia
     }
 }

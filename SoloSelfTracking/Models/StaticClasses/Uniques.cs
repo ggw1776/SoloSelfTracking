@@ -1366,5 +1366,6 @@ namespace SoloSelfTracking.Models.StaticClasses
         public static readonly Unique TheCovetousDark = new("The Covetous Dark", EItemType.EyeGouger);
 
         public static readonly Unique TheSwordofAges = new("The Sword of Ages", EItemType.ExquisiteBlade, "The_Sword_of_Ages_inventory_icon.png");
+        public readonly static Unique MantleOfDreams = new("Mantle of Dreams", EItemType.TwilightRegalia);
     }
 }

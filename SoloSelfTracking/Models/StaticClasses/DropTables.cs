@@ -169,6 +169,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Uniques.WingoftheWyvern, 2f),
             new(Uniques.Woespike, 2f),
             new(Uniques.BoundByDestiny, 10f),  //todo bbd handling
+            new(Uniques.MantleOfDreams, 0f),
             new(Gems.GreaterDevourSupport, 5f),
             new(MiscItems.TraumaticReliquaryKey, 1f),
             new(Currencies.OrbOfIntention, 33f),
