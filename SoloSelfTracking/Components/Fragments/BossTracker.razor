@@ -389,15 +389,15 @@ else
                         {
                             @if(NightmareMods.HasValue && NightmareMods == true)
                             {
-                                <td title="IIQ/IIR/Pack Size/Maps/Scarabs/Currency/Div Cards">@string.Format("{0}%/{1}%/{2}%/{3}%/{4}%/{5}%/{6}%/{7}%", kill.MapQuantity, kill.MapRarity, kill.MapAtlasDrops, kill.MapMonsterPackSize, kill.MapMaps, kill.MapScarabs, kill.MapCurrency, kill.MapDivCards)</td>
+                                <td title="IIR/Pack Size/Maps/Scarabs/Currency/Div Cards">@string.Format("{0}%/{1}%/{2}%/{3}%/{4}%/{5}%/{6}%", kill.MapRarity, kill.MapAtlasDrops, kill.MapMonsterPackSize, kill.MapMaps, kill.MapScarabs, kill.MapCurrency, kill.MapDivCards)</td>
                             }
                             else if (HasWings.HasValue && HasWings == true)
                             {
-                                <td title="IIQ/IIR">@string.Format("{0}%/{1}%/{2} Wings", kill.MapQuantity, kill.MapRarity, kill.Wings)</td>
+                                <td title="IIR">@string.Format("{0}%/{1} Wings", kill.MapQuantity, kill.MapRarity, kill.Wings)</td>
                             }
                             else
                             {
-                                <td title="IIQ/IIR">@string.Format("{0}%/{1}%/{2}%/{3}%", kill.MapQuantity, kill.MapRarity, kill.MapAtlasDrops, kill.MapMonsterPackSize)</td>
+                                <td title="IIQ/IIR">@string.Format("{0}%/{1}%/{2}%", kill.MapRarity, kill.MapAtlasDrops, kill.MapMonsterPackSize)</td>
                             }
                         }
 
