@@ -84,5 +84,8 @@
         public static readonly CurrencyItem TaintedOil = new("Tainted Oil", "", "Tainted_Oil_inventory_icon.png");
         public static readonly CurrencyItem ReflectiveOil = new("Reflective Oil", "", "78px-Reflective_Oil_inventory_icon.png");
         public static readonly CurrencyItem PrismaticOil = new("Prismatic Oil", "", "Prismatic_Oil_inventory_icon.png");
+
+        public static readonly CurrencyItem AllflameEmberOfPropagation = new("Allflame Ember of Propagation", "");
+        public static readonly CurrencyItem AllflameEmberOfTheEthereal = new("Allflame Ember of the Ethereal", "");
     }
 }

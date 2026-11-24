@@ -67,5 +67,10 @@
         public static readonly MiscItem GamblingDistrict = new("Gambling District");
         public static readonly MiscItem CourtofChaos = new("Court of Chaos");
         public static readonly MiscItem UnchartedExpedition = new("Uncharted Expedition");
+
+        public static readonly MiscItem SoulCoreOfInstability = new("Soul Core Of Instability");
+        public static readonly MiscItem SoulCoreOfMight = new("Soul Core Of Might");
+        public static readonly MiscItem SoulCoreOfFinesse = new("Soul Core Of Finesse");
+        public static readonly MiscItem SoulCoreOfIntellect = new("Soul Core Of Intellect");
     }
 }
