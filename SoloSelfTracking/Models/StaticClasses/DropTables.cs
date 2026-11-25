@@ -720,6 +720,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(DivinationCards.Triskaidekaphobia, 20f),
             new(DivinationCards.ThePriceOfDevotion, 0.1f),
             new(DivinationCards.ChasingRisk, 0.1f),
+            new(MiscItems.RoyalVisage, 0f, true),
             new(MiscItems.SoulCoreOfInstability, 0f, true),
             new(MiscItems.SoulCoreOfMight, 0f, true),
             new(MiscItems.SoulCoreOfFinesse, 0f, true),
