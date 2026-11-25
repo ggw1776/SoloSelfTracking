@@ -947,7 +947,7 @@ else
 
     private async Task HandleTimerTrigger(string location)
     {
-        if (!Bosses.Contains(location))
+        if (!Bosses.Any(boss => boss.Contains(location, StringComparison.OrdinalIgnoreCase)))
         {
             return;
         }
