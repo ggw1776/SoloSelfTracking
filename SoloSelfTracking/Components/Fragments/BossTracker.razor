@@ -385,7 +385,7 @@ else
                             </td>
                         }
 
-                        @if (Maps.HasValue && Maps.Value == true)
+                        @if (Maps.HasValue && Maps.Value == true && kill.IsMapStatsSet())
                         {
                             @if(NightmareMods.HasValue && NightmareMods == true)
                             {
@@ -399,6 +399,10 @@ else
                             {
                                 <td title="IIQ/IIR">@string.Format("{0}%/{1}%/{2}%", kill.MapRarity, kill.MapAtlasDrops, kill.MapMonsterPackSize)</td>
                             }
+                        }
+                        else if (Maps.HasValue && Maps.Value == true && !kill.IsMapStatsSet())
+                        {
+                            <td>N/A</td>
                         }
 
                         @if (HasThreads)
@@ -934,7 +938,7 @@ else
 
     private async Task HandleNavigationTrigger(string location)
     {
-        if (!Bosses.Contains(location))
+        if (!Bosses.Any(boss => boss.Contains(location, StringComparison.OrdinalIgnoreCase)))
         {
             return;
         }

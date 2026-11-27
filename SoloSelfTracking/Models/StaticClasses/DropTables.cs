@@ -16,6 +16,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.OrbOfDominance, 5f),
             new(Currencies.AwakenersOrb, 20f),
             new(DivinationCards.AFateWorseThanDeath, 4f),
+            new(MiscItems.VaultOpened, 0f),
             new(Visceras.SirusHeadMind, 0f),
             new(Visceras.SirusHeadBody, 0f),
             new(Visceras.SirusHeadSoul, 0f),
@@ -36,6 +37,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.OrbOfDominance, 3f),
             new(MiscItems.FragmentofKnowledge, 50f),
             new(MiscItems.FragmentofShape, 50f),
+            new(MiscItems.VaultOpened, 0f),
             new(Visceras.ShapersHead, 0f),
             new(Visceras.ShapersHeadUber, 0f)
         ];
@@ -58,6 +60,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.OrbOfDominance, 6f),
             new(DivinationCards.VoidOfTheElements, 0.05f),
             new(DivinationCards.AuspiciousAmbitions, 0.5f),
+            new(MiscItems.VaultOpened, 0f),
             new(Visceras.EldersHead, 0f),
             new(Visceras.EldersHeadUber, 0f)
         ];
@@ -76,6 +79,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Gems.InvertTheRulesSupport, 10f),
             new(Currencies.OrbOfConflict, 32f),
             new(DivinationCards.AuspiciousAmbitions, 0.05f),
+            new(MiscItems.VaultOpened, 0f),
             new(Visceras.MavensOrrery, 0f),
             new(Visceras.MavensOrreryUber, 0f)
         ];
@@ -90,6 +94,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Gems.GreaterKineticInstabilitySupport, 10f),
             new(DivinationCards.TheHook, 5f),
             new(DivinationCards.ImperfectMemories, 0.5f),
+            new(MiscItems.VaultOpened, 0f),
             new(Visceras.VenariusScripture, 0f),
             new(Visceras.VenariusScriptureUber, 0f)
         ];
@@ -108,6 +113,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.EldrichChaosOrb, 5f),
             new(Currencies.EldrichExaltedOrb, 5f),
             new(DivinationCards.AuspiciousAmbitions, 1f),
+            new(MiscItems.VaultOpened, 0f),
             new(Visceras.SearingExarchsDescry, 0f),
             new(Visceras.SearingExarchsDescryUber, 0f)
         ];
@@ -126,6 +132,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.EldrichChaosOrb, 5f),
             new(Currencies.EldrichExaltedOrb, 5f),
             new(DivinationCards.AuspiciousAmbitions, 1f),
+            new(MiscItems.VaultOpened, 0f),
             new(Visceras.EaterOfWorldsHead, 0f),
             new(Visceras.EaterOfWorldsHeadUber, 0f)
         ];
@@ -157,6 +164,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.OrbOfDominance, 6f),
             new(DivinationCards.VoidOfTheElements, 0.05f),
             new(DivinationCards.AuspiciousAmbitions, 0.5f),
+            new(MiscItems.VaultOpened, 0f),
             new(Visceras.EldersHead, 0f),
             new(Visceras.EldersHeadUber, 0f),
             new(Visceras.ShapersHead, 0f),
@@ -184,6 +192,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.RunicAstrolabe, 7.5f),
             new(Currencies.TimelessAstrolabe, 7.5f),
             new(DivinationCards.Monochrome, 3f),
+            new(MiscItems.VaultOpened, 0f),
             new(Visceras.IncarnationOfFearsHead, 0f),
             new(Visceras.IncarnationOfFearsHeadUber, 0f)
         ];
@@ -206,6 +215,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.RunicAstrolabe, 7.5f),
             new(Currencies.TimelessAstrolabe, 7.5f),
             new(DivinationCards.Monochrome, 3f),
+            new(MiscItems.VaultOpened, 0f),
             new(Visceras.IncarnationOfNeglectsCube, 0f),
             new(Visceras.IncarnationOfNeglectsCubeUber, 0f)
         ];
@@ -228,6 +238,7 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Currencies.RunicAstrolabe, 7.5f),
             new(Currencies.TimelessAstrolabe, 7.5f),
             new(DivinationCards.Monochrome, 3f),
+            new(MiscItems.VaultOpened, 0f),
             new(Visceras.IncarnationOfDreadsHead, 0f),
             new(Visceras.IncarnationOfDreadsHeadUber, 0f)
         ];
@@ -254,7 +265,8 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Gems.UnholyTrinitySupport, 5f),
             new(MiscItems.AwakeningFragment, 0f, true),
             new(MiscItems.RealityFragment, 0f, true),
-            new(DivinationCards.TheVoid, 0f, true)
+            new(DivinationCards.TheVoid, 0f, true),
+            new(MiscItems.VaultOpened, 0f)
         ];
 
         public readonly static List<DropTableEntry> Citadel =
@@ -263,7 +275,8 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Gems.CastOnWardBreakSupport, 5f),
             new(MiscItems.CosmicFragment, 0f, true),
             new(MiscItems.SynthesisingFragment, 0f, true),
-            new(DivinationCards.TheVoid, 0f, true)
+            new(DivinationCards.TheVoid, 0f, true),
+            new(MiscItems.VaultOpened, 0f)
         ];
 
         public readonly static List<DropTableEntry> Fortress =
@@ -272,7 +285,8 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Gems.OverloadedIntensitySupport, 5f),
             new(MiscItems.DecayingFragment, 0f, true),
             new(MiscItems.SynthesisingFragment, 0f, true),
-            new(DivinationCards.TheVoid, 0f, true)
+            new(DivinationCards.TheVoid, 0f, true),
+            new(MiscItems.VaultOpened, 0f)
         ];
 
         public readonly static List<DropTableEntry> Sanctuary =
@@ -284,7 +298,8 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(MiscItems.LonelyFragment, 0f, true),
             new(MiscItems.TraumaticFragment, 0f, true),
             new(MiscItems.ReverentFragment, 0f, true),
-            new(DivinationCards.TheVoid, 0f, true)
+            new(DivinationCards.TheVoid, 0f, true),
+            new(MiscItems.VaultOpened, 0f)
         ];
 
         public readonly static List<DropTableEntry> Ziggaurat =
@@ -293,7 +308,8 @@ namespace SoloSelfTracking.Models.StaticClasses
             new(Gems.CommunionSupport, 5f),
             new(MiscItems.BlazingFragment, 0f, true),
             new(MiscItems.DevouringFragment, 0f, true),
-            new(DivinationCards.TheVoid, 0f, true)
+            new(DivinationCards.TheVoid, 0f, true),
+            new(MiscItems.VaultOpened, 0f)
         ];
 
         public readonly static List<DropTableEntry> Shaper =

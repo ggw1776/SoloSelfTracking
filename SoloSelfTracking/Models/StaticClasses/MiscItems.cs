@@ -73,6 +73,7 @@
         public static readonly MiscItem SoulCoreOfFinesse = new("Soul Core Of Finesse");
         public static readonly MiscItem SoulCoreOfIntellect = new("Soul Core Of Intellect");
 
-        public static readonly MiscItem RoyalVisage = new ("Royal Visage");
+        public static readonly MiscItem RoyalVisage = new("Royal Visage");
+        public static readonly MiscItem VaultOpened = new("Vault Opened");
     }
 }
