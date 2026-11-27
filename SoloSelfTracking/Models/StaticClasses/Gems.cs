@@ -18,7 +18,7 @@
         public static readonly GemItem FrostmageSupport = new("Frostmage Support");
         public static readonly GemItem CongregationSupport = new("Congregation Support");
 
-        public static readonly GemItem UnholyTrinitySupport = new("Unholy Trinity Support");
+        public static readonly GemItem UnholyTrinitySupport = new("Unholy Trinity Support", "Unholy_Trinity_Support_inventory_icon.png");
         public static readonly GemItem CastOnWardBreakSupport = new("Cast On Ward Break Support", "cast_on_ward_break.png");
         public static readonly GemItem OverloadedIntensitySupport = new("Overloaded Intensity Support");
         public static readonly GemItem ScornfulHeraldSupport = new("Scornful Herald Support", "Scornful_Herald_Support_inventory_icon.png");
